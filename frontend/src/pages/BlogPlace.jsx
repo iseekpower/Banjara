@@ -190,7 +190,7 @@ Local Insight: This trek is less commercialized than Kheerganga, offering a more
     metaTitle: 'Sar Pass Trek Complete Guide | Starting from Kasol Region',
     metaDescription: 'Sar Pass trek guide. Multi-day high altitude trek, difficulty level, best time. Plan from Banjara Barracks Kalga base.',
     keywords: 'Sar Pass trek, high altitude trek Himachal, multi-day trek, snow trek Parvati Valley',
-    distance: ''15 km base from Kalga',
+    distance: '15 km base from Kalga',
     duration: 'Multi-day (4-5 days)',
     altitude: '4,200 meters',
     content: `Sar Pass is a challenging high-altitude trek that takes you to 4,200 meters through snow-covered landscapes, pine forests, and alpine meadows. This multi-day adventure is for experienced trekkers seeking a thrilling Himalayan challenge.
