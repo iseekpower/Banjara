@@ -316,8 +316,8 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
             <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1611875371292-a2bbee7c496b?w=800&q=80"
-                alt="Trekking in Himalayas"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/99841d52-1d9a-4b1e-a234-57b27b360555.jpeg?im_w=1200"
+                alt="Himalayan mountain views from property"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -329,14 +329,14 @@ const Home = () => {
             </div>
             <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1638801428412-cadc850fbd8e?w=800&q=80"
-                alt="Snow-capped Himalayan peaks"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/b771f6f8-ad23-4d07-a57f-7678a5997157.jpeg?im_w=1200"
+                alt="Cozy bedroom at Banjara Barracks"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                 <div className="p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Reach New Heights</h3>
-                  <p className="text-sm opacity-90">Witness breathtaking panoramic views of the valley</p>
+                  <h3 className="text-2xl font-bold mb-2">Comfortable Stays</h3>
+                  <p className="text-sm opacity-90">Cozy rooms with stunning mountain views</p>
                 </div>
               </div>
             </div>
