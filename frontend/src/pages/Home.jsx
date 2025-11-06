@@ -75,6 +75,31 @@ const Home = () => {
     }
   };
 
+  const handleChatSubmit = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+
+    const userMessage = { role: 'user', content: chatInput };
+    setChatMessages(prev => [...prev, userMessage]);
+    setChatInput('');
+    setChatLoading(true);
+
+    try {
+      const response = await axios.post(`${API}/chat/ai-assistant`, {
+        session_id: sessionId,
+        message: chatInput
+      });
+
+      const assistantMessage = { role: 'assistant', content: response.data.response };
+      setChatMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      toast.error('Failed to get response. Please try again.');
+      console.error('Chat error:', error);
+    } finally {
+      setChatLoading(false);
+    }
+  };
+
   const groupedMenu = menuItems.reduce((acc, item) => {
     if (!acc[item.category]) acc[item.category] = [];
     acc[item.category].push(item);
