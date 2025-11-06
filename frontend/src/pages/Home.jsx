@@ -283,18 +283,21 @@ const Home = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {explorePlaces.map((place, index) => (
-              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 bg-white" data-testid={`explore-place-${index}`}>
-                <CardHeader>
-                  <CardTitle className="text-xl">{place.name}</CardTitle>
-                  <CardDescription className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    {place.distance} · {place.time}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-stone-600">{place.description}</p>
-                </CardContent>
-              </Card>
+              <Link key={index} to={`/blog/${place.slug}`}>
+                <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 bg-white cursor-pointer h-full" data-testid={`explore-place-${index}`}>
+                  <CardHeader>
+                    <CardTitle className="text-xl">{place.name}</CardTitle>
+                    <CardDescription className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      {place.distance} · {place.time}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-stone-600">{place.description}</p>
+                    <p className="text-xs text-emerald-600 mt-3 font-semibold">Read Complete Guide →</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
