@@ -432,34 +432,34 @@ const Home = () => {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl lg:text-5xl font-bold mb-12 text-center text-stone-900">
-            Experience Kalga
+            Experience Banjara Barracks
           </h2>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="md:col-span-2 h-80">
               <img
-                src="https://images.unsplash.com/photo-1544442069-97dded965a9f?w=1200&q=80"
-                alt="Himalayan glacial lake"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/305b2f0e-8311-4a4f-95f6-d2dfc4ad1333.jpeg?im_w=1440"
+                alt="Bedroom 1 at Banjara Barracks"
                 className="w-full h-full object-cover rounded-xl shadow-lg"
               />
             </div>
             <div className="h-80">
               <img
-                src="https://images.unsplash.com/photo-1666908954730-ad4852009970?w=600&q=80"
-                alt="Apple orchard"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/ca059473-8387-480a-b669-ab1b77b4c943.jpeg?im_w=720"
+                alt="Bedroom 2 with floor mattresses"
                 className="w-full h-full object-cover rounded-xl shadow-lg"
               />
             </div>
             <div className="h-80">
               <img
-                src="https://images.unsplash.com/photo-1738482223848-008ac3110276?w=600&q=80"
-                alt="Traditional village with prayer flags"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/ce3b16e6-7ede-445c-9b47-c464154ef308.jpeg?im_w=720"
+                alt="Bedroom 4 with wall art"
                 className="w-full h-full object-cover rounded-xl shadow-lg"
               />
             </div>
             <div className="md:col-span-2 h-80">
               <img
-                src="https://images.unsplash.com/photo-1481340101608-cb5f45cb1f99?w=1200&q=80"
-                alt="Trekker on mountain peak"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/f60a8ab7-fea0-44cd-b119-18460ca3de38.jpeg?im_w=1440"
+                alt="Stunning mountain views from property"
                 className="w-full h-full object-cover rounded-xl shadow-lg"
               />
             </div>
