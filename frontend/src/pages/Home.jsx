@@ -70,14 +70,14 @@ const Home = () => {
   }, {});
 
   const explorePlaces = [
-    { name: 'Kheerganga Trek', distance: '12 km', time: '4-5 hours', description: 'Famous hot springs and scenic trek through pine forests' },
-    { name: 'Pulga Village', distance: '3 km', time: '1 hour', description: 'Quaint village with apple orchards and waterfalls' },
-    { name: 'Tosh Village', distance: '8 km', time: '2 hours', description: 'Popular village with cafes and mountain views' },
-    { name: 'Fairy Forest', distance: '2 km', time: '45 mins', description: 'Hidden caves and perfect for camping under stars' },
-    { name: 'Manikaran', distance: '18 km', time: 'Day trip', description: 'Sacred hot springs and Gurudwara' },
-    { name: 'Kasol', distance: '16 km', time: 'Day trip', description: 'Vibrant town along Parvati River' },
-    { name: 'Bunbuni Pass', distance: '10 km', time: '5-6 hours', description: 'Moderate trek with panoramic valley views' },
-    { name: 'Sar Pass', distance: '15 km', time: 'Multi-day', description: 'Challenging high-altitude trek through snow' }
+    { name: 'Kheerganga Trek', distance: '12 km', time: '4-5 hours', description: 'Famous hot springs and scenic trek through pine forests', slug: 'kheerganga-trek' },
+    { name: 'Pulga Village', distance: '3 km', time: '1 hour', description: 'Quaint village with apple orchards and waterfalls', slug: 'pulga-village' },
+    { name: 'Tosh Village', distance: '8 km', time: '2 hours', description: 'Popular village with cafes and mountain views', slug: 'tosh-village' },
+    { name: 'Fairy Forest', distance: '2 km', time: '45 mins', description: 'Hidden caves and perfect for camping under stars', slug: 'fairy-forest' },
+    { name: 'Manikaran', distance: '18 km', time: 'Day trip', description: 'Sacred hot springs and Gurudwara', slug: 'manikaran' },
+    { name: 'Kasol', distance: '16 km', time: 'Day trip', description: 'Vibrant town along Parvati River', slug: 'kasol' },
+    { name: 'Bunbuni Pass', distance: '10 km', time: '5-6 hours', description: 'Moderate trek with panoramic valley views', slug: 'bunbuni-pass' },
+    { name: 'Sar Pass', distance: '15 km', time: 'Multi-day', description: 'Challenging high-altitude trek through snow', slug: 'sar-pass' }
   ];
 
   return (
