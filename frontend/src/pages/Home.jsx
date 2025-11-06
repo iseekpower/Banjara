@@ -28,6 +28,11 @@ const Home = () => {
   const [faqs, setFaqs] = useState([]);
   const [rules, setRules] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const [chatLoading, setChatLoading] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
