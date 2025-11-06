@@ -230,8 +230,8 @@ const Home = () => {
             </div>
             <div className="order-1 lg:order-2">
               <img
-                src="https://images.unsplash.com/photo-1759593641759-93551a10e9fc?w=800&q=80"
-                alt="Parvati Valley village"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/10a98b24-1a16-42c9-b063-d60992c041ec.jpeg?im_w=1200"
+                alt="Banjara Barracks exterior view"
                 className="w-full h-96 object-cover rounded-2xl shadow-2xl"
               />
             </div>
