@@ -9,8 +9,15 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { toast } from 'sonner';
-import { Mountain, Utensils, TreePine, MapPin, Heart, Music, Calendar, ExternalLink, Menu as MenuIcon, X } from 'lucide-react';
+import { Mountain, Utensils, TreePine, MapPin, Heart, Music, Calendar, ExternalLink, Menu as MenuIcon, X, MessageCircle, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
