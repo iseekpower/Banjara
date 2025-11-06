@@ -169,8 +169,8 @@ const Home = () => {
       <section className="relative h-screen mt-16" data-testid="hero-section">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1718894294953-92e3f9a17559?w=1920&q=80"
-            alt="Kalga Village at sunrise"
+            src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/f60a8ab7-fea0-44cd-b119-18460ca3de38.jpeg?im_w=1920"
+            alt="Banjara Barracks - Mountain view"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
