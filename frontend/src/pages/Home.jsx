@@ -2,23 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 import {
   Accordion,
   AccordionContent,
@@ -26,59 +9,18 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { toast } from 'sonner';
-import { Mountain, Utensils, Home as HomeIcon, Trees, Calendar, Phone, Mail, MessageCircle, Sparkles, Send, X } from 'lucide-react';
+import { Mountain, Utensils, TreePine, MapPin, Heart, Music, Calendar, ExternalLink, Menu as MenuIcon, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+const AIRBNB_URL = 'https://www.airbnb.co.in/rooms/51261620?source_impression_id=p3_1762452247_P3PmxG8ksmAwf3Rz';
 
 const Home = () => {
-  const [trekDialog, setTrekDialog] = useState(false);
-  const [bbqDialog, setBbqDialog] = useState(false);
-  const [roomDialog, setRoomDialog] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [rules, setRules] = useState([]);
-  const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatInput, setChatInput] = useState('');
-  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
-  const [chatLoading, setChatLoading] = useState(false);
-
-  const [trekForm, setTrekForm] = useState({
-    trek_name: '',
-    person_count: 1,
-    date: '',
-    full_name: '',
-    email: '',
-    phone: ''
-  });
-
-  const [bbqForm, setBbqForm] = useState({
-    date: '',
-    person_count: 1,
-    full_name: '',
-    email: '',
-    phone: '',
-    special_requests: ''
-  });
-
-  const [roomForm, setRoomForm] = useState({
-    check_in: '',
-    check_out: '',
-    guest_count: 1,
-    room_type: '',
-    full_name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-
-  const treks = [
-    { name: 'Bhunbhuni Trek', duration: '4-5 hours', difficulty: 'Moderate' },
-    { name: 'Bhandak Trek', duration: '5-6 hours', difficulty: 'Moderate' },
-    { name: 'Bishkeri Trek', duration: '6-7 hours', difficulty: 'Challenging' },
-    { name: 'Tevla Trek', duration: '3-4 hours', difficulty: 'Easy' }
-  ];
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
@@ -113,86 +55,11 @@ const Home = () => {
     }
   };
 
-  const handleTrekBooking = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API}/bookings/trek`, trekForm);
-      toast.success('Trek booking submitted successfully! We will contact you soon.');
-      setTrekDialog(false);
-      setTrekForm({
-        trek_name: '',
-        person_count: 1,
-        date: '',
-        full_name: '',
-        email: '',
-        phone: ''
-      });
-    } catch (error) {
-      toast.error('Failed to submit booking. Please try again.');
-    }
-  };
-
-  const handleBBQBooking = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API}/bookings/bbq`, bbqForm);
-      toast.success('BBQ booking submitted successfully! We will contact you soon.');
-      setBbqDialog(false);
-      setBbqForm({
-        date: '',
-        person_count: 1,
-        full_name: '',
-        email: '',
-        phone: '',
-        special_requests: ''
-      });
-    } catch (error) {
-      toast.error('Failed to submit booking. Please try again.');
-    }
-  };
-
-  const handleRoomInquiry = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API}/inquiries/room`, roomForm);
-      toast.success('Room inquiry submitted successfully! We will contact you soon.');
-      setRoomDialog(false);
-      setRoomForm({
-        check_in: '',
-        check_out: '',
-        guest_count: 1,
-        room_type: '',
-        full_name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
-    } catch (error) {
-      toast.error('Failed to submit inquiry. Please try again.');
-    }
-  };
-
-  const handleChatSubmit = async (e) => {
-    e.preventDefault();
-    if (!chatInput.trim()) return;
-
-    const userMessage = { role: 'user', content: chatInput };
-    setChatMessages(prev => [...prev, userMessage]);
-    setChatInput('');
-    setChatLoading(true);
-
-    try {
-      const response = await axios.post(`${API}/chat/ai-assistant`, {
-        session_id: sessionId,
-        message: chatInput
-      });
-
-      const assistantMessage = { role: 'assistant', content: response.data.response };
-      setChatMessages(prev => [...prev, assistantMessage]);
-    } catch (error) {
-      toast.error('Failed to get response. Please try again.');
-    } finally {
-      setChatLoading(false);
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
     }
   };
 
@@ -202,185 +69,230 @@ const Home = () => {
     return acc;
   }, {});
 
+  const explorePlaces = [
+    { name: 'Kheerganga Trek', distance: '12 km', time: '4-5 hours', description: 'Famous hot springs and scenic trek through pine forests' },
+    { name: 'Pulga Village', distance: '3 km', time: '1 hour', description: 'Quaint village with apple orchards and waterfalls' },
+    { name: 'Tosh Village', distance: '8 km', time: '2 hours', description: 'Popular village with cafes and mountain views' },
+    { name: 'Fairy Forest', distance: '2 km', time: '45 mins', description: 'Hidden caves and perfect for camping under stars' },
+    { name: 'Manikaran', distance: '18 km', time: 'Day trip', description: 'Sacred hot springs and Gurudwara' },
+    { name: 'Kasol', distance: '16 km', time: 'Day trip', description: 'Vibrant town along Parvati River' },
+    { name: 'Bunbuni Pass', distance: '10 km', time: '5-6 hours', description: 'Moderate trek with panoramic valley views' },
+    { name: 'Sar Pass', distance: '15 km', time: 'Multi-day', description: 'Challenging high-altitude trek through snow' }
+  ];
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section
-        className="relative h-screen flex items-center justify-center overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative z-10 text-center text-white px-4 animate-fade-in">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6" data-testid="hero-title">
-            Banjara Barracks
-          </h1>
-          <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-8" data-testid="hero-subtitle">
-            Escape to the Himalayas. Experience nature at its finest in the heart of Kalgha.
-          </p>
-          <Button
-            onClick={() => setRoomDialog(true)}
-            size="lg"
-            className="bg-white text-purple-900 hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold"
-            data-testid="inquire-now-btn"
-          >
-            Inquire About Rooms
-          </Button>
+    <div className="min-h-screen bg-stone-50">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm" data-testid="main-nav">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-2xl font-bold text-stone-900" data-testid="logo">
+                Banjara Barracks
+              </button>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <button onClick={() => scrollToSection('about')} className="text-stone-700 hover:text-stone-900 transition-colors" data-testid="nav-about">
+                About
+              </button>
+              <button onClick={() => scrollToSection('explore')} className="text-stone-700 hover:text-stone-900 transition-colors" data-testid="nav-explore">
+                Explore
+              </button>
+              <button onClick={() => scrollToSection('treks')} className="text-stone-700 hover:text-stone-900 transition-colors" data-testid="nav-treks">
+                Treks
+              </button>
+              <button onClick={() => scrollToSection('menu')} className="text-stone-700 hover:text-stone-900 transition-colors" data-testid="nav-menu">
+                Menu
+              </button>
+              <button onClick={() => scrollToSection('faq')} className="text-stone-700 hover:text-stone-900 transition-colors" data-testid="nav-faq">
+                FAQ
+              </button>
+              <Link to="/admin-banjara-core" className="text-stone-700 hover:text-stone-900 transition-colors" data-testid="nav-admin">
+                Admin
+              </Link>
+              <Button
+                onClick={() => window.open(AIRBNB_URL, '_blank')}
+                className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white"
+                data-testid="nav-book-now"
+              >
+                Book Now
+              </Button>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-stone-700"
+              data-testid="mobile-menu-btn"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t" data-testid="mobile-menu">
+            <div className="px-4 py-3 space-y-3">
+              <button onClick={() => scrollToSection('about')} className="block w-full text-left text-stone-700 hover:text-stone-900">
+                About
+              </button>
+              <button onClick={() => scrollToSection('explore')} className="block w-full text-left text-stone-700 hover:text-stone-900">
+                Explore
+              </button>
+              <button onClick={() => scrollToSection('treks')} className="block w-full text-left text-stone-700 hover:text-stone-900">
+                Treks
+              </button>
+              <button onClick={() => scrollToSection('menu')} className="block w-full text-left text-stone-700 hover:text-stone-900">
+                Menu
+              </button>
+              <button onClick={() => scrollToSection('faq')} className="block w-full text-left text-stone-700 hover:text-stone-900">
+                FAQ
+              </button>
+              <Link to="/admin-banjara-core" className="block w-full text-left text-stone-700 hover:text-stone-900">
+                Admin
+              </Link>
+              <Button
+                onClick={() => window.open(AIRBNB_URL, '_blank')}
+                className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white"
+              >
+                Book Now
+              </Button>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative h-screen mt-16" data-testid="hero-section">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1718894294953-92e3f9a17559?w=1920&q=80"
+            alt="Kalga Village at sunrise"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
+        </div>
+        <div className="relative z-10 h-full flex items-center justify-center px-4">
+          <div className="text-center text-white max-w-4xl animate-fade-in">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6" data-testid="hero-title">
+              Banjara Barracks
+            </h1>
+            <p className="text-xl sm:text-2xl mb-4 font-light">
+              Where Mountains Meet Music
+            </p>
+            <p className="text-base sm:text-lg mb-8 max-w-2xl mx-auto opacity-90">
+              A cozy retreat in Kalga, Parvati Valley · Surrounded by apple orchards and snow-capped peaks
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                onClick={() => window.open(AIRBNB_URL, '_blank')}
+                className="bg-white text-stone-900 hover:bg-stone-100 text-lg px-8 py-6"
+                data-testid="hero-book-btn"
+              >
+                Book on Airbnb
+                <ExternalLink className="ml-2 w-5 h-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => scrollToSection('about')}
+                className="bg-transparent border-2 border-white text-white hover:bg-white/20 text-lg px-8 py-6"
+                data-testid="hero-learn-more"
+              >
+                Learn More
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Banjara Barracks */}
       <section className="py-20 px-4 bg-white" id="about" data-testid="about-section">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-slide-up">
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
-                Welcome to Your Mountain Retreat
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-stone-900">
+                Escape to the Himalayas
               </h2>
-              <p className="text-base text-gray-600 mb-4 leading-relaxed">
-                Banjara Barracks is a cozy homestay located right at the start of Kalgha, making it easy to find and perfectly positioned to offer breathtaking views of the Himalayas.
+              <p className="text-lg text-stone-600 mb-4 leading-relaxed">
+                Nestled at the start of Kalga village in the pristine Parvati Valley, Banjara Barracks is more than just a homestay—it's a sanctuary for souls seeking the raw beauty of nature.
               </p>
-              <p className="text-base text-gray-600 mb-4 leading-relaxed">
-                Surrounded by apple orchards and snow-capped mountains, we offer a peaceful escape from city life. Our clean, comfortable rooms and delicious food ranging from continental to local cuisine ensure you feel right at home.
+              <p className="text-lg text-stone-600 mb-4 leading-relaxed">
+                Surrounded by lush apple orchards and towering snow-capped mountains, we offer clean, comfortable rooms with breathtaking valley views. Our cuisine ranges from continental favorites to authentic local Himachali dishes, prepared with love and local ingredients.
               </p>
-              <p className="text-base text-gray-600 leading-relaxed">
-                Each season and day is unique at Kalgha, filled with amazing sunset views, cloud shows, and the natural beauty of the Himalayas.
+              <p className="text-lg text-stone-600 leading-relaxed">
+                Every season brings its own magic—stunning sunset views, mesmerizing cloud shows, blooming apple orchards in spring, and snow-covered peaks in winter. Each day is unique at Kalga.
               </p>
             </div>
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl animate-slide-up">
+            <div className="order-1 lg:order-2">
               <img
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80"
-                alt="Himalayan mountains"
-                className="w-full h-full object-cover"
+                src="https://images.unsplash.com/photo-1759593641759-93551a10e9fc?w=800&q=80"
+                alt="Parvati Valley village"
+                className="w-full h-96 object-cover rounded-2xl shadow-2xl"
               />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Services Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50" id="services" data-testid="services-section">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 text-gray-900">
-            Our Services
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur" data-testid="service-treks">
-              <CardHeader>
-                <Mountain className="w-12 h-12 text-purple-600 mb-4" />
-                <CardTitle>Guided Treks</CardTitle>
-                <CardDescription>₹5,000 per person</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  Fully supported treks to stunning locations around Kalgha.
-                </p>
-                <Button
-                  onClick={() => setTrekDialog(true)}
-                  className="w-full rounded-full bg-purple-600 hover:bg-purple-700"
-                  data-testid="book-trek-btn"
-                >
-                  Book a Trek
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur" data-testid="service-bbq">
-              <CardHeader>
-                <Sparkles className="w-12 h-12 text-orange-600 mb-4" />
-                <CardTitle>BBQ Nights</CardTitle>
-                <CardDescription>Under the stars</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  Enjoy delicious barbecue evenings with stunning mountain views.
-                </p>
-                <Button
-                  onClick={() => setBbqDialog(true)}
-                  className="w-full rounded-full bg-orange-600 hover:bg-orange-700"
-                  data-testid="book-bbq-btn"
-                >
-                  Book BBQ Night
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur" data-testid="service-day-walks">
-              <CardHeader>
-                <Trees className="w-12 h-12 text-green-600 mb-4" />
-                <CardTitle>Day Walks</CardTitle>
-                <CardDescription>Explore nearby spots</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  Guided day walks and small picnics to scenic locations.
-                </p>
-                <Button
-                  className="w-full rounded-full bg-green-600 hover:bg-green-700"
-                  data-testid="contact-day-walks-btn"
-                >
-                  Contact Us
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur" data-testid="service-rooms">
-              <CardHeader>
-                <HomeIcon className="w-12 h-12 text-blue-600 mb-4" />
-                <CardTitle>Cozy Rooms</CardTitle>
-                <CardDescription>Valley views</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  Clean, comfortable rooms with breathtaking valley views.
-                </p>
-                <Button
-                  onClick={() => setRoomDialog(true)}
-                  className="w-full rounded-full bg-blue-600 hover:bg-blue-700"
-                  data-testid="inquire-rooms-btn"
-                >
-                  Inquire Now
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Founders Story */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 lg:p-12" data-testid="founders-section">
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1734625621841-b79eceba24a1?w=800&q=80"
+                alt="Apple orchards in Himachal Pradesh"
+                className="w-full h-96 object-cover rounded-xl shadow-xl"
+              />
+            </div>
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <Music className="w-8 h-8 text-emerald-600" />
+                <h3 className="text-3xl font-bold text-stone-900">The Brothers Behind Banjara</h3>
+              </div>
+              <p className="text-lg text-stone-700 mb-4 leading-relaxed">
+                <span className="font-semibold">Sadhya Sharma</span> and <span className="font-semibold">Sankalp Sharma</span>—two brothers who fell deeply in love with the lifestyle this valley had to offer.
+              </p>
+              <p className="text-lg text-stone-700 mb-4 leading-relaxed">
+                They found in Kalga what many spend their whole lives searching for: nature in its truest, rawest form. A place where the mountains speak, the rivers sing, and life moves at its own gentle pace.
+              </p>
+              <p className="text-lg text-stone-700 mb-4 leading-relaxed">
+                Passionate about music and creating unique sounds, Sankalp is a music producer who crafts interesting melodies when inspiration strikes. The brothers believe in enjoying life as it is—simple, authentic, and deeply connected to nature.
+              </p>
+              <div className="flex items-center gap-2 text-emerald-700">
+                <Heart className="w-5 h-5" />
+                <p className="text-base italic">"Creating spaces where travelers can connect with nature and themselves"</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Treks Section */}
-      <section className="py-20 px-4 bg-white" id="treks" data-testid="treks-section">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 text-gray-900">
-            Available Treks
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {treks.map((trek, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow" data-testid={`trek-${index}`}>
+      {/* Explore Parvati Valley */}
+      <section className="py-20 px-4 bg-gradient-to-b from-stone-100 to-stone-50" id="explore" data-testid="explore-section">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <MapPin className="w-12 h-12 text-teal-600 mx-auto mb-4" />
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-stone-900">
+              Explore Parvati Valley
+            </h2>
+            <p className="text-lg text-stone-600 max-w-2xl mx-auto">
+              Kalga is your gateway to discovering the hidden gems of Parvati Valley in Kullu District
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {explorePlaces.map((place, index) => (
+              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 bg-white" data-testid={`explore-place-${index}`}>
                 <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    {trek.name}
-                    <span className="text-sm font-normal text-purple-600 bg-purple-100 px-3 py-1 rounded-full">
-                      ₹5,000/person
-                    </span>
-                  </CardTitle>
+                  <CardTitle className="text-xl">{place.name}</CardTitle>
+                  <CardDescription className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4" />
+                    {place.distance} · {place.time}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>Duration: {trek.duration}</span>
-                    <span className={`font-semibold ${
-                      trek.difficulty === 'Easy' ? 'text-green-600' :
-                      trek.difficulty === 'Moderate' ? 'text-yellow-600' :
-                      'text-red-600'
-                    }`}>
-                      {trek.difficulty}
-                    </span>
-                  </div>
+                  <p className="text-sm text-stone-600">{place.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -388,36 +300,123 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Treks Section */}
+      <section className="py-20 px-4 bg-white" id="treks" data-testid="treks-section">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <Mountain className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-stone-900">
+              Guided Treks
+            </h2>
+            <p className="text-lg text-stone-600 max-w-2xl mx-auto">
+              Fully supported treks organized by our experienced team at ₹5,000 per person
+            </p>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src="https://images.unsplash.com/photo-1611875371292-a2bbee7c496b?w=800&q=80"
+                alt="Trekking in Himalayas"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div className="p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Experience the Trails</h3>
+                  <p className="text-sm opacity-90">Through pine forests, past waterfalls, to stunning viewpoints</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src="https://images.unsplash.com/photo-1638801428412-cadc850fbd8e?w=800&q=80"
+                alt="Snow-capped Himalayan peaks"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div className="p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Reach New Heights</h3>
+                  <p className="text-sm opacity-90">Witness breathtaking panoramic views of the valley</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { name: 'Bhunbhuni Trek', duration: '4-5 hours', difficulty: 'Moderate' },
+              { name: 'Bhandak Trek', duration: '5-6 hours', difficulty: 'Moderate' },
+              { name: 'Bishkeri Trek', duration: '6-7 hours', difficulty: 'Challenging' },
+              { name: 'Tevla Trek', duration: '3-4 hours', difficulty: 'Easy' }
+            ].map((trek, index) => (
+              <Card key={index} className="border-2 border-emerald-100 hover:border-emerald-300 transition-colors" data-testid={`trek-${index}`}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{trek.name}</CardTitle>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-stone-600">{trek.duration}</span>
+                    <span className={`font-semibold px-2 py-1 rounded text-xs ${
+                      trek.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                      trek.difficulty === 'Moderate' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {trek.difficulty}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-emerald-600 mb-2">₹5,000</p>
+                    <p className="text-xs text-stone-500">per person</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button
+              size="lg"
+              onClick={() => window.open(AIRBNB_URL, '_blank')}
+              className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-12 py-6"
+              data-testid="book-trek-btn"
+            >
+              Book Your Trek on Airbnb
+              <ExternalLink className="ml-2 w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Menu Section */}
       {Object.keys(groupedMenu).length > 0 && (
-        <section className="py-20 px-4 bg-gradient-to-br from-orange-50 to-yellow-50" id="menu" data-testid="menu-section">
-          <div className="max-w-6xl mx-auto">
+        <section className="py-20 px-4 bg-gradient-to-br from-amber-50 to-orange-50" id="menu" data-testid="menu-section">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
-              <Utensils className="w-16 h-16 text-orange-600 mx-auto mb-4" />
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900">
+              <Utensils className="w-12 h-12 text-orange-600 mx-auto mb-4" />
+              <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-stone-900">
                 Our Menu
               </h2>
-              <p className="text-base text-gray-600 mt-4">
-                From continental to local cuisine, prepared with love
+              <p className="text-lg text-stone-600">
+                From continental favorites to authentic Himachali cuisine, prepared with love
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {Object.entries(groupedMenu).map(([category, items]) => (
-                <Card key={category} className="border-0 shadow-lg" data-testid={`menu-category-${category}`}>
-                  <CardHeader className="bg-orange-100">
+                <Card key={category} className="border-0 shadow-xl overflow-hidden" data-testid={`menu-category-${category}`}>
+                  <CardHeader className="bg-gradient-to-r from-orange-500 to-amber-500 text-white">
                     <CardTitle className="text-2xl">{category}</CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-6">
+                  <CardContent className="pt-6 bg-white">
                     {items.filter(item => item.available).map((item) => (
-                      <div key={item.id} className="flex justify-between items-start mb-4" data-testid={`menu-item-${item.id}`}>
-                        <div>
-                          <p className="font-semibold text-gray-900">{item.name}</p>
+                      <div key={item.id} className="flex justify-between items-start mb-4 pb-4 border-b last:border-0" data-testid={`menu-item-${item.id}`}>
+                        <div className="flex-1">
+                          <p className="font-semibold text-stone-900 text-base">{item.name}</p>
                           {item.description && (
-                            <p className="text-xs text-gray-600">{item.description}</p>
+                            <p className="text-sm text-stone-500 mt-1">{item.description}</p>
                           )}
                         </div>
                         {item.price && (
-                          <span className="text-orange-600 font-semibold">₹{item.price}</span>
+                          <span className="text-orange-600 font-bold text-lg ml-4">₹{item.price}</span>
                         )}
                       </div>
                     ))}
@@ -429,45 +428,60 @@ const Home = () => {
         </section>
       )}
 
-      {/* FAQ Section with AI Assistant */}
-      <section className="py-20 px-4 bg-white" id="faq" data-testid="faq-section">
+      {/* Image Gallery */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-12 text-center text-stone-900">
+            Experience Kalga
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="md:col-span-2 h-80">
+              <img
+                src="https://images.unsplash.com/photo-1544442069-97dded965a9f?w=1200&q=80"
+                alt="Himalayan glacial lake"
+                className="w-full h-full object-cover rounded-xl shadow-lg"
+              />
+            </div>
+            <div className="h-80">
+              <img
+                src="https://images.unsplash.com/photo-1666908954730-ad4852009970?w=600&q=80"
+                alt="Apple orchard"
+                className="w-full h-full object-cover rounded-xl shadow-lg"
+              />
+            </div>
+            <div className="h-80">
+              <img
+                src="https://images.unsplash.com/photo-1738482223848-008ac3110276?w=600&q=80"
+                alt="Traditional village with prayer flags"
+                className="w-full h-full object-cover rounded-xl shadow-lg"
+              />
+            </div>
+            <div className="md:col-span-2 h-80">
+              <img
+                src="https://images.unsplash.com/photo-1481340101608-cb5f45cb1f99?w=1200&q=80"
+                alt="Trekker on mountain peak"
+                className="w-full h-full object-cover rounded-xl shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 bg-stone-50" id="faq" data-testid="faq-section">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 text-gray-900">
+          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 text-stone-900">
             Frequently Asked Questions
           </h2>
           
-          {/* AI Trip Planner */}
-          <Card className="mb-8 border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50" data-testid="ai-assistant-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MessageCircle className="w-6 h-6 text-purple-600" />
-                AI Trip Planning Assistant
-              </CardTitle>
-              <CardDescription>
-                Get personalized trip recommendations and costing estimates
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                onClick={() => setChatOpen(true)}
-                className="w-full rounded-full bg-purple-600 hover:bg-purple-700"
-                data-testid="open-ai-chat-btn"
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Start Planning Your Trip
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Regular FAQs */}
           {faqs.length > 0 && (
             <Accordion type="single" collapsible className="space-y-4" data-testid="faq-accordion">
               {faqs.map((faq) => (
-                <AccordionItem key={faq.id} value={faq.id} className="border rounded-lg px-4 bg-gray-50" data-testid={`faq-item-${faq.id}`}>
-                  <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                <AccordionItem key={faq.id} value={faq.id} className="border-2 border-stone-200 rounded-xl px-6 bg-white" data-testid={`faq-item-${faq.id}`}>
+                  <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline hover:text-emerald-600">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm text-gray-600">
+                  <AccordionContent className="text-base text-stone-600 leading-relaxed">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -477,20 +491,20 @@ const Home = () => {
         </div>
       </section>
 
-      {/* House Rules Section */}
+      {/* House Rules */}
       {rules.length > 0 && (
-        <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50" id="rules" data-testid="rules-section">
+        <section className="py-20 px-4 bg-white" id="rules" data-testid="rules-section">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 text-gray-900">
+            <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 text-stone-900">
               House Rules
             </h2>
-            <Card className="border-0 shadow-lg">
-              <CardContent className="pt-6">
-                <ul className="space-y-4">
+            <Card className="border-2 border-stone-200 shadow-xl">
+              <CardContent className="pt-8">
+                <ul className="space-y-5">
                   {rules.map((rule, index) => (
                     <li key={rule.id} className="flex items-start" data-testid={`rule-${index}`}>
-                      <span className="text-purple-600 mr-3 text-xl">•</span>
-                      <span className="text-base text-gray-700">{rule.rule}</span>
+                      <span className="text-emerald-600 mr-4 text-2xl font-bold">{index + 1}.</span>
+                      <span className="text-lg text-stone-700 leading-relaxed">{rule.rule}</span>
                     </li>
                   ))}
                 </ul>
@@ -500,381 +514,73 @@ const Home = () => {
         </section>
       )}
 
-      {/* Contact Section */}
-      <section className="py-20 px-4 bg-white" id="contact" data-testid="contact-section">
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-8 text-gray-900">
-            Get in Touch
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            Ready for Your Himalayan Adventure?
           </h2>
-          <p className="text-base text-gray-600 mb-8">
-            Have questions? We're here to help make your Himalayan experience unforgettable.
+          <p className="text-xl mb-8 opacity-90">
+            Book your stay at Banjara Barracks and experience the magic of Parvati Valley
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Phone className="w-5 h-5 text-purple-600" />
-              <span className="text-base">+91 XXXXX XXXXX</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-purple-600" />
-              <span className="text-base">info@banjarabarracks.com</span>
-            </div>
-          </div>
+          <Button
+            size="lg"
+            onClick={() => window.open(AIRBNB_URL, '_blank')}
+            className="bg-white text-emerald-700 hover:bg-stone-100 text-xl px-12 py-7 shadow-xl"
+            data-testid="cta-book-btn"
+          >
+            Book Now on Airbnb
+            <ExternalLink className="ml-3 w-6 h-6" />
+          </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-sm">
-            © 2025 Banjara Barracks. All rights reserved.
-          </p>
-          <p className="text-xs text-gray-400 mt-2">
-            Kalgha, Himachal Pradesh
-          </p>
+      <footer className="bg-stone-900 text-white py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Banjara Barracks</h3>
+              <p className="text-stone-400 text-sm leading-relaxed">
+                A cozy homestay in Kalga, Parvati Valley, where mountains meet music.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <div className="space-y-2 text-sm">
+                <button onClick={() => scrollToSection('about')} className="block text-stone-400 hover:text-white transition-colors">
+                  About Us
+                </button>
+                <button onClick={() => scrollToSection('treks')} className="block text-stone-400 hover:text-white transition-colors">
+                  Treks
+                </button>
+                <button onClick={() => scrollToSection('menu')} className="block text-stone-400 hover:text-white transition-colors">
+                  Menu
+                </button>
+                <Link to="/admin-banjara-core" className="block text-stone-400 hover:text-white transition-colors">
+                  Admin Login
+                </Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact</h4>
+              <div className="space-y-2 text-sm text-stone-400">
+                <p>Kalga Village</p>
+                <p>Parvati Valley, Kullu District</p>
+                <p>Himachal Pradesh, India</p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-stone-800 pt-8 text-center">
+            <p className="text-stone-500 text-sm">
+              © 2025 Banjara Barracks. Crafted with <Heart className="inline w-4 h-4 text-red-500" /> in the Himalayas.
+            </p>
+            <p className="text-stone-600 text-xs mt-2">
+              Run by Sadhya & Sankalp Sharma
+            </p>
+          </div>
         </div>
       </footer>
-
-      {/* Trek Booking Dialog */}
-      <Dialog open={trekDialog} onOpenChange={setTrekDialog}>
-        <DialogContent className="max-w-md" data-testid="trek-booking-dialog">
-          <DialogHeader>
-            <DialogTitle>Book a Trek</DialogTitle>
-            <DialogDescription>
-              Fill in your details to book a trek. Cost: ₹5,000 per person
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleTrekBooking} className="space-y-4">
-            <div>
-              <Label htmlFor="trek-name">Select Trek</Label>
-              <Select
-                value={trekForm.trek_name}
-                onValueChange={(value) => setTrekForm({ ...trekForm, trek_name: value })}
-                required
-              >
-                <SelectTrigger data-testid="trek-select">
-                  <SelectValue placeholder="Choose a trek" />
-                </SelectTrigger>
-                <SelectContent>
-                  {treks.map((trek) => (
-                    <SelectItem key={trek.name} value={trek.name}>
-                      {trek.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="trek-person-count">Number of People</Label>
-              <Input
-                id="trek-person-count"
-                type="number"
-                min="1"
-                value={trekForm.person_count}
-                onChange={(e) => setTrekForm({ ...trekForm, person_count: parseInt(e.target.value) })}
-                required
-                data-testid="trek-person-count"
-              />
-            </div>
-            <div>
-              <Label htmlFor="trek-date">Preferred Date</Label>
-              <Input
-                id="trek-date"
-                type="date"
-                value={trekForm.date}
-                onChange={(e) => setTrekForm({ ...trekForm, date: e.target.value })}
-                required
-                data-testid="trek-date"
-              />
-            </div>
-            <div>
-              <Label htmlFor="trek-name-input">Full Name</Label>
-              <Input
-                id="trek-name-input"
-                value={trekForm.full_name}
-                onChange={(e) => setTrekForm({ ...trekForm, full_name: e.target.value })}
-                required
-                data-testid="trek-full-name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="trek-email">Email</Label>
-              <Input
-                id="trek-email"
-                type="email"
-                value={trekForm.email}
-                onChange={(e) => setTrekForm({ ...trekForm, email: e.target.value })}
-                required
-                data-testid="trek-email"
-              />
-            </div>
-            <div>
-              <Label htmlFor="trek-phone">Phone</Label>
-              <Input
-                id="trek-phone"
-                type="tel"
-                value={trekForm.phone}
-                onChange={(e) => setTrekForm({ ...trekForm, phone: e.target.value })}
-                required
-                data-testid="trek-phone"
-              />
-            </div>
-            <div className="bg-purple-50 p-3 rounded">
-              <p className="text-sm font-semibold">Total Cost: ₹{5000 * trekForm.person_count}</p>
-            </div>
-            <Button type="submit" className="w-full rounded-full" data-testid="submit-trek-booking">
-              Submit Booking
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* BBQ Booking Dialog */}
-      <Dialog open={bbqDialog} onOpenChange={setBbqDialog}>
-        <DialogContent className="max-w-md" data-testid="bbq-booking-dialog">
-          <DialogHeader>
-            <DialogTitle>Book BBQ Night</DialogTitle>
-            <DialogDescription>
-              Reserve a memorable barbecue evening under the stars
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleBBQBooking} className="space-y-4">
-            <div>
-              <Label htmlFor="bbq-date">Preferred Date</Label>
-              <Input
-                id="bbq-date"
-                type="date"
-                value={bbqForm.date}
-                onChange={(e) => setBbqForm({ ...bbqForm, date: e.target.value })}
-                required
-                data-testid="bbq-date"
-              />
-            </div>
-            <div>
-              <Label htmlFor="bbq-person-count">Number of People</Label>
-              <Input
-                id="bbq-person-count"
-                type="number"
-                min="1"
-                value={bbqForm.person_count}
-                onChange={(e) => setBbqForm({ ...bbqForm, person_count: parseInt(e.target.value) })}
-                required
-                data-testid="bbq-person-count"
-              />
-            </div>
-            <div>
-              <Label htmlFor="bbq-name">Full Name</Label>
-              <Input
-                id="bbq-name"
-                value={bbqForm.full_name}
-                onChange={(e) => setBbqForm({ ...bbqForm, full_name: e.target.value })}
-                required
-                data-testid="bbq-full-name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="bbq-email">Email</Label>
-              <Input
-                id="bbq-email"
-                type="email"
-                value={bbqForm.email}
-                onChange={(e) => setBbqForm({ ...bbqForm, email: e.target.value })}
-                required
-                data-testid="bbq-email"
-              />
-            </div>
-            <div>
-              <Label htmlFor="bbq-phone">Phone</Label>
-              <Input
-                id="bbq-phone"
-                type="tel"
-                value={bbqForm.phone}
-                onChange={(e) => setBbqForm({ ...bbqForm, phone: e.target.value })}
-                required
-                data-testid="bbq-phone"
-              />
-            </div>
-            <div>
-              <Label htmlFor="bbq-requests">Special Requests (Optional)</Label>
-              <Textarea
-                id="bbq-requests"
-                value={bbqForm.special_requests}
-                onChange={(e) => setBbqForm({ ...bbqForm, special_requests: e.target.value })}
-                data-testid="bbq-special-requests"
-              />
-            </div>
-            <Button type="submit" className="w-full rounded-full" data-testid="submit-bbq-booking">
-              Submit Booking
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* Room Inquiry Dialog */}
-      <Dialog open={roomDialog} onOpenChange={setRoomDialog}>
-        <DialogContent className="max-w-md" data-testid="room-inquiry-dialog">
-          <DialogHeader>
-            <DialogTitle>Room Inquiry</DialogTitle>
-            <DialogDescription>
-              Let us know your requirements and we'll get back to you
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleRoomInquiry} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="check-in">Check-in</Label>
-                <Input
-                  id="check-in"
-                  type="date"
-                  value={roomForm.check_in}
-                  onChange={(e) => setRoomForm({ ...roomForm, check_in: e.target.value })}
-                  required
-                  data-testid="room-check-in"
-                />
-              </div>
-              <div>
-                <Label htmlFor="check-out">Check-out</Label>
-                <Input
-                  id="check-out"
-                  type="date"
-                  value={roomForm.check_out}
-                  onChange={(e) => setRoomForm({ ...roomForm, check_out: e.target.value })}
-                  required
-                  data-testid="room-check-out"
-                />
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="guest-count">Number of Guests</Label>
-              <Input
-                id="guest-count"
-                type="number"
-                min="1"
-                value={roomForm.guest_count}
-                onChange={(e) => setRoomForm({ ...roomForm, guest_count: parseInt(e.target.value) })}
-                required
-                data-testid="room-guest-count"
-              />
-            </div>
-            <div>
-              <Label htmlFor="room-type">Room Preference (Optional)</Label>
-              <Input
-                id="room-type"
-                placeholder="e.g., Valley view, Mountain view"
-                value={roomForm.room_type}
-                onChange={(e) => setRoomForm({ ...roomForm, room_type: e.target.value })}
-                data-testid="room-type"
-              />
-            </div>
-            <div>
-              <Label htmlFor="room-name">Full Name</Label>
-              <Input
-                id="room-name"
-                value={roomForm.full_name}
-                onChange={(e) => setRoomForm({ ...roomForm, full_name: e.target.value })}
-                required
-                data-testid="room-full-name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="room-email">Email</Label>
-              <Input
-                id="room-email"
-                type="email"
-                value={roomForm.email}
-                onChange={(e) => setRoomForm({ ...roomForm, email: e.target.value })}
-                required
-                data-testid="room-email"
-              />
-            </div>
-            <div>
-              <Label htmlFor="room-phone">Phone</Label>
-              <Input
-                id="room-phone"
-                type="tel"
-                value={roomForm.phone}
-                onChange={(e) => setRoomForm({ ...roomForm, phone: e.target.value })}
-                required
-                data-testid="room-phone"
-              />
-            </div>
-            <div>
-              <Label htmlFor="room-message">Message (Optional)</Label>
-              <Textarea
-                id="room-message"
-                value={roomForm.message}
-                onChange={(e) => setRoomForm({ ...roomForm, message: e.target.value })}
-                data-testid="room-message"
-              />
-            </div>
-            <Button type="submit" className="w-full rounded-full" data-testid="submit-room-inquiry">
-              Submit Inquiry
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* AI Chat Dialog */}
-      <Dialog open={chatOpen} onOpenChange={setChatOpen}>
-        <DialogContent className="max-w-2xl h-[600px] flex flex-col" data-testid="ai-chat-dialog">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <MessageCircle className="w-5 h-5 text-purple-600" />
-              AI Trip Planning Assistant
-            </DialogTitle>
-            <DialogDescription>
-              Ask about trip duration, activities, weather, and get personalized recommendations
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex-1 overflow-y-auto space-y-4 p-4 bg-gray-50 rounded-lg" data-testid="chat-messages">
-            {chatMessages.length === 0 && (
-              <div className="text-center text-gray-500 mt-8">
-                <MessageCircle className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <p className="text-sm">Start a conversation to plan your perfect Himalayan getaway!</p>
-              </div>
-            )}
-            {chatMessages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                data-testid={`chat-message-${index}`}
-              >
-                <div
-                  className={`max-w-[80%] p-3 rounded-lg ${
-                    msg.role === 'user'
-                      ? 'bg-purple-600 text-white rounded-br-none'
-                      : 'bg-white text-gray-900 rounded-bl-none shadow'
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-                </div>
-              </div>
-            ))}
-            {chatLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white p-3 rounded-lg shadow">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <form onSubmit={handleChatSubmit} className="flex gap-2">
-            <Input
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Ask about trip planning, weather, activities..."
-              disabled={chatLoading}
-              data-testid="chat-input"
-            />
-            <Button type="submit" disabled={chatLoading || !chatInput.trim()} data-testid="send-chat-btn">
-              <Send className="w-4 h-4" />
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
