@@ -477,6 +477,33 @@ const Home = () => {
             Frequently Asked Questions
           </h2>
           
+          {/* AI Trip Planner */}
+          <Card className="mb-8 border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 shadow-xl" data-testid="ai-assistant-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-2xl">
+                <MessageCircle className="w-7 h-7 text-emerald-600" />
+                AI Trip Planning Assistant
+              </CardTitle>
+              <CardDescription className="text-base">
+                Get personalized recommendations for your Parvati Valley adventure. Our AI assistant helps you plan the perfect trip based on your preferences.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                onClick={() => setChatOpen(true)}
+                size="lg"
+                className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full text-lg py-6"
+                data-testid="open-ai-chat-btn"
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Start Planning Your Trip with AI
+              </Button>
+              <p className="text-sm text-stone-600 text-center mt-4">
+                Ask about trip duration, activities, weather, trekking routes, and get instant recommendations
+              </p>
+            </CardContent>
+          </Card>
+
           {faqs.length > 0 && (
             <Accordion type="single" collapsible className="space-y-4" data-testid="faq-accordion">
               {faqs.map((faq) => (
@@ -493,6 +520,91 @@ const Home = () => {
           )}
         </div>
       </section>
+
+      {/* AI Chat Dialog */}
+      <Dialog open={chatOpen} onOpenChange={setChatOpen}>
+        <DialogContent className="max-w-2xl h-[600px] flex flex-col" data-testid="ai-chat-dialog">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-2xl">
+              <MessageCircle className="w-6 h-6 text-emerald-600" />
+              AI Trip Planning Assistant
+            </DialogTitle>
+            <DialogDescription className="text-base">
+              Ask about your trip duration, activities, weather preferences, trekking routes, and get personalized recommendations with tentative costing
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex-1 overflow-y-auto space-y-4 p-4 bg-stone-50 rounded-lg" data-testid="chat-messages">
+            {chatMessages.length === 0 && (
+              <div className="text-center text-stone-500 mt-8">
+                <MessageCircle className="w-16 h-16 mx-auto mb-4 text-emerald-400" />
+                <p className="text-base font-semibold mb-2">Welcome to Banjara Barracks Trip Planner!</p>
+                <p className="text-sm text-stone-600 max-w-md mx-auto">
+                  I can help you plan your perfect Parvati Valley getaway. Ask me about:
+                </p>
+                <div className="grid grid-cols-2 gap-3 mt-4 max-w-lg mx-auto">
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-left">
+                    <p className="text-xs font-semibold text-emerald-700">Trip Duration</p>
+                    <p className="text-xs text-stone-600">How many days to stay</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-left">
+                    <p className="text-xs font-semibold text-emerald-700">Weather & Season</p>
+                    <p className="text-xs text-stone-600">Best time to visit</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-left">
+                    <p className="text-xs font-semibold text-emerald-700">Trekking Routes</p>
+                    <p className="text-xs text-stone-600">Recommended treks</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-left">
+                    <p className="text-xs font-semibold text-emerald-700">Budget Planning</p>
+                    <p className="text-xs text-stone-600">Tentative costs</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {chatMessages.map((msg, index) => (
+              <div
+                key={index}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                data-testid={`chat-message-${index}`}
+              >
+                <div
+                  className={`max-w-[80%] p-4 rounded-xl ${
+                    msg.role === 'user'
+                      ? 'bg-emerald-600 text-white rounded-br-none'
+                      : 'bg-white text-stone-900 rounded-bl-none shadow-md border border-stone-200'
+                  }`}
+                >
+                  <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                </div>
+              </div>
+            ))}
+            {chatLoading && (
+              <div className="flex justify-start">
+                <div className="bg-white p-4 rounded-xl shadow-md border border-stone-200">
+                  <div className="flex space-x-2">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <form onSubmit={handleChatSubmit} className="flex gap-2">
+            <Input
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+              placeholder="e.g., I'm planning a 4-day trip in May, what should I do?"
+              disabled={chatLoading}
+              className="flex-1"
+              data-testid="chat-input"
+            />
+            <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="bg-emerald-600 hover:bg-emerald-700" data-testid="send-chat-btn">
+              <Send className="w-4 h-4" />
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* House Rules */}
       {rules.length > 0 && (
