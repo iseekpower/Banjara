@@ -241,8 +241,8 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 lg:p-12" data-testid="founders-section">
             <div>
               <img
-                src="https://images.unsplash.com/photo-1734625621841-b79eceba24a1?w=800&q=80"
-                alt="Apple orchards in Himachal Pradesh"
+                src="https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/e5e0dac2-198d-46a4-bc63-f11ff0d19da3.jpeg?im_w=1200"
+                alt="Valley views from Banjara Barracks"
                 className="w-full h-96 object-cover rounded-xl shadow-xl"
               />
             </div>
