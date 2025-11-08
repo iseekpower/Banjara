@@ -553,15 +553,15 @@ class AnnouncementCreate(BaseModel):
 
 
 # Food Ordering Endpoints
-@api_router.get(\"/menu/food\", response_model=List[dict])
+@api_router.get("/menu/food", response_model=List[dict])
 async def get_food_menu():
-    \"\"\"Get complete food menu from Hemu's kitchen\"\"\"
-    items = await db.menu_items.find({}, {\"_id\": 0}).to_list(1000)
+    """Get complete food menu from Hemu's kitchen"""
+    items = await db.menu_items.find({}, {"_id": 0}).to_list(1000)
     return items
 
-@api_router.post(\"/orders/food\", response_model=FoodOrder)
+@api_router.post("/orders/food", response_model=FoodOrder)
 async def create_food_order(order: FoodOrderCreate):
-    \"\"\"Create new food order\"\"\"
+    """Create new food order"""
     order_dict = order.model_dump()
     order_obj = FoodOrder(**order_dict)
     
