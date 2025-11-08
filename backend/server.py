@@ -620,25 +620,25 @@ async def get_subscriptions():
     
     return subs
 
-@api_router.put(\"/subscriptions/{sub_id}/status\")
+@api_router.put("/subscriptions/{sub_id}/status")
 async def update_subscription_status(sub_id: str, status: str):
-    \"\"\"Update subscription status\"\"\"
+    """Update subscription status"""
     result = await db.subscriptions.update_one(
-        {\"id\": sub_id},
-        {\"$set\": {\"status\": status}}
+        {"id": sub_id},
+        {"$set": {"status": status}}
     )
     
     if result.modified_count == 0:
-        raise HTTPException(status_code=404, detail=\"Subscription not found\")
+        raise HTTPException(status_code=404, detail="Subscription not found")
     
-    return {\"message\": \"Subscription status updated\", \"status\": status}
+    return {"message": "Subscription status updated", "status": status}
 
 
 # Announcements Endpoints
-@api_router.get(\"/announcements\", response_model=List[Announcement])
+@api_router.get("/announcements", response_model=List[Announcement])
 async def get_announcements():
-    \"\"\"Get all active announcements\"\"\"
-    announcements = await db.announcements.find({\"active\": True}, {\"_id\": 0}).sort(\"created_at\", -1).to_list(1000)
+    """Get all active announcements"""
+    announcements = await db.announcements.find({"active": True}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     
     for announcement in announcements:
         if isinstance(announcement['created_at'], str):
