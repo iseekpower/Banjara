@@ -262,6 +262,68 @@ const AdminDashboard = () => {
     setRuleDialog(true);
   };
 
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await axios.put(`${API}/orders/food/${orderId}/status?status=${newStatus}`);
+      toast.success(`Order status updated to ${newStatus}`);
+      fetchAllData();
+    } catch (error) {
+      toast.error('Failed to update order status');
+    }
+  };
+
+  const handleUpdateSubscriptionStatus = async (subId, newStatus) => {
+    try {
+      await axios.put(`${API}/subscriptions/${subId}/status?status=${newStatus}`);
+      toast.success(`Subscription status updated to ${newStatus}`);
+      fetchAllData();
+    } catch (error) {
+      toast.error('Failed to update subscription status');
+    }
+  };
+
+  const handleCreateAnnouncement = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`${API}/announcements`, announcementForm);
+      toast.success('Announcement created successfully!');
+      setAnnouncementDialog(false);
+      setAnnouncementForm({
+        title: '',
+        description: '',
+        event_type: 'other',
+        event_date: '',
+        active: true
+      });
+      fetchAllData();
+    } catch (error) {
+      toast.error('Failed to create announcement');
+    }
+  };
+
+  const handleDeleteAnnouncement = async (announcementId) => {
+    if (window.confirm('Are you sure you want to delete this announcement?')) {
+      try {
+        await axios.delete(`${API}/announcements/${announcementId}`);
+        toast.success('Announcement deleted');
+        fetchAllData();
+      } catch (error) {
+        toast.error('Failed to delete announcement');
+      }
+    }
+  };
+
+  const getOrderStatusColor = (status) => {
+    switch(status) {
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'preparing': return 'bg-blue-100 text-blue-800';
+      case 'ready': return 'bg-green-100 text-green-800';
+      case 'delivered': return 'bg-gray-100 text-gray-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div
