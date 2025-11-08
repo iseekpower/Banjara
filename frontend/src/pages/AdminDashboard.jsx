@@ -379,7 +379,19 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6" data-testid="admin-tabs">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9" data-testid="admin-tabs">
+            <TabsTrigger value="food-orders" data-testid="food-orders-tab">
+              <ChefHat className="w-4 h-4 mr-2" />
+              Food Orders
+            </TabsTrigger>
+            <TabsTrigger value="subscriptions" data-testid="subscriptions-tab">
+              <Package className="w-4 h-4 mr-2" />
+              Subscriptions
+            </TabsTrigger>
+            <TabsTrigger value="announcements" data-testid="announcements-tab">
+              <Bell className="w-4 h-4 mr-2" />
+              Events
+            </TabsTrigger>
             <TabsTrigger value="bookings" data-testid="bookings-tab">
               <Calendar className="w-4 h-4 mr-2" />
               Bookings
@@ -405,6 +417,205 @@ const AdminDashboard = () => {
               Rules
             </TabsTrigger>
           </TabsList>
+
+          {/* Food Orders */}
+          <TabsContent value="food-orders" className="space-y-4">
+            <Card data-testid="food-orders-card">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Hemu's Food Orders</CardTitle>
+                    <CardDescription>Manage incoming orders and update preparation status</CardDescription>
+                  </div>
+                  <Badge className="bg-emerald-500">{foodOrders.length} Total Orders</Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Order ID</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Customer</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Location</TableHead>
+                        <TableHead>Items</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Time</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {foodOrders.map((order) => (
+                        <TableRow key={order.id} data-testid={`food-order-${order.id}`}>
+                          <TableCell className="font-mono text-xs">{order.id.slice(0, 8)}...</TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{order.order_type}</Badge>
+                          </TableCell>
+                          <TableCell className="font-semibold">{order.customer_name}</TableCell>
+                          <TableCell>{order.phone}</TableCell>
+                          <TableCell className="text-xs">
+                            {order.order_type === 'guest' ? `Room ${order.room_number}` : order.delivery_address}
+                          </TableCell>
+                          <TableCell>
+                            <div className="text-xs max-w-xs">
+                              {order.items.map((item, idx) => (
+                                <div key={idx}>{item.name} x{item.quantity}</div>
+                              ))}
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-bold">₹{order.total_amount}</TableCell>
+                          <TableCell className="text-xs">{order.estimated_time} min</TableCell>
+                          <TableCell>
+                            <Badge className={getOrderStatusColor(order.status)}>
+                              {order.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <select
+                              className="text-xs border rounded p-1"
+                              value={order.status}
+                              onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
+                              data-testid={`order-status-${order.id}`}
+                            >
+                              <option value="pending">Pending</option>
+                              <option value="preparing">Preparing</option>
+                              <option value="ready">Ready</option>
+                              <option value="delivered">Delivered</option>
+                              <option value="cancelled">Cancelled</option>
+                            </select>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {foodOrders.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={10} className="text-center text-gray-500">
+                            No food orders yet
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Subscriptions */}
+          <TabsContent value="subscriptions" className="space-y-4">
+            <Card data-testid="subscriptions-card">
+              <CardHeader>
+                <CardTitle>Meal Subscriptions</CardTitle>
+                <CardDescription>Manage recurring meal subscriptions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Customer</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Address</TableHead>
+                        <TableHead>Plan</TableHead>
+                        <TableHead>Meals</TableHead>
+                        <TableHead>Start Date</TableHead>
+                        <TableHead>Price/Day</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {subscriptions.map((sub) => (
+                        <TableRow key={sub.id}>
+                          <TableCell className="font-semibold">{sub.customer_name}</TableCell>
+                          <TableCell>{sub.phone}</TableCell>
+                          <TableCell className="text-xs max-w-xs">{sub.address}</TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{sub.plan_type}</Badge>
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {sub.meal_preferences.join(', ')}
+                          </TableCell>
+                          <TableCell>{sub.start_date}</TableCell>
+                          <TableCell>₹{sub.price_per_day}</TableCell>
+                          <TableCell>
+                            <Badge className={sub.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                              {sub.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <select
+                              className="text-xs border rounded p-1"
+                              value={sub.status}
+                              onChange={(e) => handleUpdateSubscriptionStatus(sub.id, e.target.value)}
+                            >
+                              <option value="active">Active</option>
+                              <option value="paused">Paused</option>
+                              <option value="cancelled">Cancelled</option>
+                            </select>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {subscriptions.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={9} className="text-center text-gray-500">
+                            No subscriptions yet
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Announcements */}
+          <TabsContent value="announcements" className="space-y-4">
+            <Card data-testid="announcements-card">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Event Announcements</CardTitle>
+                    <CardDescription>Create announcements for Jam Nights, Pizza Nights, BBQ, etc.</CardDescription>
+                  </div>
+                  <Button onClick={() => setAnnouncementDialog(true)} data-testid="add-announcement-btn">
+                    Create Announcement
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {announcements.map((announcement) => (
+                    <div key={announcement.id} className="border p-4 rounded-lg flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="font-bold text-lg">{announcement.title}</h3>
+                          <Badge variant="outline">{announcement.event_type}</Badge>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">{announcement.description}</p>
+                        {announcement.event_date && (
+                          <p className="text-xs text-gray-500">Date: {announcement.event_date}</p>
+                        )}
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleDeleteAnnouncement(announcement.id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  ))}
+                  {announcements.length === 0 && (
+                    <p className="text-center text-gray-500">No announcements yet</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* BBQ Bookings */}
           <TabsContent value="bookings" className="space-y-4">
