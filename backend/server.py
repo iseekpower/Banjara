@@ -582,12 +582,12 @@ async def get_food_orders():
     
     return orders
 
-@api_router.put(\"/orders/food/{order_id}/status\")
+@api_router.put("/orders/food/{order_id}/status")
 async def update_order_status(order_id: str, status: str):
-    \"\"\"Update food order status\"\"\"
+    """Update food order status"""
     result = await db.food_orders.update_one(
-        {\"id\": order_id},
-        {\"$set\": {\"status\": status}}
+        {"id": order_id},
+        {"$set": {"status": status}}
     )
     
     if result.modified_count == 0:
