@@ -593,13 +593,13 @@ async def update_order_status(order_id: str, status: str):
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail=\"Order not found\")
     
-    return {\"message\": \"Order status updated\", \"status\": status}
+    return {"message": "Order status updated", "status": status}
 
 
 # Subscription Endpoints
-@api_router.post(\"/subscriptions\", response_model=Subscription)
+@api_router.post("/subscriptions", response_model=Subscription)
 async def create_subscription(subscription: SubscriptionCreate):
-    \"\"\"Create meal subscription\"\"\"
+    """Create meal subscription"""
     sub_dict = subscription.model_dump()
     sub_obj = Subscription(**sub_dict)
     
