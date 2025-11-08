@@ -1136,6 +1136,74 @@ const AdminDashboard = () => {
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Announcement Dialog */}
+      <Dialog open={announcementDialog} onOpenChange={setAnnouncementDialog}>
+        <DialogContent data-testid="announcement-dialog">
+          <DialogHeader>
+            <DialogTitle>Create Event Announcement</DialogTitle>
+            <DialogDescription>
+              Announce upcoming events like Jam Nights, Pizza Nights, BBQ, Bonfire
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleCreateAnnouncement} className="space-y-4">
+            <div>
+              <Label htmlFor="ann-title">Event Title</Label>
+              <Input
+                id="ann-title"
+                value={announcementForm.title}
+                onChange={(e) => setAnnouncementForm({ ...announcementForm, title: e.target.value })}
+                required
+                placeholder="e.g., Live Jam Night with Local Artists"
+                data-testid="announcement-title"
+              />
+            </div>
+            <div>
+              <Label htmlFor="ann-description">Description</Label>
+              <Textarea
+                id="ann-description"
+                value={announcementForm.description}
+                onChange={(e) => setAnnouncementForm({ ...announcementForm, description: e.target.value })}
+                required
+                rows={3}
+                placeholder="Describe the event"
+                data-testid="announcement-description"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="ann-type">Event Type</Label>
+                <select
+                  id="ann-type"
+                  className="w-full p-2 border rounded-lg"
+                  value={announcementForm.event_type}
+                  onChange={(e) => setAnnouncementForm({ ...announcementForm, event_type: e.target.value })}
+                  data-testid="announcement-type"
+                >
+                  <option value="jam_night">Jam Night</option>
+                  <option value="pizza_night">Pizza Night</option>
+                  <option value="bbq">BBQ Night</option>
+                  <option value="bonfire">Bonfire</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <Label htmlFor="ann-date">Event Date</Label>
+                <Input
+                  id="ann-date"
+                  type="date"
+                  value={announcementForm.event_date}
+                  onChange={(e) => setAnnouncementForm({ ...announcementForm, event_date: e.target.value })}
+                  data-testid="announcement-date"
+                />
+              </div>
+            </div>
+            <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700" data-testid="submit-announcement">
+              Create Announcement
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
