@@ -646,9 +646,9 @@ async def get_announcements():
     
     return announcements
 
-@api_router.post(\"/announcements\", response_model=Announcement)
+@api_router.post("/announcements", response_model=Announcement)
 async def create_announcement(announcement: AnnouncementCreate):
-    \"\"\"Create new announcement (admin)\"\"\"
+    """Create new announcement (admin)"""
     ann_dict = announcement.model_dump()
     ann_obj = Announcement(**ann_dict)
     
@@ -658,15 +658,15 @@ async def create_announcement(announcement: AnnouncementCreate):
     await db.announcements.insert_one(doc)
     return ann_obj
 
-@api_router.delete(\"/announcements/{announcement_id}\")
+@api_router.delete("/announcements/{announcement_id}")
 async def delete_announcement(announcement_id: str):
-    \"\"\"Delete announcement\"\"\"
-    result = await db.announcements.delete_one({\"id\": announcement_id})
+    """Delete announcement"""
+    result = await db.announcements.delete_one({"id": announcement_id})
     
     if result.deleted_count == 0:
-        raise HTTPException(status_code=404, detail=\"Announcement not found\")
+        raise HTTPException(status_code=404, detail="Announcement not found")
     
-    return {\"message\": \"Announcement deleted successfully\"}
+    return {"message": "Announcement deleted successfully"}
 
 
 # Include the router in the main app
