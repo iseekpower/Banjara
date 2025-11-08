@@ -379,10 +379,14 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9" data-testid="admin-tabs">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-10" data-testid="admin-tabs">
             <TabsTrigger value="food-orders" data-testid="food-orders-tab">
               <ChefHat className="w-4 h-4 mr-2" />
               Food Orders
+            </TabsTrigger>
+            <TabsTrigger value="qr-code" data-testid="qr-code-tab">
+              <QrCode className="w-4 h-4 mr-2" />
+              QR Menu
             </TabsTrigger>
             <TabsTrigger value="subscriptions" data-testid="subscriptions-tab">
               <Package className="w-4 h-4 mr-2" />
@@ -417,6 +421,84 @@ const AdminDashboard = () => {
               Rules
             </TabsTrigger>
           </TabsList>
+
+          {/* QR Code Tab */}
+          <TabsContent value="qr-code" className="space-y-4">
+            <Card data-testid="qr-code-card" className="max-w-2xl mx-auto">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <QrCode className="w-6 h-6 text-emerald-600" />
+                  Food Menu QR Code
+                </CardTitle>
+                <CardDescription>
+                  Print and display this QR code at your homestay. Guests can scan it to access Hemu's food menu instantly!
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-xl border-2 border-emerald-200">
+                  <div className="text-center space-y-4">
+                    <div className="bg-white p-6 rounded-xl inline-block shadow-lg">
+                      <img 
+                        src={`${API}/qr/food-menu`} 
+                        alt="Food Menu QR Code"
+                        className="w-64 h-64"
+                        data-testid="qr-code-image"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xl font-bold text-emerald-900">Hemu's by Banjara Barracks</p>
+                      <p className="text-sm text-stone-600">Scan to order delicious food!</p>
+                      <p className="text-xs text-stone-500 font-mono">mountain-retreat-6.preview.emergentagent.com/food</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <a 
+                    href={`${API}/qr/food-menu`} 
+                    download="hemu-menu-qr-code.png"
+                    className="block"
+                  >
+                    <Button className="w-full bg-emerald-600 hover:bg-emerald-700" data-testid="download-qr-btn">
+                      <Download className="w-4 h-4 mr-2" />
+                      Download QR Code
+                    </Button>
+                  </a>
+                  <Button 
+                    className="w-full" 
+                    variant="outline"
+                    onClick={() => window.print()}
+                    data-testid="print-qr-btn"
+                  >
+                    <Printer className="w-4 h-4 mr-2" />
+                    Print QR Code
+                  </Button>
+                </div>
+
+                <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded">
+                  <h4 className="font-bold text-amber-900 mb-2">💡 Where to Display:</h4>
+                  <ul className="text-sm text-amber-800 space-y-1">
+                    <li>• At reception desk</li>
+                    <li>• In guest rooms (on table or wall)</li>
+                    <li>• At the dining area</li>
+                    <li>• Common areas and cafe</li>
+                    <li>• Share in village WhatsApp groups for delivery orders</li>
+                  </ul>
+                </div>
+
+                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                  <h4 className="font-bold text-blue-900 mb-2">📱 How Customers Use It:</h4>
+                  <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+                    <li>Open camera or QR scanner on phone</li>
+                    <li>Point at QR code</li>
+                    <li>Click the notification to open menu</li>
+                    <li>Browse Hemu's dishes and place order</li>
+                    <li>Specify guest room or village address</li>
+                  </ol>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* Food Orders */}
           <TabsContent value="food-orders" className="space-y-4">
