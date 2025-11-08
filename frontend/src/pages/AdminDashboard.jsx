@@ -27,7 +27,7 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { LogOut, Mountain, Utensils, Home, HelpCircle, Shield, Calendar, ChefHat, Package, Bell } from 'lucide-react';
+import { LogOut, Mountain, Utensils, Home, HelpCircle, Shield, Calendar, ChefHat, Package, Bell, QrCode, Download, Printer } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
