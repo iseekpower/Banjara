@@ -476,6 +476,199 @@ async def admin_login(login: AdminLogin):
         )
 
 
+# Food Ordering Models
+class FoodOrder(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    order_type: str  # "guest" or "village"
+    customer_name: str
+    phone: str
+    room_number: Optional[str] = None  # For guest orders
+    delivery_address: Optional[str] = None  # For village orders
+    items: List[dict]  # [{menu_item_id, name, quantity, price}]
+    total_amount: int
+    estimated_time: int  # minutes
+    special_instructions: Optional[str] = None
+    status: str = "pending"  # pending, preparing, ready, delivered, cancelled
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class FoodOrderCreate(BaseModel):
+    order_type: str
+    customer_name: str
+    phone: str
+    room_number: Optional[str] = None
+    delivery_address: Optional[str] = None
+    items: List[dict]
+    total_amount: int
+    estimated_time: int
+    special_instructions: Optional[str] = None
+
+class Subscription(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    customer_name: str
+    phone: str
+    address: str
+    plan_type: str  # "daily", "weekly", "monthly"
+    meal_preferences: List[str]  # ["breakfast", "lunch", "dinner"]
+    start_date: str
+    end_date: Optional[str] = None
+    price_per_day: int
+    total_paid: int
+    status: str = "active"  # active, paused, cancelled
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class SubscriptionCreate(BaseModel):
+    customer_name: str
+    phone: str
+    address: str
+    plan_type: str
+    meal_preferences: List[str]
+    start_date: str
+    end_date: Optional[str] = None
+    price_per_day: int
+    total_paid: int
+
+class Announcement(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: str
+    event_type: str  # "jam_night", "pizza_night", "bbq", "bonfire", "other"
+    event_date: Optional[str] = None
+    image_url: Optional[str] = None
+    active: bool = True
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class AnnouncementCreate(BaseModel):
+    title: str
+    description: str
+    event_type: str
+    event_date: Optional[str] = None
+    image_url: Optional[str] = None
+    active: bool = True
+
+
+# Food Ordering Endpoints
+@api_router.get(\"/menu/food\", response_model=List[dict])
+async def get_food_menu():
+    \"\"\"Get complete food menu from Hemu's kitchen\"\"\"
+    items = await db.menu_items.find({}, {\"_id\": 0}).to_list(1000)
+    return items
+
+@api_router.post(\"/orders/food\", response_model=FoodOrder)
+async def create_food_order(order: FoodOrderCreate):
+    \"\"\"Create new food order\"\"\"
+    order_dict = order.model_dump()
+    order_obj = FoodOrder(**order_dict)
+    
+    doc = order_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.food_orders.insert_one(doc)
+    return order_obj
+
+@api_router.get(\"/orders/food\", response_model=List[FoodOrder])
+async def get_food_orders():
+    \"\"\"Get all food orders (admin)\"\"\"
+    orders = await db.food_orders.find({}, {\"_id\": 0}).sort(\"created_at\", -1).to_list(1000)
+    
+    for order in orders:
+        if isinstance(order['created_at'], str):
+            order['created_at'] = datetime.fromisoformat(order['created_at'])
+    
+    return orders
+
+@api_router.put(\"/orders/food/{order_id}/status\")
+async def update_order_status(order_id: str, status: str):
+    \"\"\"Update food order status\"\"\"
+    result = await db.food_orders.update_one(
+        {\"id\": order_id},
+        {\"$set\": {\"status\": status}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail=\"Order not found\")
+    
+    return {\"message\": \"Order status updated\", \"status\": status}
+
+
+# Subscription Endpoints
+@api_router.post(\"/subscriptions\", response_model=Subscription)
+async def create_subscription(subscription: SubscriptionCreate):
+    \"\"\"Create meal subscription\"\"\"
+    sub_dict = subscription.model_dump()
+    sub_obj = Subscription(**sub_dict)
+    
+    doc = sub_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.subscriptions.insert_one(doc)
+    return sub_obj
+
+@api_router.get(\"/subscriptions\", response_model=List[Subscription])
+async def get_subscriptions():
+    \"\"\"Get all subscriptions (admin)\"\"\"
+    subs = await db.subscriptions.find({}, {\"_id\": 0}).to_list(1000)
+    
+    for sub in subs:
+        if isinstance(sub['created_at'], str):
+            sub['created_at'] = datetime.fromisoformat(sub['created_at'])
+    
+    return subs
+
+@api_router.put(\"/subscriptions/{sub_id}/status\")
+async def update_subscription_status(sub_id: str, status: str):
+    \"\"\"Update subscription status\"\"\"
+    result = await db.subscriptions.update_one(
+        {\"id\": sub_id},
+        {\"$set\": {\"status\": status}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail=\"Subscription not found\")
+    
+    return {\"message\": \"Subscription status updated\", \"status\": status}
+
+
+# Announcements Endpoints
+@api_router.get(\"/announcements\", response_model=List[Announcement])
+async def get_announcements():
+    \"\"\"Get all active announcements\"\"\"
+    announcements = await db.announcements.find({\"active\": True}, {\"_id\": 0}).sort(\"created_at\", -1).to_list(1000)
+    
+    for announcement in announcements:
+        if isinstance(announcement['created_at'], str):
+            announcement['created_at'] = datetime.fromisoformat(announcement['created_at'])
+    
+    return announcements
+
+@api_router.post(\"/announcements\", response_model=Announcement)
+async def create_announcement(announcement: AnnouncementCreate):
+    \"\"\"Create new announcement (admin)\"\"\"
+    ann_dict = announcement.model_dump()
+    ann_obj = Announcement(**ann_dict)
+    
+    doc = ann_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.announcements.insert_one(doc)
+    return ann_obj
+
+@api_router.delete(\"/announcements/{announcement_id}\")
+async def delete_announcement(announcement_id: str):
+    \"\"\"Delete announcement\"\"\"
+    result = await db.announcements.delete_one({\"id\": announcement_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail=\"Announcement not found\")
+    
+    return {\"message\": \"Announcement deleted successfully\"}
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
