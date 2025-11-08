@@ -591,7 +591,7 @@ async def update_order_status(order_id: str, status: str):
     )
     
     if result.modified_count == 0:
-        raise HTTPException(status_code=404, detail=\"Order not found\")
+        raise HTTPException(status_code=404, detail="Order not found")
     
     return {"message": "Order status updated", "status": status}
 
