@@ -183,9 +183,9 @@ const Home = () => {
               <button onClick={() => scrollToSection('treks')} className="block w-full text-left text-stone-700 hover:text-stone-900">
                 Treks
               </button>
-              <button onClick={() => scrollToSection('menu')} className="block w-full text-left text-stone-700 hover:text-stone-900">
-                Menu
-              </button>
+              <Link to="/food" className="block w-full text-left text-stone-700 hover:text-stone-900">
+                Food Menu
+              </Link>
               <button onClick={() => scrollToSection('faq')} className="block w-full text-left text-stone-700 hover:text-stone-900">
                 FAQ
               </button>
