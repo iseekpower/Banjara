@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, status
+from fastapi.responses import StreamingResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -10,6 +11,8 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+import qrcode
+from io import BytesIO
 
 
 ROOT_DIR = Path(__file__).parent
