@@ -27,7 +27,8 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { LogOut, Mountain, Utensils, Home, HelpCircle, Shield, Calendar } from 'lucide-react';
+import { LogOut, Mountain, Utensils, Home, HelpCircle, Shield, Calendar, ChefHat, Package, Bell } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -41,12 +42,24 @@ const AdminDashboard = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [rules, setRules] = useState([]);
+  const [foodOrders, setFoodOrders] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
   
   const [menuDialog, setMenuDialog] = useState(false);
   const [faqDialog, setFaqDialog] = useState(false);
   const [ruleDialog, setRuleDialog] = useState(false);
+  const [announcementDialog, setAnnouncementDialog] = useState(false);
   
   const [editingItem, setEditingItem] = useState(null);
+  
+  const [announcementForm, setAnnouncementForm] = useState({
+    title: '',
+    description: '',
+    event_type: 'other',
+    event_date: '',
+    active: true
+  });
 
   const [menuForm, setMenuForm] = useState({
     name: '',
