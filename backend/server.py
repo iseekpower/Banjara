@@ -672,6 +672,35 @@ async def delete_announcement(announcement_id: str):
     return {"message": "Announcement deleted successfully"}
 
 
+# QR Code Generation
+@api_router.get("/qr/food-menu")
+async def generate_food_menu_qr():
+    """Generate QR code for food menu"""
+    # Get the base URL from environment or use default
+    base_url = os.environ.get('FRONTEND_URL', 'https://mountain-retreat-6.preview.emergentagent.com')
+    food_url = f"{base_url}/food"
+    
+    # Create QR code
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(food_url)
+    qr.make(fit=True)
+    
+    # Create image
+    img = qr.make_image(fill_color="black", back_color="white")
+    
+    # Save to bytes
+    img_io = BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    
+    return StreamingResponse(img_io, media_type="image/png")
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
