@@ -889,12 +889,104 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
-          {/* Trek Bookings */}
+          {/* Trek Management */}
           <TabsContent value="treks" className="space-y-4">
+            <Card data-testid="trek-management-card">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Trek Management</CardTitle>
+                    <CardDescription>Add, edit, or remove treks</CardDescription>
+                  </div>
+                  <Button onClick={() => {
+                    setEditingItem(null);
+                    setTrekForm({
+                      name: '',
+                      duration: '',
+                      difficulty: 'Easy',
+                      description: '',
+                      highlights: '',
+                      best_season: '',
+                      what_to_carry: '',
+                      images: '',
+                      altitude: '',
+                      distance: '',
+                      featured: false,
+                      active: true
+                    });
+                    setTrekDialog(true);
+                  }} className="bg-emerald-600 hover:bg-emerald-700" data-testid="add-trek-btn">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Trek
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  {treks.map((trek) => (
+                    <Card key={trek.id} className="border-2">
+                      <CardContent className="pt-6">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <h3 className="text-xl font-bold">{trek.name}</h3>
+                              {trek.featured && (
+                                <Badge className="bg-yellow-500 text-white">
+                                  <Star className="w-3 h-3 mr-1" />
+                                  Featured
+                                </Badge>
+                              )}
+                              <Badge className={trek.active ? "bg-green-500" : "bg-gray-400"}>
+                                {trek.active ? 'Active' : 'Inactive'}
+                              </Badge>
+                            </div>
+                            <p className="text-stone-600 mb-3">{trek.description}</p>
+                            <div className="flex gap-4 text-sm text-stone-600">
+                              <span>⏱️ {trek.duration}</span>
+                              <span>📊 {trek.difficulty}</span>
+                              {trek.altitude && <span>⛰️ {trek.altitude}</span>}
+                              {trek.distance && <span>📏 {trek.distance}</span>}
+                            </div>
+                            <div className="mt-2 text-sm">
+                              <span className="text-emerald-600 font-semibold">₹5,000 per person</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleEditTrek(trek)}
+                              data-testid={`edit-trek-${trek.id}`}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleDeleteTrek(trek.id)}
+                              data-testid={`delete-trek-${trek.id}`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {treks.length === 0 && (
+                    <div className="text-center py-8 text-stone-500">
+                      No treks added yet. Click "Add Trek" to get started.
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Trek Bookings Card */}
             <Card data-testid="trek-bookings-card">
               <CardHeader>
                 <CardTitle>Trek Bookings</CardTitle>
-                <CardDescription>Manage trek reservations</CardDescription>
+                <CardDescription>View trek reservations</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
