@@ -1707,6 +1707,74 @@ const AdminDashboard = () => {
             </div>
 
             <div>
+
+      {/* Gallery Dialog */}
+      <Dialog open={galleryDialog} onOpenChange={setGalleryDialog}>
+        <DialogContent data-testid="gallery-dialog">
+          <DialogHeader>
+            <DialogTitle>Add Gallery Image</DialogTitle>
+            <DialogDescription>
+              Add a new image to the Life at Barracks gallery
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleAddGalleryImage} className="space-y-4">
+            <div>
+              <Label htmlFor="gallery-title">Title</Label>
+              <Input
+                id="gallery-title"
+                value={galleryForm.title}
+                onChange={(e) => setGalleryForm({ ...galleryForm, title: e.target.value })}
+                required
+                placeholder="e.g., Sunset Views"
+                data-testid="gallery-title-input"
+              />
+            </div>
+            <div>
+              <Label htmlFor="gallery-description">Description (optional)</Label>
+              <Textarea
+                id="gallery-description"
+                value={galleryForm.description}
+                onChange={(e) => setGalleryForm({ ...galleryForm, description: e.target.value })}
+                rows={2}
+                placeholder="Brief description of the image"
+                data-testid="gallery-description-input"
+              />
+            </div>
+            <div>
+              <Label htmlFor="gallery-image-url">Image URL</Label>
+              <Input
+                id="gallery-image-url"
+                type="url"
+                value={galleryForm.image_url}
+                onChange={(e) => setGalleryForm({ ...galleryForm, image_url: e.target.value })}
+                required
+                placeholder="https://example.com/image.jpg"
+                data-testid="gallery-image-url-input"
+              />
+            </div>
+            <div>
+              <Label htmlFor="gallery-category">Category</Label>
+              <select
+                id="gallery-category"
+                className="w-full p-2 border rounded-lg"
+                value={galleryForm.category}
+                onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
+                data-testid="gallery-category-input"
+              >
+                <option value="nature">Nature</option>
+                <option value="events">Events</option>
+                <option value="people">People</option>
+                <option value="food">Food</option>
+                <option value="rooms">Rooms</option>
+              </select>
+            </div>
+            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700" data-testid="submit-gallery">
+              Add Image
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+
               <Label htmlFor="trek-carry">What to Carry (one per line)</Label>
               <Textarea
                 id="trek-carry"
