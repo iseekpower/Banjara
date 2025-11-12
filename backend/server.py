@@ -748,6 +748,102 @@ async def delete_announcement(announcement_id: str):
     return {"message": "Announcement deleted successfully"}
 
 
+# Trek Management Endpoints
+@api_router.get("/treks", response_model=List[Trek])
+async def get_treks():
+    """Get all active treks"""
+    treks = await db.treks.find({"active": True}, {"_id": 0}).sort("order", 1).to_list(1000)
+    
+    for trek in treks:
+        if isinstance(trek.get('created_at'), str):
+            trek['created_at'] = datetime.fromisoformat(trek['created_at'])
+    
+    return treks
+
+@api_router.get("/treks/{trek_id}", response_model=Trek)
+async def get_trek(trek_id: str):
+    """Get single trek details"""
+    trek = await db.treks.find_one({"id": trek_id}, {"_id": 0})
+    
+    if not trek:
+        raise HTTPException(status_code=404, detail="Trek not found")
+    
+    if isinstance(trek.get('created_at'), str):
+        trek['created_at'] = datetime.fromisoformat(trek['created_at'])
+    
+    return Trek(**trek)
+
+@api_router.post("/treks", response_model=Trek)
+async def create_trek(trek: TrekCreate):
+    """Create new trek (admin)"""
+    trek_dict = trek.model_dump()
+    trek_obj = Trek(**trek_dict)
+    
+    doc = trek_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.treks.insert_one(doc)
+    return trek_obj
+
+@api_router.put("/treks/{trek_id}", response_model=Trek)
+async def update_trek(trek_id: str, trek: TrekUpdate):
+    """Update trek (admin)"""
+    existing = await db.treks.find_one({"id": trek_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Trek not found")
+    
+    update_data = {k: v for k, v in trek.model_dump().items() if v is not None}
+    
+    await db.treks.update_one({"id": trek_id}, {"$set": update_data})
+    
+    updated = await db.treks.find_one({"id": trek_id}, {"_id": 0})
+    if isinstance(updated.get('created_at'), str):
+        updated['created_at'] = datetime.fromisoformat(updated['created_at'])
+    
+    return Trek(**updated)
+
+@api_router.delete("/treks/{trek_id}")
+async def delete_trek(trek_id: str):
+    """Delete trek (admin)"""
+    result = await db.treks.delete_one({"id": trek_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Trek not found")
+    return {"message": "Trek deleted successfully"}
+
+
+# Gallery Management Endpoints
+@api_router.get("/gallery", response_model=List[GalleryImage])
+async def get_gallery():
+    """Get all active gallery images"""
+    images = await db.gallery.find({"active": True}, {"_id": 0}).sort("order", 1).to_list(1000)
+    
+    for img in images:
+        if isinstance(img.get('created_at'), str):
+            img['created_at'] = datetime.fromisoformat(img['created_at'])
+    
+    return images
+
+@api_router.post("/gallery", response_model=GalleryImage)
+async def create_gallery_image(image: GalleryImageCreate):
+    """Add image to gallery (admin)"""
+    img_dict = image.model_dump()
+    img_obj = GalleryImage(**img_dict)
+    
+    doc = img_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.gallery.insert_one(doc)
+    return img_obj
+
+@api_router.delete("/gallery/{image_id}")
+async def delete_gallery_image(image_id: str):
+    """Delete gallery image (admin)"""
+    result = await db.gallery.delete_one({"id": image_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Image not found")
+    return {"message": "Image deleted successfully"}
+
+
 # QR Code Generation
 @api_router.get("/qr/food-menu")
 async def generate_food_menu_qr():
