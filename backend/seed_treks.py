@@ -173,7 +173,8 @@ treks = [
         "distance": "6 km",
         "featured": False,
         "active": True,
-        "order": 5
+        "order": 5,
+        "created_at": datetime.now(timezone.utc).isoformat()
     }
 ]
 
