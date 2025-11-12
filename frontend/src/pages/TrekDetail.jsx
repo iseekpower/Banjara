@@ -181,7 +181,9 @@ const TrekDetail = () => {
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all ${\n                  currentImageIndex === index ? 'w-8 bg-white' : 'bg-white/50'\n                }`}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  currentImageIndex === index ? 'w-8 bg-white' : 'bg-white/50'
+                }`}
               />
             ))}
           </div>
