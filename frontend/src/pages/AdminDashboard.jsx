@@ -1274,6 +1274,64 @@ const AdminDashboard = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Gallery Management - Life at Barracks */}
+          <TabsContent value="gallery" className="space-y-4">
+            <Card data-testid="gallery-management-card">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Life at Barracks Gallery</CardTitle>
+                    <CardDescription>Manage gallery images showcasing life at the homestay</CardDescription>
+                  </div>
+                  <Button onClick={() => setGalleryDialog(true)} className="bg-purple-600 hover:bg-purple-700" data-testid="add-gallery-btn">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Image
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {gallery.map((image) => (
+                    <Card key={image.id} className="overflow-hidden">
+                      <div className="relative h-48">
+                        <img
+                          src={image.image_url}
+                          alt={image.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <CardContent className="pt-4">
+                        <h3 className="font-semibold mb-1">{image.title}</h3>
+                        {image.description && (
+                          <p className="text-sm text-stone-600 mb-2">{image.description}</p>
+                        )}
+                        <Badge variant="outline" className="mb-3 text-xs">
+                          {image.category}
+                        </Badge>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDeleteGalleryImage(image.id)}
+                          className="w-full"
+                          data-testid={`delete-gallery-${image.id}`}
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Delete
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {gallery.length === 0 && (
+                    <div className="col-span-full text-center py-8 text-stone-500">
+                      No images in gallery yet. Click "Add Image" to get started.
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
         </Tabs>
       </main>
 
