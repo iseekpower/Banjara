@@ -44,9 +44,11 @@ treks = [
         "distance": "12-13 km",
         "featured": True,
         "active": True,
-        "order": 1
+        "order": 1,
+        "created_at": datetime.now(timezone.utc).isoformat()
     },
     {
+        "id": str(uuid.uuid4()),
         "name": "Bunbuni Pass Trek",
         "duration": "5-6 hours",
         "difficulty": "Moderate",
