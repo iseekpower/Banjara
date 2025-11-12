@@ -45,11 +45,15 @@ const AdminDashboard = () => {
   const [foodOrders, setFoodOrders] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
+  const [treks, setTreks] = useState([]);
+  const [gallery, setGallery] = useState([]);
   
   const [menuDialog, setMenuDialog] = useState(false);
   const [faqDialog, setFaqDialog] = useState(false);
   const [ruleDialog, setRuleDialog] = useState(false);
   const [announcementDialog, setAnnouncementDialog] = useState(false);
+  const [trekDialog, setTrekDialog] = useState(false);
+  const [galleryDialog, setGalleryDialog] = useState(false);
   
   const [editingItem, setEditingItem] = useState(null);
   
