@@ -2,6 +2,8 @@ import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 from dotenv import load_dotenv
+import uuid
+from datetime import datetime, timezone
 
 load_dotenv()
 
@@ -11,6 +13,7 @@ db = client[os.environ['DB_NAME']]
 
 treks = [
     {
+        "id": str(uuid.uuid4()),
         "name": "Kheerganga Trek",
         "duration": "4-6 hours",
         "difficulty": "Moderate",
