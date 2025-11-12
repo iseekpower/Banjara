@@ -733,9 +733,13 @@ def main():
     
     tester = BanjaraBarracksAPITester()
     
-    # Run all tests
+    # Run all tests - prioritizing V4 redesign tests
     tests = [
         tester.test_admin_login,
+        tester.test_trek_crud_apis,  # V4 Priority: HIGH
+        tester.test_gallery_crud_apis,  # V4 Priority: HIGH  
+        tester.test_v4_trek_booking_with_upi,  # V4 Priority: HIGH
+        tester.test_error_handling,  # V4 Error handling
         tester.test_trek_bookings,
         tester.test_bbq_bookings,
         tester.test_room_inquiries,
