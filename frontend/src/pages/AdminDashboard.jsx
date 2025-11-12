@@ -1517,6 +1517,192 @@ const AdminDashboard = () => {
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Trek Dialog */}
+      <Dialog open={trekDialog} onOpenChange={(open) => {
+        setTrekDialog(open);
+        if (!open) {
+          setEditingItem(null);
+          setTrekForm({
+            name: '',
+            duration: '',
+            difficulty: 'Easy',
+            description: '',
+            highlights: '',
+            best_season: '',
+            what_to_carry: '',
+            images: '',
+            altitude: '',
+            distance: '',
+            featured: false,
+            active: true
+          });
+        }
+      }}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto" data-testid="trek-dialog">
+          <DialogHeader>
+            <DialogTitle>{editingItem ? 'Edit Trek' : 'Add New Trek'}</DialogTitle>
+            <DialogDescription>
+              {editingItem ? 'Update trek details' : 'Add a new trek to your offerings'}
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleAddTrek} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="trek-name">Trek Name</Label>
+                <Input
+                  id="trek-name"
+                  value={trekForm.name}
+                  onChange={(e) => setTrekForm({ ...trekForm, name: e.target.value })}
+                  required
+                  placeholder="e.g., Kedarkantha Trek"
+                  data-testid="trek-name-input"
+                />
+              </div>
+              <div>
+                <Label htmlFor="trek-duration">Duration</Label>
+                <Input
+                  id="trek-duration"
+                  value={trekForm.duration}
+                  onChange={(e) => setTrekForm({ ...trekForm, duration: e.target.value })}
+                  required
+                  placeholder="e.g., 5 Days 4 Nights"
+                  data-testid="trek-duration-input"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="trek-difficulty">Difficulty</Label>
+                <select
+                  id="trek-difficulty"
+                  className="w-full p-2 border rounded-lg"
+                  value={trekForm.difficulty}
+                  onChange={(e) => setTrekForm({ ...trekForm, difficulty: e.target.value })}
+                  data-testid="trek-difficulty-input"
+                >
+                  <option value="Easy">Easy</option>
+                  <option value="Moderate">Moderate</option>
+                  <option value="Difficult">Difficult</option>
+                  <option value="Expert">Expert</option>
+                </select>
+              </div>
+              <div>
+                <Label htmlFor="trek-season">Best Season</Label>
+                <Input
+                  id="trek-season"
+                  value={trekForm.best_season}
+                  onChange={(e) => setTrekForm({ ...trekForm, best_season: e.target.value })}
+                  placeholder="e.g., April to June, September to November"
+                  data-testid="trek-season-input"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="trek-altitude">Altitude (optional)</Label>
+                <Input
+                  id="trek-altitude"
+                  value={trekForm.altitude}
+                  onChange={(e) => setTrekForm({ ...trekForm, altitude: e.target.value })}
+                  placeholder="e.g., 12,500 ft"
+                  data-testid="trek-altitude-input"
+                />
+              </div>
+              <div>
+                <Label htmlFor="trek-distance">Distance (optional)</Label>
+                <Input
+                  id="trek-distance"
+                  value={trekForm.distance}
+                  onChange={(e) => setTrekForm({ ...trekForm, distance: e.target.value })}
+                  placeholder="e.g., 20 km"
+                  data-testid="trek-distance-input"
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="trek-description">Description</Label>
+              <Textarea
+                id="trek-description"
+                value={trekForm.description}
+                onChange={(e) => setTrekForm({ ...trekForm, description: e.target.value })}
+                required
+                rows={3}
+                placeholder="Describe the trek experience"
+                data-testid="trek-description-input"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="trek-highlights">Highlights (one per line)</Label>
+              <Textarea
+                id="trek-highlights"
+                value={trekForm.highlights}
+                onChange={(e) => setTrekForm({ ...trekForm, highlights: e.target.value })}
+                rows={4}
+                placeholder="Summit views&#10;Alpine lakes&#10;Dense forests&#10;Local culture"
+                data-testid="trek-highlights-input"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="trek-carry">What to Carry (one per line)</Label>
+              <Textarea
+                id="trek-carry"
+                value={trekForm.what_to_carry}
+                onChange={(e) => setTrekForm({ ...trekForm, what_to_carry: e.target.value })}
+                rows={4}
+                placeholder="Trekking shoes&#10;Warm clothes&#10;Rain gear&#10;Water bottle"
+                data-testid="trek-carry-input"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="trek-images">Image URLs (one per line)</Label>
+              <Textarea
+                id="trek-images"
+                value={trekForm.images}
+                onChange={(e) => setTrekForm({ ...trekForm, images: e.target.value })}
+                rows={3}
+                placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+                data-testid="trek-images-input"
+              />
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="trek-featured"
+                  checked={trekForm.featured}
+                  onChange={(e) => setTrekForm({ ...trekForm, featured: e.target.checked })}
+                  className="w-4 h-4"
+                  data-testid="trek-featured-input"
+                />
+                <Label htmlFor="trek-featured">Featured Trek</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="trek-active"
+                  checked={trekForm.active}
+                  onChange={(e) => setTrekForm({ ...trekForm, active: e.target.checked })}
+                  className="w-4 h-4"
+                  data-testid="trek-active-input"
+                />
+                <Label htmlFor="trek-active">Active</Label>
+              </div>
+            </div>
+
+            <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700" data-testid="submit-trek">
+              {editingItem ? 'Update' : 'Add'} Trek
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
