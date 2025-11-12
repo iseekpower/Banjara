@@ -555,6 +555,82 @@ class AnnouncementCreate(BaseModel):
     active: bool = True
 
 
+# Trek Models
+class Trek(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    duration: str  # e.g., "4-5 hours"
+    difficulty: str  # Easy, Moderate, Challenging
+    price: int = 5000
+    description: str
+    highlights: List[str]
+    best_season: str
+    what_to_carry: List[str]
+    images: List[str]  # URLs of trek images
+    altitude: Optional[str] = None
+    distance: Optional[str] = None
+    featured: bool = False
+    active: bool = True
+    order: int = 0
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class TrekCreate(BaseModel):
+    name: str
+    duration: str
+    difficulty: str
+    price: int = 5000
+    description: str
+    highlights: List[str]
+    best_season: str
+    what_to_carry: List[str]
+    images: List[str]
+    altitude: Optional[str] = None
+    distance: Optional[str] = None
+    featured: bool = False
+    active: bool = True
+    order: int = 0
+
+class TrekUpdate(BaseModel):
+    name: Optional[str] = None
+    duration: Optional[str] = None
+    difficulty: Optional[str] = None
+    price: Optional[int] = None
+    description: Optional[str] = None
+    highlights: Optional[List[str]] = None
+    best_season: Optional[str] = None
+    what_to_carry: Optional[List[str]] = None
+    images: Optional[List[str]] = None
+    altitude: Optional[str] = None
+    distance: Optional[str] = None
+    featured: Optional[bool] = None
+    active: Optional[bool] = None
+    order: Optional[int] = None
+
+
+# Gallery Models (Life at Barracks)
+class GalleryImage(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: Optional[str] = None
+    image_url: str
+    category: str  # e.g., "events", "nature", "people", "food", "rooms"
+    order: int = 0
+    active: bool = True
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class GalleryImageCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+    image_url: str
+    category: str
+    order: int = 0
+    active: bool = True
+
+
 # Food Ordering Endpoints
 @api_router.get("/menu/food", response_model=List[dict])
 async def get_food_menu():
