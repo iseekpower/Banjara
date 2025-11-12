@@ -100,10 +100,10 @@ const TrekDetail = () => {
 
   if (loading) {
     return (
-      <div  className="min-h-screen flex items-center justify-center">
-        <div  className="text-center">
-          <Mountain  className="w-16 h-16 text-emerald-600 mx-auto mb-4 animate-bounce" />
-          <p  className="text-stone-600">Loading trek details...</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Mountain className="w-16 h-16 text-emerald-600 mx-auto mb-4 animate-bounce" />
+          <p className="text-stone-600">Loading trek details...</p>
         </div>
       </div>
     );
@@ -111,10 +111,10 @@ const TrekDetail = () => {
 
   if (!trek) {
     return (
-      <div  className="min-h-screen flex items-center justify-center">
-        <div  className="text-center">
-          <AlertCircle  className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h2  className="text-2xl font-bold mb-2">Trek Not Found</h2>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold mb-2">Trek Not Found</h2>
           <Link to="/">
             <Button>Back to Home</Button>
           </Link>
@@ -124,18 +124,18 @@ const TrekDetail = () => {
   }
 
   return (
-    <div  className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-stone-50">
       {/* Header */}
-      <header  className="bg-white shadow-sm sticky top-0 z-40">
-        <div  className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/"  className="flex items-center text-emerald-600 hover:text-emerald-700">
-            <ArrowLeft  className="w-5 h-5 mr-2" />
+      <header className="bg-white shadow-sm sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center text-emerald-600 hover:text-emerald-700">
+            <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Home
           </Link>
           <Button
             onClick={() => setBookingOpen(true)}
             size="lg"
-             className="bg-emerald-600 hover:bg-emerald-700"
+            className="bg-emerald-600 hover:bg-emerald-700"
             data-testid="book-trek-btn"
           >
             Book This Trek
@@ -144,31 +144,31 @@ const TrekDetail = () => {
       </header>
 
       {/* Hero Section */}
-      <section  className="relative h-96 overflow-hidden">
+      <section className="relative h-96 overflow-hidden">
         <img
           src={trek.images[currentImageIndex]}
           alt={trek.name}
-           className="w-full h-full object-cover"
+          className="w-full h-full object-cover"
         />
-        <div  className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-        <div  className="absolute bottom-0 left-0 right-0 p-8 text-white">
-          <div  className="max-w-7xl mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div className="max-w-7xl mx-auto">
             {trek.featured && (
-              <Badge  className="bg-yellow-500 text-white mb-3">
-                <Star  className="w-4 h-4 mr-1 fill-white" />
+              <Badge className="bg-yellow-500 text-white mb-3">
+                <Star className="w-4 h-4 mr-1 fill-white" />
                 FEATURED TREK
               </Badge>
             )}
-            <h1  className="text-5xl font-bold mb-3">{trek.name}</h1>
-            <div  className="flex flex-wrap gap-4 text-lg">
-              <span  className="flex items-center gap-2">
-                <Clock  className="w-5 h-5" /> {trek.duration}
+            <h1 className="text-5xl font-bold mb-3">{trek.name}</h1>
+            <div className="flex flex-wrap gap-4 text-lg">
+              <span className="flex items-center gap-2">
+                <Clock className="w-5 h-5" /> {trek.duration}
               </span>
-              <span  className="flex items-center gap-2">
-                <Mountain  className="w-5 h-5" /> {trek.altitude}
+              <span className="flex items-center gap-2">
+                <Mountain className="w-5 h-5" /> {trek.altitude}
               </span>
-              <span  className="flex items-center gap-2">
-                <MapPin  className="w-5 h-5" /> {trek.distance}
+              <span className="flex items-center gap-2">
+                <MapPin className="w-5 h-5" /> {trek.distance}
               </span>
             </div>
           </div>
@@ -176,12 +176,12 @@ const TrekDetail = () => {
         
         {/* Image Navigation */}
         {trek.images.length > 1 && (
-          <div  className="absolute bottom-20 right-8 flex gap-2">
+          <div className="absolute bottom-20 right-8 flex gap-2">
             {trek.images.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
+               className={`w-3 h-3 rounded-full transition-all ${
                   currentImageIndex === index ? 'w-8 bg-white' : 'bg-white/50'
                 }`}
               />
@@ -191,27 +191,27 @@ const TrekDetail = () => {
       </section>
 
       {/* Content */}
-      <div  className="max-w-7xl mx-auto px-4 py-12">
-        <div  className="grid lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div  className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8">
             {/* Quick Info */}
-            <Card  className="border-2 border-emerald-100">
-              <CardContent  className="pt-6">
-                <div  className="grid md:grid-cols-3 gap-6 text-center">
+            <Card className="border-2 border-emerald-100">
+              <CardContent className="pt-6">
+                <div className="grid md:grid-cols-3 gap-6 text-center">
                   <div>
                     <Badge className={`${getDifficultyColor(trek.difficulty)} text-lg px-4 py-2`}>
                       {trek.difficulty}
                     </Badge>
-                    <p  className="text-sm text-stone-600 mt-2">Difficulty Level</p>
+                    <p className="text-sm text-stone-600 mt-2">Difficulty Level</p>
                   </div>
                   <div>
-                    <p  className="text-3xl font-bold text-emerald-600">\u20b95,000</p>
-                    <p  className="text-sm text-stone-600 mt-1">per person</p>
+                    <p className="text-3xl font-bold text-emerald-600">\u20b95,000</p>
+                    <p className="text-sm text-stone-600 mt-1">per person</p>
                   </div>
                   <div>
-                    <p  className="text-2xl font-bold text-stone-900">{trek.duration}</p>
-                    <p  className="text-sm text-stone-600 mt-1">Duration</p>
+                    <p className="text-2xl font-bold text-stone-900">{trek.duration}</p>
+                    <p className="text-sm text-stone-600 mt-1">Duration</p>
                   </div>
                 </div>
               </CardContent>
@@ -220,27 +220,27 @@ const TrekDetail = () => {
             {/* Description */}
             <Card>
               <CardHeader>
-                <CardTitle  className="text-2xl">About This Trek</CardTitle>
+                <CardTitle className="text-2xl">About This Trek</CardTitle>
               </CardHeader>
               <CardContent>
-                <p  className="text-stone-700 leading-relaxed text-lg">{trek.description}</p>
+                <p className="text-stone-700 leading-relaxed text-lg">{trek.description}</p>
               </CardContent>
             </Card>
 
             {/* Highlights */}
-            <Card  className="bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
+            <Card className="bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
               <CardHeader>
-                <CardTitle  className="flex items-center gap-2">
-                  <Sparkles  className="w-6 h-6 text-emerald-600" />
+                <CardTitle className="flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-emerald-600" />
                   Trek Highlights
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul  className="space-y-3">
+                <ul className="space-y-3">
                   {trek.highlights.map((highlight, index) => (
-                    <li key={index}  className="flex items-start gap-3">
-                      <CheckCircle  className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-1" />
-                      <span  className="text-stone-700">{highlight}</span>
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-1" />
+                      <span className="text-stone-700">{highlight}</span>
                     </li>
                   ))}
                 </ul>
@@ -253,10 +253,10 @@ const TrekDetail = () => {
                 <CardTitle>What to Carry</CardTitle>
               </CardHeader>
               <CardContent>
-                <div  className="grid md:grid-cols-2 gap-3">
+                <div className="grid md:grid-cols-2 gap-3">
                   {trek.what_to_carry.map((item, index) => (
-                    <div key={index}  className="flex items-center gap-2 text-stone-700">
-                      <div  className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                    <div key={index} className="flex items-center gap-2 text-stone-700">
+                      <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                       <span>{item}</span>
                     </div>
                   ))}
@@ -266,41 +266,41 @@ const TrekDetail = () => {
           </div>
 
           {/* Sidebar */}
-          <div  className="space-y-6">
+          <div className="space-y-6">
             {/* Booking Card */}
-            <Card  className="sticky top-24 border-2 border-emerald-200 shadow-xl">
-              <CardHeader  className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
-                <CardTitle  className="text-2xl">Book This Trek</CardTitle>
+            <Card className="sticky top-24 border-2 border-emerald-200 shadow-xl">
+              <CardHeader className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+                <CardTitle className="text-2xl">Book This Trek</CardTitle>
               </CardHeader>
-              <CardContent  className="pt-6 space-y-4">
-                <div  className="text-center py-4 bg-emerald-50 rounded-lg">
-                  <p  className="text-4xl font-bold text-emerald-600">\u20b95,000</p>
-                  <p  className="text-stone-600">per person</p>
+              <CardContent className="pt-6 space-y-4">
+                <div className="text-center py-4 bg-emerald-50 rounded-lg">
+                  <p className="text-4xl font-bold text-emerald-600">\u20b95,000</p>
+                  <p className="text-stone-600">per person</p>
                 </div>
                 
                 <Button
                   onClick={() => setBookingOpen(true)}
-                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-lg py-6"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-lg py-6"
                   data-testid="sidebar-book-btn"
                 >
                   Book Now
                 </Button>
 
-                <div  className="pt-4 border-t space-y-2 text-sm text-stone-600">
-                  <p  className="flex items-center gap-2">
-                    <CheckCircle  className="w-4 h-4 text-emerald-600" />
+                <div className="pt-4 border-t space-y-2 text-sm text-stone-600">
+                  <p className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
                     Expert guide included
                   </p>
-                  <p  className="flex items-center gap-2">
-                    <CheckCircle  className="w-4 h-4 text-emerald-600" />
+                  <p className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
                     All safety equipment
                   </p>
-                  <p  className="flex items-center gap-2">
-                    <CheckCircle  className="w-4 h-4 text-emerald-600" />
+                  <p className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
                     First-aid support
                   </p>
-                  <p  className="flex items-center gap-2">
-                    <CheckCircle  className="w-4 h-4 text-emerald-600" />
+                  <p className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
                     Starts from Kalga
                   </p>
                 </div>
@@ -310,10 +310,10 @@ const TrekDetail = () => {
             {/* Best Season */}
             <Card>
               <CardHeader>
-                <CardTitle  className="text-lg">Best Season</CardTitle>
+                <CardTitle className="text-lg">Best Season</CardTitle>
               </CardHeader>
               <CardContent>
-                <p  className="text-stone-700">{trek.best_season}</p>
+                <p className="text-stone-700">{trek.best_season}</p>
               </CardContent>
             </Card>
           </div>
@@ -322,16 +322,16 @@ const TrekDetail = () => {
 
       {/* Booking Dialog */}
       <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-        <DialogContent  className="max-w-2xl" data-testid="booking-dialog">
+        <DialogContent className="max-w-2xl" data-testid="booking-dialog">
           <DialogHeader>
-            <DialogTitle  className="text-2xl">Book {trek.name}</DialogTitle>
+            <DialogTitle className="text-2xl">Book {trek.name}</DialogTitle>
             <DialogDescription>
               Fill in your details and we'll confirm your trek booking
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleBooking}  className="space-y-6">
-            <div  className="grid md:grid-cols-2 gap-4">
+          <form onSubmit={handleBooking} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="full_name">Full Name</Label>
                 <Input
@@ -355,7 +355,7 @@ const TrekDetail = () => {
               </div>
             </div>
 
-            <div  className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="phone">Phone Number</Label>
                 <Input
@@ -393,63 +393,63 @@ const TrekDetail = () => {
               />
             </div>
 
-            <div  className="bg-emerald-50 p-6 rounded-lg space-y-3">
-              <div  className="flex justify-between items-center">
-                <span  className="font-semibold">Total Amount:</span>
-                <span  className="text-3xl font-bold text-emerald-600">
+            <div className="bg-emerald-50 p-6 rounded-lg space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="font-semibold">Total Amount:</span>
+                <span className="text-3xl font-bold text-emerald-600">
                   \u20b9{5000 * bookingForm.person_count}
                 </span>
               </div>
             </div>
 
             {/* UPI Payment Section */}
-            <div  className="bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 p-6 rounded-xl">
-              <h3  className="font-bold text-lg mb-3 flex items-center gap-2">
-                <span  className="text-2xl">💳</span> Pay via UPI
+            <div className="bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 p-6 rounded-xl">
+              <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                <span className="text-2xl">💳</span> Pay via UPI
               </h3>
-              <p  className="text-sm text-stone-600 mb-4">
+              <p className="text-sm text-stone-600 mb-4">
                 Transfer the amount to our UPI ID and we'll confirm your booking
               </p>
-              <div  className="bg-white p-4 rounded-lg border-2 border-purple-300">
-                <Label  className="text-xs text-stone-600 mb-1 block">UPI ID</Label>
-                <div  className="flex items-center justify-between">
-                  <span  className="font-mono text-lg font-bold text-purple-700">{UPI_ID}</span>
+              <div className="bg-white p-4 rounded-lg border-2 border-purple-300">
+                <Label className="text-xs text-stone-600 mb-1 block">UPI ID</Label>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-lg font-bold text-purple-700">{UPI_ID}</span>
                   <Button
                     type="button"
                     size="sm"
                     onClick={copyUPI}
                     variant="outline"
-                     className="border-purple-300 hover:bg-purple-50"
+                    className="border-purple-300 hover:bg-purple-50"
                     data-testid="copy-upi-btn"
                   >
                     {copiedUPI ? (
                       <>
-                        <Check  className="w-4 h-4 mr-2 text-green-600" />
+                        <Check className="w-4 h-4 mr-2 text-green-600" />
                         Copied!
                       </>
                     ) : (
                       <>
-                        <Copy  className="w-4 h-4 mr-2" />
+                        <Copy className="w-4 h-4 mr-2" />
                         Copy ID
                       </>
                     )}
                   </Button>
                 </div>
               </div>
-              <p  className="text-xs text-stone-500 mt-3">
+              <p className="text-xs text-stone-500 mt-3">
                 * After payment, submit this form and we'll contact you to confirm
               </p>
             </div>
 
             <Button 
               type="submit" 
-               className="w-full bg-emerald-600 hover:bg-emerald-700 text-lg py-6"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-lg py-6"
               data-testid="submit-booking-btn"
             >
               Submit Booking Request
             </Button>
 
-            <p  className="text-xs text-center text-stone-500">
+            <p className="text-xs text-center text-stone-500">
               By booking, you agree to our terms and conditions
             </p>
           </form>
