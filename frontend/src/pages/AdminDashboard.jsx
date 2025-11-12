@@ -84,6 +84,28 @@ const AdminDashboard = () => {
     order: 0
   });
 
+  const [trekForm, setTrekForm] = useState({
+    name: '',
+    duration: '',
+    difficulty: 'Easy',
+    description: '',
+    highlights: '',
+    best_season: '',
+    what_to_carry: '',
+    images: '',
+    altitude: '',
+    distance: '',
+    featured: false,
+    active: true
+  });
+
+  const [galleryForm, setGalleryForm] = useState({
+    title: '',
+    description: '',
+    image_url: '',
+    category: 'nature'
+  });
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchAllData();
