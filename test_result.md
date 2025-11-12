@@ -167,28 +167,28 @@ frontend:
         comment: "Trek detail page with booking form and UPI ID (sadhya0794@okhdfcbank) implemented. Needs testing."
   
   - task: "Admin Trek Management"
-    implemented: false
+    implemented: true
     working: "NA"
     file: "AdminDashboard.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Not yet implemented. Need to add Trek Management tab to admin dashboard."
+        comment: "Trek Management tab added with full CRUD operations: Add, Edit, Delete treks. Includes trek bookings view."
   
   - task: "Admin Gallery Management"
-    implemented: false
+    implemented: true
     working: "NA"
     file: "AdminDashboard.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Not yet implemented. Need to add Gallery Management tab to admin dashboard."
+        comment: "Gallery Management tab added with image upload (URL), delete, and categorization. Displays Life at Barracks images."
 
 metadata:
   created_by: "main_agent"
