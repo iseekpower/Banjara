@@ -141,9 +141,11 @@ treks = [
         "distance": "14 km",
         "featured": False,
         "active": True,
-        "order": 4
+        "order": 4,
+        "created_at": datetime.now(timezone.utc).isoformat()
     },
     {
+        "id": str(uuid.uuid4()),
         "name": "Tevla Trek",
         "duration": "3-4 hours",
         "difficulty": "Easy",
