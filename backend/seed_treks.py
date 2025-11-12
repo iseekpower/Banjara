@@ -109,9 +109,11 @@ treks = [
         "distance": "11 km",
         "featured": False,
         "active": True,
-        "order": 3
+        "order": 3,
+        "created_at": datetime.now(timezone.utc).isoformat()
     },
     {
+        "id": str(uuid.uuid4()),
         "name": "Bishkeri Trek",
         "duration": "6-7 hours",
         "difficulty": "Challenging",
