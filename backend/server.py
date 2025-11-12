@@ -46,12 +46,15 @@ class TrekBooking(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class TrekBookingCreate(BaseModel):
+    trek_id: Optional[str] = None
     trek_name: str
     person_count: int
     date: str
     full_name: str
     email: EmailStr
     phone: str
+    payment_method: str = "upi"  # upi, cash, online
+    payment_status: str = "pending"  # pending, paid, failed
 
 
 class BBQBooking(BaseModel):
