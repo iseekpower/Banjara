@@ -207,9 +207,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Trek CRUD API endpoints"
-    - "Gallery CRUD API endpoints"
-    - "Trek booking endpoint"
     - "Trek detail and booking page"
     - "Admin Trek Management"
     - "Admin Gallery Management"
@@ -220,3 +217,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "All implementation complete! Backend: Trek & Gallery APIs ready. Frontend: HomeNew.jsx with hero/treks/gallery working. TrekDetail.jsx with booking form and UPI payment. AdminDashboard with Trek & Gallery management tabs. Ready for comprehensive testing."
+  - agent: "testing"
+    message: "✅ V4 Backend Testing Complete - 100% Success Rate! All high-priority backend APIs tested and working: Trek CRUD (5 seeded treks, ₹5,000 pricing, featured flags), Gallery CRUD (6 seeded images), Trek booking with UPI (payment_status=pending, correct cost calculation). Fixed critical seeding issue - treks now have proper IDs. Admin password verified: banjara-core-admin-2024. UPI ID confirmed: sadhya0794@okhdfcbank. Backend ready for frontend integration."
