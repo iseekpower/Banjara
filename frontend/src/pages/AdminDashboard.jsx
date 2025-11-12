@@ -539,6 +539,10 @@ const AdminDashboard = () => {
               <Mountain className="w-4 h-4 mr-2" />
               Treks
             </TabsTrigger>
+            <TabsTrigger value="gallery" data-testid="gallery-tab">
+              <ImageIcon className="w-4 h-4 mr-2" />
+              Gallery
+            </TabsTrigger>
             <TabsTrigger value="rooms" data-testid="rooms-tab">
               <Home className="w-4 h-4 mr-2" />
               Rooms
