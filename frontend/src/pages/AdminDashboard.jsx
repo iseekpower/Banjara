@@ -114,7 +114,7 @@ const AdminDashboard = () => {
 
   const fetchAllData = async () => {
     try {
-      const [treks, bbqs, rooms, menu, faqsData, rulesData, orders, subs, anns] = await Promise.all([
+      const [treks_data, bbqs, rooms, menu, faqsData, rulesData, orders, subs, anns, treksData, galleryData] = await Promise.all([
         axios.get(`${API}/bookings/trek`),
         axios.get(`${API}/bookings/bbq`),
         axios.get(`${API}/inquiries/room`),
@@ -123,10 +123,12 @@ const AdminDashboard = () => {
         axios.get(`${API}/rules`),
         axios.get(`${API}/orders/food`),
         axios.get(`${API}/subscriptions`),
-        axios.get(`${API}/announcements`)
+        axios.get(`${API}/announcements`),
+        axios.get(`${API}/treks`),
+        axios.get(`${API}/gallery`)
       ]);
 
-      setTrekBookings(treks.data);
+      setTrekBookings(treks_data.data);
       setBbqBookings(bbqs.data);
       setRoomInquiries(rooms.data);
       setMenuItems(menu.data);
@@ -135,6 +137,8 @@ const AdminDashboard = () => {
       setFoodOrders(orders.data);
       setSubscriptions(subs.data);
       setAnnouncements(anns.data);
+      setTreks(treksData.data);
+      setGallery(galleryData.data);
     } catch (error) {
       toast.error('Failed to fetch data');
     }
