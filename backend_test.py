@@ -446,6 +446,287 @@ class BanjaraBarracksAPITester:
             print("❌ AI chat failed to respond")
             return False
 
+    def test_trek_crud_apis(self):
+        """Test V4 Trek CRUD API endpoints"""
+        print("\n=== Testing V4 Trek CRUD APIs ===")
+        
+        # Test GET /api/treks - should return seeded treks
+        success, response = self.run_test(
+            "Get All Treks",
+            "GET",
+            "treks",
+            200
+        )
+        
+        trek_count = 0
+        sample_trek_id = None
+        if success and isinstance(response, list):
+            trek_count = len(response)
+            print(f"✅ Retrieved {trek_count} treks (expected: 5 seeded treks)")
+            
+            # Verify trek data structure
+            if response:
+                sample_trek = response[0]
+                sample_trek_id = sample_trek.get('id')
+                required_fields = ['name', 'duration', 'difficulty', 'description', 'highlights', 
+                                 'best_season', 'what_to_carry', 'images', 'altitude', 'distance', 'featured', 'active']
+                
+                missing_fields = [field for field in required_fields if field not in sample_trek]
+                if not missing_fields:
+                    print("✅ Trek data structure is correct")
+                    
+                    # Check if price is ₹5,000
+                    if sample_trek.get('price') == 5000:
+                        print("✅ Trek price is correctly set to ₹5,000")
+                    else:
+                        print(f"❌ Trek price is {sample_trek.get('price')}, expected ₹5,000")
+                        
+                    # Check for featured treks
+                    featured_treks = [t for t in response if t.get('featured', False)]
+                    if featured_treks:
+                        print(f"✅ Found {len(featured_treks)} featured treks")
+                    else:
+                        print("⚠️ No featured treks found")
+                else:
+                    print(f"❌ Missing required fields in trek data: {missing_fields}")
+        
+        # Test GET /api/treks/{trek_id} - get single trek
+        if sample_trek_id:
+            success, response = self.run_test(
+                "Get Single Trek",
+                "GET",
+                f"treks/{sample_trek_id}",
+                200
+            )
+            
+            if success and response.get('id') == sample_trek_id:
+                print(f"✅ Successfully retrieved single trek: {response.get('name', 'Unknown')}")
+        
+        # Test POST /api/treks - create new trek (admin functionality)
+        new_trek_data = {
+            "name": "Test Trek V4",
+            "duration": "6-7 hours",
+            "difficulty": "Moderate",
+            "price": 5000,
+            "description": "A test trek for V4 testing purposes",
+            "highlights": ["Beautiful views", "Test experience"],
+            "best_season": "March to June",
+            "what_to_carry": ["Water bottle", "Comfortable shoes"],
+            "images": ["https://example.com/test-image.jpg"],
+            "altitude": "3000m",
+            "distance": "8km",
+            "featured": False,
+            "active": True,
+            "order": 999
+        }
+        
+        success, response = self.run_test(
+            "Create New Trek",
+            "POST",
+            "treks",
+            200,
+            data=new_trek_data
+        )
+        
+        created_trek_id = None
+        if success and response.get('id'):
+            created_trek_id = response['id']
+            print(f"✅ Trek created successfully with ID: {created_trek_id}")
+        
+        # Test PUT /api/treks/{trek_id} - update trek
+        if created_trek_id:
+            update_data = {
+                "name": "Updated Test Trek V4",
+                "featured": True
+            }
+            
+            success, response = self.run_test(
+                "Update Trek",
+                "PUT",
+                f"treks/{created_trek_id}",
+                200,
+                data=update_data
+            )
+            
+            if success and response.get('name') == "Updated Test Trek V4":
+                print("✅ Trek updated successfully")
+        
+        # Test DELETE /api/treks/{trek_id} - delete trek
+        if created_trek_id:
+            success, response = self.run_test(
+                "Delete Trek",
+                "DELETE",
+                f"treks/{created_trek_id}",
+                200
+            )
+            
+            if success:
+                print("✅ Trek deleted successfully")
+        
+        return trek_count >= 1
+
+    def test_gallery_crud_apis(self):
+        """Test V4 Gallery CRUD API endpoints"""
+        print("\n=== Testing V4 Gallery CRUD APIs ===")
+        
+        # Test GET /api/gallery - should return seeded gallery images
+        success, response = self.run_test(
+            "Get All Gallery Images",
+            "GET",
+            "gallery",
+            200
+        )
+        
+        gallery_count = 0
+        if success and isinstance(response, list):
+            gallery_count = len(response)
+            print(f"✅ Retrieved {gallery_count} gallery images (expected: 6 seeded images)")
+            
+            # Verify gallery data structure
+            if response:
+                sample_image = response[0]
+                required_fields = ['title', 'description', 'image_url', 'category', 'order', 'active']
+                
+                missing_fields = [field for field in required_fields if field not in sample_image]
+                if not missing_fields:
+                    print("✅ Gallery data structure is correct")
+                    print(f"   Sample image: {sample_image.get('title', 'Unknown')} - {sample_image.get('category', 'Unknown')}")
+                else:
+                    print(f"❌ Missing required fields in gallery data: {missing_fields}")
+        
+        # Test POST /api/gallery - add new gallery image (admin functionality)
+        new_image_data = {
+            "title": "Test Gallery Image V4",
+            "description": "A test image for V4 gallery testing",
+            "image_url": "https://example.com/test-gallery-image.jpg",
+            "category": "test",
+            "order": 999,
+            "active": True
+        }
+        
+        success, response = self.run_test(
+            "Add Gallery Image",
+            "POST",
+            "gallery",
+            200,
+            data=new_image_data
+        )
+        
+        created_image_id = None
+        if success and response.get('id'):
+            created_image_id = response['id']
+            print(f"✅ Gallery image added successfully with ID: {created_image_id}")
+        
+        # Test DELETE /api/gallery/{image_id} - delete gallery image
+        if created_image_id:
+            success, response = self.run_test(
+                "Delete Gallery Image",
+                "DELETE",
+                f"gallery/{created_image_id}",
+                200
+            )
+            
+            if success:
+                print("✅ Gallery image deleted successfully")
+        
+        return gallery_count >= 1
+
+    def test_v4_trek_booking_with_upi(self):
+        """Test V4 Trek booking with UPI payment"""
+        print("\n=== Testing V4 Trek Booking with UPI ===")
+        
+        # Create a trek booking with UPI payment
+        tomorrow = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
+        trek_booking_data = {
+            "trek_id": "sample-trek-id",
+            "trek_name": "Bhunbhuni Trek",
+            "person_count": 3,
+            "date": tomorrow,
+            "full_name": "Rajesh Kumar",
+            "email": "rajesh.kumar@example.com",
+            "phone": "+91 9876543210",
+            "payment_method": "upi",
+            "payment_status": "pending"
+        }
+        
+        success, response = self.run_test(
+            "Create Trek Booking with UPI",
+            "POST",
+            "bookings/trek",
+            200,
+            data=trek_booking_data
+        )
+        
+        booking_id = None
+        if success and response.get('id'):
+            booking_id = response['id']
+            print(f"✅ Trek booking created with ID: {booking_id}")
+            
+            # Verify UPI payment details
+            if response.get('status') == 'pending':
+                print("✅ Payment status correctly set to 'pending'")
+            else:
+                print(f"❌ Payment status is {response.get('status')}, expected 'pending'")
+            
+            # Verify cost calculation (₹5,000 per person)
+            expected_cost = 5000 * trek_booking_data['person_count']
+            if response.get('cost') == expected_cost:
+                print(f"✅ Cost correctly calculated: ₹{response.get('cost')} for {trek_booking_data['person_count']} persons")
+            else:
+                print(f"❌ Cost calculation error: got ₹{response.get('cost')}, expected ₹{expected_cost}")
+        
+        # Test GET /api/bookings/trek - verify booking is stored
+        success, response = self.run_test(
+            "Get All Trek Bookings",
+            "GET",
+            "bookings/trek",
+            200
+        )
+        
+        if success and isinstance(response, list):
+            # Find our booking
+            our_booking = None
+            for booking in response:
+                if booking.get('id') == booking_id:
+                    our_booking = booking
+                    break
+            
+            if our_booking:
+                print(f"✅ Trek booking found in database")
+                print(f"   UPI ID should be used: sadhya0794@okhdfcbank")
+            else:
+                print("❌ Trek booking not found in database")
+        
+        return booking_id is not None
+
+    def test_error_handling(self):
+        """Test error handling for invalid IDs"""
+        print("\n=== Testing Error Handling ===")
+        
+        # Test invalid trek ID
+        success, response = self.run_test(
+            "Get Trek with Invalid ID",
+            "GET",
+            "treks/invalid-trek-id-12345",
+            404
+        )
+        
+        if success:
+            print("✅ Proper 404 error for invalid trek ID")
+        
+        # Test invalid gallery image ID
+        success, response = self.run_test(
+            "Delete Gallery Image with Invalid ID",
+            "DELETE",
+            "gallery/invalid-image-id-12345",
+            404
+        )
+        
+        if success:
+            print("✅ Proper 404 error for invalid gallery image ID")
+        
+        return True
+
 def main():
     print("🏔️  Starting Banjara Barracks API Testing")
     print("=" * 50)
