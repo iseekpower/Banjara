@@ -15,7 +15,7 @@ const KheergangaTrek = () => {
         <title>Kheerganga Trek Guide 2025: Complete Trekking Experience from Kalga | Banjara Barracks</title>
         <meta name="description" content="Complete guide to Kheerganga Trek from Kalga village. Best time to visit, trek route, hot springs, camping, and tips for beginners. Book your stay at Banjara Barracks, your gateway to Parvati Valley treks." />
         <meta name="keywords" content="Kheerganga trek, Kheerganga hot springs, Parvati Valley trek, Kalga to Kheerganga, best time Kheerganga, Kheerganga camping, Himachal Pradesh trekking, Banjara Barracks Kalga" />
-        <link rel="canonical" href="https://mountain-retreat-6.preview.emergentagent.com/blog/kheerganga-trek" />
+        <link rel="canonical" href="https://banjara-homestay.preview.emergentagent.com/blog/kheerganga-trek" />
       </Helmet>
 
       {/* Hero */}

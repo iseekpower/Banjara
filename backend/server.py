@@ -852,7 +852,7 @@ async def delete_gallery_image(image_id: str):
 async def generate_food_menu_qr():
     """Generate QR code for food menu"""
     # Get the base URL from environment or use default
-    base_url = os.environ.get('FRONTEND_URL', 'https://mountain-retreat-6.preview.emergentagent.com')
+    base_url = os.environ.get('FRONTEND_URL', 'https://banjara-homestay.preview.emergentagent.com')
     food_url = f"{base_url}/food"
     
     # Create QR code
