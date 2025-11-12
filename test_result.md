@@ -107,39 +107,48 @@ user_problem_statement: "V4 Redesign: Update landing page to prioritize Treks an
 backend:
   - task: "Trek CRUD API endpoints"
     implemented: true
-    working: "NA"
+    working: true
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoints created: GET /api/treks, GET /api/treks/{id}, POST /api/treks, PUT /api/treks/{id}, DELETE /api/treks/{id}"
+      - working: true
+        agent: "testing"
+        comment: "✅ All Trek CRUD APIs working perfectly. Fixed seeding issue - treks now have proper IDs. Verified: 5 seeded treks, correct data structure, ₹5,000 pricing, 2 featured treks, full CRUD operations, proper error handling for invalid IDs."
   
   - task: "Gallery CRUD API endpoints"
     implemented: true
-    working: "NA"
+    working: true
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoints created: GET /api/gallery, POST /api/gallery, DELETE /api/gallery/{id}"
+      - working: true
+        agent: "testing"
+        comment: "✅ All Gallery CRUD APIs working perfectly. Verified: 6 seeded gallery images, correct data structure with title/description/image_url/category/order/active fields, successful add/delete operations, proper error handling for invalid IDs."
   
   - task: "Trek booking endpoint"
     implemented: true
-    working: "NA"
+    working: true
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "POST /api/bookings/trek endpoint for in-house trek bookings with UPI payment"
+      - working: true
+        agent: "testing"
+        comment: "✅ Trek booking with UPI payment working perfectly. Verified: UPI payment method support, payment_status='pending', correct cost calculation (₹5,000 per person), booking storage and retrieval. UPI ID: sadhya0794@okhdfcbank confirmed for frontend integration."
 
 frontend:
   - task: "New landing page (HomeNew.jsx)"
