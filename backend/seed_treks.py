@@ -77,9 +77,11 @@ treks = [
         "distance": "10 km",
         "featured": True,
         "active": True,
-        "order": 2
+        "order": 2,
+        "created_at": datetime.now(timezone.utc).isoformat()
     },
     {
+        "id": str(uuid.uuid4()),
         "name": "Bhandak Trek",
         "duration": "5-6 hours",
         "difficulty": "Moderate",
