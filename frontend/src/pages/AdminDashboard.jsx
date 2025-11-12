@@ -343,6 +343,111 @@ const AdminDashboard = () => {
     }
   };
 
+  // Trek Management Handlers
+  const handleAddTrek = async (e) => {
+    e.preventDefault();
+    try {
+      const trekData = {
+        ...trekForm,
+        highlights: trekForm.highlights.split('\n').filter(h => h.trim()),
+        what_to_carry: trekForm.what_to_carry.split('\n').filter(w => w.trim()),
+        images: trekForm.images.split('\n').filter(i => i.trim()),
+        price: 5000
+      };
+      
+      if (editingItem) {
+        await axios.put(`${API}/treks/${editingItem}`, trekData);
+        toast.success('Trek updated');
+      } else {
+        await axios.post(`${API}/treks`, trekData);
+        toast.success('Trek added');
+      }
+      
+      setTrekDialog(false);
+      setEditingItem(null);
+      setTrekForm({
+        name: '',
+        duration: '',
+        difficulty: 'Easy',
+        description: '',
+        highlights: '',
+        best_season: '',
+        what_to_carry: '',
+        images: '',
+        altitude: '',
+        distance: '',
+        featured: false,
+        active: true
+      });
+      fetchAllData();
+    } catch (error) {
+      toast.error('Failed to save trek');
+    }
+  };
+
+  const handleEditTrek = (trek) => {
+    setEditingItem(trek.id);
+    setTrekForm({
+      name: trek.name,
+      duration: trek.duration,
+      difficulty: trek.difficulty,
+      description: trek.description,
+      highlights: trek.highlights.join('\n'),
+      best_season: trek.best_season,
+      what_to_carry: trek.what_to_carry.join('\n'),
+      images: trek.images.join('\n'),
+      altitude: trek.altitude || '',
+      distance: trek.distance || '',
+      featured: trek.featured,
+      active: trek.active
+    });
+    setTrekDialog(true);
+  };
+
+  const handleDeleteTrek = async (trekId) => {
+    if (window.confirm('Are you sure you want to delete this trek?')) {
+      try {
+        await axios.delete(`${API}/treks/${trekId}`);
+        toast.success('Trek deleted');
+        fetchAllData();
+      } catch (error) {
+        toast.error('Failed to delete trek');
+      }
+    }
+  };
+
+  // Gallery Management Handlers
+  const handleAddGalleryImage = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`${API}/gallery`, galleryForm);
+      toast.success('Image added to gallery');
+      setGalleryDialog(false);
+      setGalleryForm({
+        title: '',
+        description: '',
+        image_url: '',
+        category: 'nature'
+      });
+      fetchAllData();
+    } catch (error) {
+      toast.error('Failed to add image');
+    }
+  };
+
+  const handleDeleteGalleryImage = async (imageId) => {
+    if (window.confirm('Are you sure you want to delete this image?')) {
+      try {
+        await axios.delete(`${API}/gallery/${imageId}`);
+        toast.success('Image deleted');
+        fetchAllData();
+      } catch (error) {
+        toast.error('Failed to delete image');
+      }
+    }
+  };
+
+
   const getOrderStatusColor = (status) => {
     switch(status) {
       case 'pending': return 'bg-yellow-100 text-yellow-800';
