@@ -202,10 +202,12 @@ test_plan:
     - "Gallery CRUD API endpoints"
     - "Trek booking endpoint"
     - "Trek detail and booking page"
+    - "Admin Trek Management"
+    - "Admin Gallery Management"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
-    message: "Fixed compilation errors in TrekDetail.jsx. New landing page (HomeNew.jsx) is rendering correctly with hero slider, treks section, and earthy color scheme. Next step is to implement admin dashboard tabs for Trek and Gallery management, then test backend APIs and frontend booking flow."
+    message: "All implementation complete! Backend: Trek & Gallery APIs ready. Frontend: HomeNew.jsx with hero/treks/gallery working. TrekDetail.jsx with booking form and UPI payment. AdminDashboard with Trek & Gallery management tabs. Ready for comprehensive testing."
