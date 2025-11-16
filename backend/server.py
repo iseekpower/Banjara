@@ -811,7 +811,7 @@ async def create_subscription(subscription: SubscriptionCreate):
     await db.subscriptions.insert_one(doc)
     return sub_obj
 
-@api_router.get("/subscriptions", response_model=List[Subscription])
+@api_router.get("/subscriptions")
 async def get_subscriptions():
     """Get all subscriptions (admin)"""
     subs = await db.subscriptions.find({}, {"_id": 0}).to_list(1000)
