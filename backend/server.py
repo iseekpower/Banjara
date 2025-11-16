@@ -730,7 +730,7 @@ async def get_user(user_id: str):
 @api_router.get("/users/{user_id}/orders")
 async def get_user_orders(user_id: str):
     """Get all orders for a user"""
-    orders = await db.food_orders.find({"user_id": user_id}).to_list(length=None)
+    orders = await db.food_orders.find({"user_id": user_id}, {"_id": 0}).to_list(length=None)
     return orders
 
 @api_router.get("/users/{user_id}/billing")
