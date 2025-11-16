@@ -59,8 +59,37 @@ const HemuDashboard = () => {
     }
   }, [isAuthenticated]);
 
-  const fetchAllData = async () => {
-    setLoading(true);
+  const requestNotificationPermission = async () => {
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      setNotificationsEnabled(permission === 'granted');
+      if (permission === 'granted') {
+        toast.success('Notifications enabled! You\'ll be alerted for new orders.');
+      }
+    }
+  };
+
+  const sendNotification = (title, body) => {
+    if (notificationsEnabled && 'Notification' in window && Notification.permission === 'granted') {
+      new Notification(title, {
+        body: body,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        vibrate: [200, 100, 200],
+        tag: 'order-notification'
+      });
+      
+      // Play a sound (optional)
+      const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTcIGmm98OScTgwOUKfl8LZjHAU5k9n0y3ojBSh+zPLaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBSh+zPDaizsKFFuz6OyrWBELTKXh8bllHgU2jdXzzn0pBQ==');
+      audio.play().catch(() => {}); // Ignore errors if sound fails
+    }
+  };
+
+  const fetchAllData = async (isBackgroundPoll = false) => {
+    if (!isBackgroundPoll) {
+      setLoading(true);
+    }
+    
     try {
       const [orders, treks, rooms] = await Promise.all([
         axios.get(`${API}/orders/food`),
@@ -68,13 +97,36 @@ const HemuDashboard = () => {
         axios.get(`${API}/inquiries/room`)
       ]);
 
-      setFoodOrders(orders.data);
+      const newOrders = orders.data;
+      
+      // Check for new orders and send notification
+      if (isBackgroundPoll && lastOrderCount > 0 && newOrders.length > lastOrderCount) {
+        const newOrderCount = newOrders.length - lastOrderCount;
+        const pendingOrders = newOrders.filter(o => o.status === 'pending').length;
+        
+        sendNotification(
+          `🔔 ${newOrderCount} New Order${newOrderCount > 1 ? 's' : ''} Received!`,
+          `You have ${pendingOrders} pending order${pendingOrders !== 1 ? 's' : ''} to prepare.`
+        );
+        
+        // Play sound and vibrate
+        if ('vibrate' in navigator) {
+          navigator.vibrate([200, 100, 200]);
+        }
+      }
+      
+      setLastOrderCount(newOrders.length);
+      setFoodOrders(newOrders);
       setTrekBookings(treks.data);
       setRoomInquiries(rooms.data);
     } catch (error) {
-      toast.error('Failed to fetch data');
+      if (!isBackgroundPoll) {
+        toast.error('Failed to fetch data');
+      }
     } finally {
-      setLoading(false);
+      if (!isBackgroundPoll) {
+        setLoading(false);
+      }
     }
   };
 
