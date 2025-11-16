@@ -6,9 +6,17 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { 
   Mountain, ChefHat, MapPin, Calendar, Clock, Users, ExternalLink,
-  Menu as MenuIcon, X, Heart, ArrowRight, Star, Sparkles, TrendingUp
+  Menu as MenuIcon, X, Heart, ArrowRight, Star, Sparkles, TrendingUp, MessageCircle, Send
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
