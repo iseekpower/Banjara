@@ -467,6 +467,37 @@ const AdminDashboard = () => {
   };
 
 
+  // Billing Handlers
+  const handleViewBill = async (user) => {
+    setSelectedUser(user);
+    try {
+      const response = await axios.get(`${API}/users/${user.id}/billing`);
+      setUserBilling(response.data);
+      setStayAmount(0); // Reset stay amount
+      setBillDialogOpen(true);
+    } catch (error) {
+      toast.error('Failed to fetch billing data');
+    }
+  };
+
+  const handlePrintBill = () => {
+    window.print();
+  };
+
+  const handleDownloadBill = () => {
+    const billContent = document.getElementById('bill-receipt').innerHTML;
+    const printWindow = window.open('', '', 'height=600,width=800');
+    printWindow.document.write('<html><head><title>Bill Receipt</title>');
+    printWindow.document.write('<style>body{font-family:Arial,sans-serif;padding:20px;} table{width:100%;border-collapse:collapse;} th,td{border:1px solid #ddd;padding:8px;text-align:left;} th{background-color:#10b981;color:white;} .total{font-size:20px;font-weight:bold;}</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(billContent);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+  };
+
+
+
   const getOrderStatusColor = (status) => {
     switch(status) {
       case 'pending': return 'bg-yellow-100 text-yellow-800';
