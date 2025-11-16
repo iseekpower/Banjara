@@ -38,6 +38,14 @@ const AdminDashboard = () => {
   const [password, setPassword] = useState('');
   const [trekBookings, setTrekBookings] = useState([]);
   const [bbqBookings, setBbqBookings] = useState([]);
+
+  // Check for persistent login on mount
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('adminLoggedIn');
+    if (isLoggedIn === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
   const [roomInquiries, setRoomInquiries] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [faqs, setFaqs] = useState([]);
