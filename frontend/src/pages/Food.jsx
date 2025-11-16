@@ -41,7 +41,6 @@ const Food = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [cart, setCart] = useState([]);
-  const [orderType, setOrderType] = useState('guest'); // 'guest' or 'village'
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [subscriptionOpen, setSubscriptionOpen] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
