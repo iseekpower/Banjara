@@ -295,32 +295,49 @@ const HemuDashboard = () => {
       {/* Mobile-optimized Tabs */}
       <main className="pb-20">
         {/* Notification Status Card */}
-        {!notificationsEnabled && (
-          <div className="p-4">
+        <div className="p-4">
+          {!notificationsEnabled ? (
             <Card className="bg-yellow-50 border-yellow-200">
               <CardContent className="pt-4">
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">🔔</span>
                   <div className="flex-1">
                     <p className="font-semibold text-sm text-stone-900 mb-1">
-                      Enable Notifications
+                      Enable Instant Order Alerts
                     </p>
                     <p className="text-xs text-stone-600 mb-3">
-                      Get instant alerts for new orders without refreshing the page
+                      Get notified automatically when new orders arrive. No need to refresh!
                     </p>
                     <Button
                       size="sm"
                       onClick={requestNotificationPermission}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-xs"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-xs w-full"
                     >
-                      Enable Now
+                      🔔 Enable Notifications
                     </Button>
+                    {!('Notification' in window) && (
+                      <p className="text-[10px] text-red-600 mt-2">
+                        ⚠️ Notifications not supported on this browser. Try Chrome or Firefox.
+                      </p>
+                    )}
                   </div>
                 </div>
               </CardContent>
             </Card>
-          </div>
-        )}
+          ) : (
+            <Card className="bg-green-50 border-green-200">
+              <CardContent className="pt-4">
+                <div className="flex items-center gap-2 text-sm text-green-800">
+                  <span className="text-xl">✅</span>
+                  <div>
+                    <p className="font-semibold">Notifications Enabled</p>
+                    <p className="text-xs">Auto-checking for new orders every 30 seconds</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
         
         <Tabs defaultValue="food-orders" className="w-full">
           <TabsList className="grid w-full grid-cols-3 sticky top-16 z-40 bg-white shadow-md">
