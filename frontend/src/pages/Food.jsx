@@ -27,6 +27,17 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const Food = () => {
+  const { user, signup, login, logout, isAuthenticated } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isSignup, setIsSignup] = useState(true);
+  const [authForm, setAuthForm] = useState({
+    name: '',
+    phone: '',
+    user_type: 'guest', // 'guest' or 'traveler'
+    room_number: '',
+    cafe_name: ''
+  });
+  
   const [menuItems, setMenuItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [cart, setCart] = useState([]);
