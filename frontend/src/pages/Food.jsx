@@ -317,21 +317,43 @@ const Food = () => {
               </h1>
               <p className="text-sm text-stone-600 mt-1">From our kitchen to your heart - Made with love by Chef Hemu</p>
             </div>
-            <div className="relative">
-              <Button
-                onClick={() => setCheckoutOpen(true)}
-                size="lg"
-                className="bg-emerald-600 hover:bg-emerald-700 relative"
-                data-testid="cart-btn"
-              >
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Cart ({cart.length})
-                {cart.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
-                    {cart.reduce((sum, item) => sum + item.quantity, 0)}
-                  </span>
-                )}
-              </Button>
+            <div className="flex items-center gap-4">
+              {isAuthenticated && (
+                <div className="text-right">
+                  <p className="text-sm font-semibold text-stone-900 flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    {user?.name}
+                  </p>
+                  <p className="text-xs text-stone-600">
+                    {user?.user_type === 'guest' ? `Room: ${user?.room_number}` : `${user?.cafe_name || 'Traveler in Kalga'}`}
+                  </p>
+                  <Button
+                    onClick={logout}
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs mt-1"
+                  >
+                    <LogOut className="w-3 h-3 mr-1" />
+                    Logout
+                  </Button>
+                </div>
+              )}
+              <div className="relative">
+                <Button
+                  onClick={() => setCheckoutOpen(true)}
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 relative"
+                  data-testid="cart-btn"
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Cart ({cart.length})
+                  {cart.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                      {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                    </span>
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
