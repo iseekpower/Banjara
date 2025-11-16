@@ -1386,6 +1386,80 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
+
+          {/* Customer Billing Tab */}
+          <TabsContent value="billing" className="space-y-4">
+            <Card data-testid="billing-card">
+              <CardHeader>
+                <CardTitle>Customer Billing</CardTitle>
+                <CardDescription>View customer profiles and generate bills</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {users.length === 0 ? (
+                    <p className="text-center text-stone-500 py-8">No customers registered yet</p>
+                  ) : (
+                    <div className="grid gap-4">
+                      {users.map((user) => {
+                        const userOrders = foodOrders.filter(o => o.user_id === user.id);
+                        const totalSpent = userOrders.reduce((sum, o) => sum + o.total_amount, 0);
+                        
+                        return (
+                          <Card key={user.id} className="border-2">
+                            <CardContent className="pt-6">
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <Users className="w-5 h-5 text-emerald-600" />
+                                    <h3 className="text-xl font-bold">{user.name}</h3>
+                                    <Badge className={user.user_type === 'guest' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'}>
+                                      {user.user_type === 'guest' ? 'Guest' : 'Traveler'}
+                                    </Badge>
+                                  </div>
+                                  <div className="grid md:grid-cols-3 gap-4 mt-3">
+                                    <div>
+                                      <p className="text-sm text-stone-600">Phone</p>
+                                      <p className="font-semibold">{user.phone}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-stone-600">
+                                        {user.user_type === 'guest' ? 'Room' : 'Staying At'}
+                                      </p>
+                                      <p className="font-semibold">
+                                        {user.user_type === 'guest' ? user.room_number : (user.cafe_name || 'Kalga')}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-stone-600">Total Food Orders</p>
+                                      <p className="font-semibold text-emerald-600">₹{totalSpent}</p>
+                                    </div>
+                                  </div>
+                                  <div className="mt-3 text-sm text-stone-600">
+                                    <p>Orders: {userOrders.length}</p>
+                                    <p>Registered: {new Date(user.created_at).toLocaleDateString()}</p>
+                                  </div>
+                                </div>
+                                <Button
+                                  onClick={() => handleViewBill(user)}
+                                  className="bg-emerald-600 hover:bg-emerald-700"
+                                  data-testid={`view-bill-${user.id}`}
+                                >
+                                  <Receipt className="w-4 h-4 mr-2" />
+                                  Generate Bill
+                                </Button>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+
         </Tabs>
       </main>
 
