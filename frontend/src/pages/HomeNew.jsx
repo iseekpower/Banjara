@@ -138,9 +138,12 @@ const HomeNew = () => {
               <button onClick={() => scrollToSection('life-at-barracks')} className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
                 Life at Barracks
               </button>
-              <button onClick={() => scrollToSection('faq')} className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
-                FAQ
+              <button onClick={() => scrollToSection('ai-planner')} className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
+                AI Planner
               </button>
+              <Link to="/admin-banjara-core" className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
+                Admin
+              </Link>
               <Button
                 onClick={() => window.open(AIRBNB_URL, '_blank')}
                 variant="outline"
