@@ -677,30 +677,17 @@ const Food = () => {
                         data-testid="checkout-phone"
                       />
                     </div>
-                    {orderType === 'guest' ? (
-                      <div>
-                        <Label htmlFor="room_number">Room Number</Label>
-                        <Input
-                          id="room_number"
-                          value={checkoutForm.room_number}
-                          onChange={(e) => setCheckoutForm({...checkoutForm, room_number: e.target.value})}
-                          required
-                          data-testid="checkout-room"
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <Label htmlFor="delivery_address">Delivery Address in Kalga</Label>
-                        <Textarea
-                          id="delivery_address"
-                          value={checkoutForm.delivery_address}
-                          onChange={(e) => setCheckoutForm({...checkoutForm, delivery_address: e.target.value})}
-                          required
-                          placeholder="Please provide detailed address"
-                          data-testid="checkout-address"
-                        />
-                      </div>
-                    )}
+                    <div>
+                      <Label htmlFor="delivery_address">Delivery Address (Room or Location in Kalga)</Label>
+                      <Textarea
+                        id="delivery_address"
+                        value={checkoutForm.delivery_address}
+                        onChange={(e) => setCheckoutForm({...checkoutForm, delivery_address: e.target.value})}
+                        required
+                        placeholder="e.g., Room 5 or Near Snowline Cafe"
+                        data-testid="checkout-address"
+                      />
+                    </div>
                   </>
                 )}
                 <div>
