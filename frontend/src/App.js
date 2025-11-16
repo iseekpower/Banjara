@@ -12,19 +12,21 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <div className="App">
-      <Toaster position="top-right" />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomeNew />} />
-          <Route path="/admin-banjara-core" element={<AdminDashboard />} />
-          <Route path="/hemu-dashboard" element={<HemuDashboard />} />
-          <Route path="/blog/:place" element={<BlogPlace />} />
-          <Route path="/food" element={<Food />} />
-          <Route path="/trek/:trekId" element={<TrekDetail />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <Toaster position="top-right" />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomeNew />} />
+            <Route path="/admin-banjara-core" element={<AdminDashboard />} />
+            <Route path="/hemu-dashboard" element={<HemuDashboard />} />
+            <Route path="/blog/:place" element={<BlogPlace />} />
+            <Route path="/food" element={<Food />} />
+            <Route path="/trek/:trekId" element={<TrekDetail />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </AuthProvider>
   );
 }
 
