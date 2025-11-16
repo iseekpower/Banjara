@@ -270,6 +270,34 @@ const HemuDashboard = () => {
 
       {/* Mobile-optimized Tabs */}
       <main className="pb-20">
+        {/* Notification Status Card */}
+        {!notificationsEnabled && (
+          <div className="p-4">
+            <Card className="bg-yellow-50 border-yellow-200">
+              <CardContent className="pt-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">🔔</span>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm text-stone-900 mb-1">
+                      Enable Notifications
+                    </p>
+                    <p className="text-xs text-stone-600 mb-3">
+                      Get instant alerts for new orders without refreshing the page
+                    </p>
+                    <Button
+                      size="sm"
+                      onClick={requestNotificationPermission}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-xs"
+                    >
+                      Enable Now
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+        
         <Tabs defaultValue="food-orders" className="w-full">
           <TabsList className="grid w-full grid-cols-3 sticky top-16 z-40 bg-white shadow-md">
             <TabsTrigger value="food-orders" className="text-xs py-3">
