@@ -77,6 +77,21 @@ const Food = () => {
     filterMenu();
   }, [menuItems, activeFilter, mealTimeFilter, searchQuery]);
 
+
+  // Pre-fill checkout form with user details when logged in
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setCheckoutForm({
+        customer_name: user.name,
+        phone: user.phone,
+        room_number: user.user_type === 'guest' ? user.room_number : '',
+        delivery_address: user.user_type === 'traveler' ? (user.cafe_name || '') : '',
+        special_instructions: ''
+      });
+    }
+  }, [isAuthenticated, user]);
+
+
   const fetchMenu = async () => {
     try {
       const response = await axios.get(`${API}/menu/food`);
