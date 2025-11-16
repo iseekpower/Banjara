@@ -24,6 +24,7 @@ function App() {
             <Route path="/blog/:place" element={<BlogPlace />} />
             <Route path="/food" element={<Food />} />
             <Route path="/trek/:trekId" element={<TrekDetail />} />
+            <Route path="/my-orders" element={<MyOrders />} />
           </Routes>
         </BrowserRouter>
       </div>
