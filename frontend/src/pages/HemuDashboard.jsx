@@ -60,12 +60,36 @@ const HemuDashboard = () => {
   }, [isAuthenticated]);
 
   const requestNotificationPermission = async () => {
-    if ('Notification' in window) {
+    if (!('Notification' in window)) {
+      toast.error('Notifications not supported on this browser');
+      return;
+    }
+
+    try {
       const permission = await Notification.requestPermission();
-      setNotificationsEnabled(permission === 'granted');
+      console.log('Notification permission:', permission);
+      
       if (permission === 'granted') {
-        toast.success('Notifications enabled! You\'ll be alerted for new orders.');
+        setNotificationsEnabled(true);
+        toast.success('🔔 Notifications enabled! You\'ll be alerted for new orders.');
+        
+        // Test notification
+        setTimeout(() => {
+          new Notification('Banjara Barracks', {
+            body: 'Notifications are working! You\'ll get alerts for new orders.',
+            icon: '/favicon.ico',
+            badge: '/favicon.ico',
+            tag: 'test-notification'
+          });
+        }, 500);
+      } else if (permission === 'denied') {
+        toast.error('Notifications blocked. Please enable in browser settings.');
+      } else {
+        toast.error('Notification permission not granted');
       }
+    } catch (error) {
+      console.error('Notification error:', error);
+      toast.error('Could not enable notifications. Try refreshing the page.');
     }
   };
 
