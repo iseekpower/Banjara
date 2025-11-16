@@ -691,6 +691,76 @@ async def get_food_menu():
     items = await db.menu_items.find({}, {"_id": 0}).to_list(1000)
     return items
 
+
+
+# User Authentication Endpoints
+@api_router.post("/auth/signup", response_model=User)
+async def signup_user(user: UserCreate):
+    """Create a new user account"""
+    # Check if phone already exists
+    existing_user = await db.users.find_one({"phone": user.phone})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Phone number already registered")
+    
+    user_dict = user.model_dump()
+    user_dict["id"] = str(uuid.uuid4())
+    user_dict["created_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.users.insert_one(user_dict)
+    return User(**user_dict)
+
+@api_router.post("/auth/login")
+async def login_user(login: UserLogin):
+    """Login user with phone number"""
+    user = await db.users.find_one({"phone": login.phone})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found. Please sign up first.")
+    
+    return User(**user)
+
+@api_router.get("/auth/user/{user_id}", response_model=User)
+async def get_user(user_id: str):
+    """Get user by ID"""
+    user = await db.users.find_one({"id": user_id})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return User(**user)
+
+@api_router.get("/users/{user_id}/orders")
+async def get_user_orders(user_id: str):
+    """Get all orders for a user"""
+    orders = await db.food_orders.find({"user_id": user_id}).to_list(length=None)
+    return orders
+
+@api_router.get("/users/{user_id}/billing")
+async def get_user_billing(user_id: str):
+    """Get billing summary for a user"""
+    orders = await db.food_orders.find({"user_id": user_id}).to_list(length=None)
+    subscriptions = await db.subscriptions.find({"user_id": user_id}).to_list(length=None)
+    
+    total_orders = len(orders)
+    total_spent_orders = sum(order.get('total_amount', 0) for order in orders)
+    
+    total_subscriptions = len(subscriptions)
+    total_spent_subscriptions = sum(sub.get('total_paid', 0) for sub in subscriptions)
+    
+    return {
+        "user_id": user_id,
+        "orders": {
+            "count": total_orders,
+            "total_spent": total_spent_orders,
+            "orders": orders
+        },
+        "subscriptions": {
+            "count": total_subscriptions,
+            "total_spent": total_spent_subscriptions,
+            "subscriptions": subscriptions
+        },
+        "grand_total": total_spent_orders + total_spent_subscriptions
+    }
+
+
 @api_router.post("/orders/food", response_model=FoodOrder)
 async def create_food_order(order: FoodOrderCreate):
     """Create new food order"""
