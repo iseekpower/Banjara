@@ -1957,6 +1957,145 @@ const AdminDashboard = () => {
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Bill Dialog */}
+      <Dialog open={billDialogOpen} onOpenChange={setBillDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" data-testid="bill-dialog">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Generate Customer Bill</DialogTitle>
+            <DialogDescription>
+              Complete bill with stay and food charges
+            </DialogDescription>
+          </DialogHeader>
+
+          {selectedUser && userBilling && (
+            <div id="bill-receipt" className="space-y-6 p-6 bg-white">
+              {/* Header */}
+              <div className="border-b-2 border-emerald-600 pb-4">
+                <h1 className="text-3xl font-bold text-emerald-600">Banjara Barracks</h1>
+                <p className="text-sm text-stone-600">Kalga, Parvati Valley, Kullu District</p>
+                <p className="text-sm text-stone-600">Phone: +91 XXXXXXXXXX</p>
+              </div>
+
+              {/* Customer Details */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h2 className="font-bold text-lg mb-2">Customer Details</h2>
+                  <p><strong>Name:</strong> {selectedUser.name}</p>
+                  <p><strong>Phone:</strong> {selectedUser.phone}</p>
+                  <p><strong>Type:</strong> {selectedUser.user_type === 'guest' ? 'Guest at Banjara' : 'Traveler'}</p>
+                  {selectedUser.user_type === 'guest' && (
+                    <p><strong>Room:</strong> {selectedUser.room_number}</p>
+                  )}
+                  {selectedUser.user_type === 'traveler' && selectedUser.cafe_name && (
+                    <p><strong>Staying At:</strong> {selectedUser.cafe_name}</p>
+                  )}
+                </div>
+                <div>
+                  <h2 className="font-bold text-lg mb-2">Bill Summary</h2>
+                  <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
+                  <p><strong>Bill No:</strong> {`BB-${Date.now().toString().slice(-6)}`}</p>
+                </div>
+              </div>
+
+              {/* Stay Amount (Only for Guests) */}
+              {selectedUser.user_type === 'guest' && (
+                <div>
+                  <h2 className="font-bold text-lg mb-2">Accommodation Charges</h2>
+                  <div className="mb-4">
+                    <Label htmlFor="stay-amount">Enter Stay Amount (₹)</Label>
+                    <Input
+                      id="stay-amount"
+                      type="number"
+                      value={stayAmount}
+                      onChange={(e) => setStayAmount(parseInt(e.target.value) || 0)}
+                      placeholder="e.g., 3000"
+                      className="max-w-xs"
+                    />
+                  </div>
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-emerald-600 text-white">
+                        <th className="border p-2 text-left">Description</th>
+                        <th className="border p-2 text-right">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border p-2">Room: {selectedUser.room_number}</td>
+                        <td className="border p-2 text-right">₹{stayAmount}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Food Orders */}
+              <div>
+                <h2 className="font-bold text-lg mb-2">Food Orders - Hemu's Kitchen</h2>
+                {userBilling.orders.orders.length > 0 ? (
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-emerald-600 text-white">
+                        <th className="border p-2 text-left">Date</th>
+                        <th className="border p-2 text-left">Items</th>
+                        <th className="border p-2 text-right">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {userBilling.orders.orders.map((order, idx) => (
+                        <tr key={idx}>
+                          <td className="border p-2">{new Date(order.created_at).toLocaleDateString()}</td>
+                          <td className="border p-2">
+                            {order.items.map(item => `${item.name} x${item.quantity}`).join(', ')}
+                          </td>
+                          <td className="border p-2 text-right">₹{order.total_amount}</td>
+                        </tr>
+                      ))}
+                      <tr className="font-bold bg-stone-100">
+                        <td className="border p-2" colSpan="2">Total Food Charges</td>
+                        <td className="border p-2 text-right">₹{userBilling.orders.total_spent}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p className="text-stone-500 text-center py-4">No food orders</p>
+                )}
+              </div>
+
+              {/* Grand Total */}
+              <div className="border-t-2 border-emerald-600 pt-4">
+                <div className="flex justify-between items-center text-2xl font-bold">
+                  <span>GRAND TOTAL</span>
+                  <span className="text-emerald-600">
+                    ₹{(selectedUser.user_type === 'guest' ? stayAmount : 0) + userBilling.orders.total_spent}
+                  </span>
+                </div>
+                <p className="text-sm text-stone-600 mt-2 text-right">
+                  Amount in words: {/* You can add number to words conversion here */}
+                </p>
+              </div>
+
+              {/* Footer */}
+              <div className="text-center text-sm text-stone-600 border-t pt-4 mt-6">
+                <p>Thank you for staying with us at Banjara Barracks!</p>
+                <p className="mt-1">We hope to see you again soon.</p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-4">
+            <Button onClick={handlePrintBill} className="flex-1 bg-blue-600 hover:bg-blue-700">
+              <Printer className="w-4 h-4 mr-2" />
+              Print Bill
+            </Button>
+            <Button onClick={handleDownloadBill} className="flex-1 bg-emerald-600 hover:bg-emerald-700">
+              <Download className="w-4 h-4 mr-2" />
+              Download Bill
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
