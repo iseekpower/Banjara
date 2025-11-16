@@ -114,6 +114,12 @@ const AdminDashboard = () => {
     category: 'nature'
   });
 
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userBilling, setUserBilling] = useState(null);
+  const [billDialogOpen, setBillDialogOpen] = useState(false);
+  const [stayAmount, setStayAmount] = useState(0);
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchAllData();
