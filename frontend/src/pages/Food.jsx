@@ -235,12 +235,12 @@ const Food = () => {
 
     const orderData = {
       user_id: user?.id || null,
-      order_type: user?.user_type || orderType,
+      order_type: user?.user_type || 'traveler',
       customer_name: user?.name || checkoutForm.customer_name,
       phone: user?.phone || checkoutForm.phone,
-      room_number: user?.user_type === 'guest' ? user?.room_number : (orderType === 'guest' ? checkoutForm.room_number : null),
+      room_number: user?.user_type === 'guest' ? user?.room_number : null,
       cafe_name: user?.user_type === 'traveler' ? user?.cafe_name : null,
-      delivery_address: orderType === 'village' ? checkoutForm.delivery_address : null,
+      delivery_address: user?.user_type === 'traveler' ? (user?.cafe_name || checkoutForm.delivery_address) : null,
       items: cart.map(item => ({
         name: item.name,
         quantity: item.quantity,
