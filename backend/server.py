@@ -501,10 +501,12 @@ class FoodOrder(BaseModel):
     model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    order_type: str  # "guest" or "village"
+    user_id: str  # Link to user
+    order_type: str  # "guest" or "traveler"
     customer_name: str
     phone: str
-    room_number: Optional[str] = None  # For guest orders
+    room_number: Optional[str] = None  # For guest: "Attic Room 1" or "Attic Room 2"
+    cafe_name: Optional[str] = None  # For traveler
     delivery_address: Optional[str] = None  # For village orders
     items: List[dict]  # [{menu_item_id, name, quantity, price}]
     total_amount: int
@@ -514,10 +516,12 @@ class FoodOrder(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class FoodOrderCreate(BaseModel):
+    user_id: str
     order_type: str
     customer_name: str
     phone: str
     room_number: Optional[str] = None
+    cafe_name: Optional[str] = None
     delivery_address: Optional[str] = None
     items: List[dict]
     total_amount: int
