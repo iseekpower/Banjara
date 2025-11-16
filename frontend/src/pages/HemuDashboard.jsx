@@ -324,7 +324,14 @@ const HemuDashboard = () => {
           <TabsContent value="food-orders" className="p-4 space-y-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-bold">Food Orders</h2>
-              <Badge variant="secondary">{foodOrders.length} orders</Badge>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary">{foodOrders.length} orders</Badge>
+                {notificationsEnabled && (
+                  <Badge className="bg-green-100 text-green-800 text-[10px] px-2 py-1">
+                    Auto-refresh ON
+                  </Badge>
+                )}
+              </div>
             </div>
             
             {foodOrders.length === 0 ? (
