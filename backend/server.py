@@ -773,7 +773,7 @@ async def create_food_order(order: FoodOrderCreate):
     await db.food_orders.insert_one(doc)
     return order_obj
 
-@api_router.get("/orders/food", response_model=List[FoodOrder])
+@api_router.get("/orders/food")
 async def get_food_orders():
     """Get all food orders (admin)"""
     orders = await db.food_orders.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
