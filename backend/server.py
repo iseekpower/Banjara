@@ -572,6 +572,30 @@ class AnnouncementCreate(BaseModel):
     active: bool = True
 
 
+
+# User Authentication Models
+class User(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    phone: str  # Using phone as unique identifier
+    user_type: str  # "guest" or "traveler"
+    room_number: Optional[str] = None  # For guests: "Attic Room 1" or "Attic Room 2"
+    cafe_name: Optional[str] = None  # For travelers: where they're staying
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class UserCreate(BaseModel):
+    name: str
+    phone: str
+    user_type: str  # "guest" or "traveler"
+    room_number: Optional[str] = None
+    cafe_name: Optional[str] = None
+
+class UserLogin(BaseModel):
+    phone: str
+
+
 # Trek Models
 class Trek(BaseModel):
     model_config = ConfigDict(extra="ignore")
