@@ -182,6 +182,35 @@ const Food = () => {
     return Math.max(...cart.map(item => item.cooking_time));
   };
 
+
+  const handleAuthSubmit = async (e) => {
+    e.preventDefault();
+    
+    let result;
+    if (isSignup) {
+      // Signup
+      result = await signup(authForm);
+    } else {
+      // Login
+      result = await login(authForm.phone);
+    }
+    
+    if (result.success) {
+      toast.success(isSignup ? 'Account created successfully!' : 'Logged in successfully!');
+      setAuthModalOpen(false);
+      setAuthForm({
+        name: '',
+        phone: '',
+        user_type: 'guest',
+        room_number: '',
+        cafe_name: ''
+      });
+    } else {
+      toast.error(result.error);
+    }
+  };
+
+
   const handleCheckout = async (e) => {
     e.preventDefault();
     
