@@ -501,7 +501,7 @@ class FoodOrder(BaseModel):
     model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    user_id: str  # Link to user
+    user_id: Optional[str] = None  # Make optional for backward compatibility
     order_type: str  # "guest" or "traveler"
     customer_name: str
     phone: str
@@ -516,7 +516,7 @@ class FoodOrder(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class FoodOrderCreate(BaseModel):
-    user_id: str
+    user_id: Optional[str] = None  # Make optional
     order_type: str
     customer_name: str
     phone: str
