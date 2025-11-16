@@ -32,10 +32,30 @@ const HemuDashboard = () => {
   const [trekBookings, setTrekBookings] = useState([]);
   const [roomInquiries, setRoomInquiries] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [lastOrderCount, setLastOrderCount] = useState(0);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
+  // Check for persistent login on mount
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('hemuLoggedIn');
+    if (isLoggedIn === 'true') {
+      setIsAuthenticated(true);
+      requestNotificationPermission();
+    }
+  }, []);
+
+  // Set up polling and notifications when authenticated
   useEffect(() => {
     if (isAuthenticated) {
       fetchAllData();
+      requestNotificationPermission();
+      
+      // Poll for new orders every 30 seconds
+      const pollInterval = setInterval(() => {
+        fetchAllData(true); // Pass true to indicate this is a background poll
+      }, 30000);
+
+      return () => clearInterval(pollInterval);
     }
   }, [isAuthenticated]);
 
