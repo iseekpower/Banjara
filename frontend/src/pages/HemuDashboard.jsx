@@ -137,6 +137,7 @@ const HemuDashboard = () => {
     
     if (password === hemuPassword) {
       setIsAuthenticated(true);
+      localStorage.setItem('hemuLoggedIn', 'true');
       toast.success('Welcome, Hemu!');
     } else {
       toast.error('Invalid password');
@@ -146,6 +147,8 @@ const HemuDashboard = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setPassword('');
+    localStorage.removeItem('hemuLoggedIn');
+    toast.success('Logged out successfully');
   };
 
   const handleUpdateFoodOrderStatus = async (orderId, newStatus) => {
