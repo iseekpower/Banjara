@@ -157,6 +157,7 @@ const AdminDashboard = () => {
     try {
       await axios.post(`${API}/admin/login`, { password });
       setIsAuthenticated(true);
+      localStorage.setItem('adminLoggedIn', 'true');
       toast.success('Login successful');
     } catch (error) {
       toast.error('Invalid password');
@@ -166,6 +167,8 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setPassword('');
+    localStorage.removeItem('adminLoggedIn');
+    toast.success('Logged out successfully');
   };
 
   const handleAddMenuItem = async (e) => {
