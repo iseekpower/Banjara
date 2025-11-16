@@ -532,10 +532,10 @@ class Subscription(BaseModel):
     model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    user_id: str  # Link to user
+    user_id: Optional[str] = None  # Make optional for backward compatibility
     customer_name: str
     phone: str
-    user_type: str  # "guest" or "traveler"
+    user_type: Optional[str] = None  # "guest" or "traveler"
     room_number: Optional[str] = None  # For guest: "Attic Room 1" or "Attic Room 2"
     cafe_name: Optional[str] = None  # For traveler
     address: str
@@ -549,10 +549,10 @@ class Subscription(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class SubscriptionCreate(BaseModel):
-    user_id: str
+    user_id: Optional[str] = None  # Make optional
     customer_name: str
     phone: str
-    user_type: str
+    user_type: Optional[str] = None
     room_number: Optional[str] = None
     cafe_name: Optional[str] = None
     address: str
