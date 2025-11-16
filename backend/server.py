@@ -736,8 +736,8 @@ async def get_user_orders(user_id: str):
 @api_router.get("/users/{user_id}/billing")
 async def get_user_billing(user_id: str):
     """Get billing summary for a user"""
-    orders = await db.food_orders.find({"user_id": user_id}).to_list(length=None)
-    subscriptions = await db.subscriptions.find({"user_id": user_id}).to_list(length=None)
+    orders = await db.food_orders.find({"user_id": user_id}, {"_id": 0}).to_list(length=None)
+    subscriptions = await db.subscriptions.find({"user_id": user_id}, {"_id": 0}).to_list(length=None)
     
     total_orders = len(orders)
     total_spent_orders = sum(order.get('total_amount', 0) for order in orders)
