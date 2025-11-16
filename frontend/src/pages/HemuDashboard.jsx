@@ -319,9 +319,13 @@ const HemuDashboard = () => {
                     >
                       🔔 Enable Notifications
                     </Button>
-                    {!('Notification' in window) && (
+                    {'Notification' in window ? (
+                      <p className="text-[10px] text-stone-500 mt-2">
+                        ℹ️ Click button above and allow notifications when browser asks
+                      </p>
+                    ) : (
                       <p className="text-[10px] text-red-600 mt-2">
-                        ⚠️ Notifications not supported on this browser. Try Chrome or Firefox.
+                        ⚠️ Notifications not supported. Auto-refresh will still work every 30 seconds.
                       </p>
                     )}
                   </div>
