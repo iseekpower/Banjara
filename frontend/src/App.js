@@ -7,6 +7,7 @@ import HemuDashboard from "./pages/HemuDashboard";
 import BlogPlace from "./pages/BlogPlace";
 import Food from "./pages/Food";
 import TrekDetail from "./pages/TrekDetail";
+import MyOrders from "./pages/MyOrders";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "./contexts/AuthContext";
 
