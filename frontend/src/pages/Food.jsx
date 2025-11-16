@@ -400,44 +400,6 @@ const Food = () => {
       )}
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Order Type Selection */}
-        <Card className="mb-6" data-testid="order-type-card">
-          <CardHeader>
-            <CardTitle>Who's Ordering?</CardTitle>
-            <CardDescription>Select your order type for the best experience</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-4">
-              <button
-                onClick={() => setOrderType('guest')}
-                className={`p-6 rounded-xl border-2 transition-all ${
-                  orderType === 'guest'
-                    ? 'border-emerald-500 bg-emerald-50'
-                    : 'border-stone-200 hover:border-emerald-300'
-                }`}
-                data-testid="guest-order-btn"
-              >
-                <HomeIcon className="w-8 h-8 text-emerald-600 mb-3" />
-                <h3 className="font-bold text-lg mb-2">I'm a Guest at Banjara Barracks</h3>
-                <p className="text-sm text-stone-600">Staying with us? Order directly to your room</p>
-              </button>
-              <button
-                onClick={() => setOrderType('village')}
-                className={`p-6 rounded-xl border-2 transition-all ${
-                  orderType === 'village'
-                    ? 'border-emerald-500 bg-emerald-50'
-                    : 'border-stone-200 hover:border-emerald-300'
-                }`}
-                data-testid="village-order-btn"
-              >
-                <ChefHat className="w-8 h-8 text-emerald-600 mb-3" />
-                <h3 className="font-bold text-lg mb-2">Village Delivery</h3>
-                <p className="text-sm text-stone-600">From anywhere in Kalga - We deliver!</p>
-              </button>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Subscription Option */}
         <Card className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200">
           <CardHeader>
