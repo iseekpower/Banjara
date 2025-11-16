@@ -29,6 +29,22 @@ const HomeNew = () => {
   const [treks, setTreks] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [faqs, setFaqs] = useState([]);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
+  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+
+  const explorePlaces = [
+    { name: 'Kheerganga Trek', distance: '12 km', time: '4-5 hours', description: 'Famous hot springs and scenic trek through pine forests', slug: 'kheerganga-trek' },
+    { name: 'Pulga Village', distance: '3 km', time: '1 hour', description: 'Quaint village with apple orchards and waterfalls', slug: 'pulga-village' },
+    { name: 'Tosh Village', distance: '8 km', time: '2 hours', description: 'Popular village with cafes and mountain views', slug: 'tosh-village' },
+    { name: 'Fairy Forest', distance: '2 km', time: '45 mins', description: 'Hidden caves and perfect for camping under stars', slug: 'fairy-forest' },
+    { name: 'Manikaran', distance: '18 km', time: 'Day trip', description: 'Sacred hot springs and Gurudwara', slug: 'manikaran' },
+    { name: 'Kasol', distance: '16 km', time: 'Day trip', description: 'Vibrant town along Parvati River', slug: 'kasol' },
+    { name: 'Bunbuni Pass', distance: '10 km', time: '5-6 hours', description: 'Moderate trek with panoramic valley views', slug: 'bunbuni-pass' },
+    { name: 'Sar Pass', distance: '15 km', time: 'Multi-day', description: 'Challenging high-altitude trek through snow', slug: 'sar-pass' }
+  ];
 
   const heroSlides = [
     {
