@@ -564,7 +564,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-11" data-testid="admin-tabs">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-12" data-testid="admin-tabs">
             <TabsTrigger value="food-orders" data-testid="food-orders-tab">
               <ChefHat className="w-4 h-4 mr-2" />
               Food Orders
