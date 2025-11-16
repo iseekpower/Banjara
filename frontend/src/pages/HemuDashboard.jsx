@@ -236,7 +236,14 @@ const HemuDashboard = () => {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-xl font-bold">Hemu's Dashboard</h1>
-              <p className="text-xs text-emerald-100">Banjara Barracks</p>
+              <p className="text-xs text-emerald-100 flex items-center gap-1">
+                Banjara Barracks
+                {notificationsEnabled && (
+                  <span className="ml-2 inline-flex items-center gap-1">
+                    🔔 <span className="text-[10px]">ON</span>
+                  </span>
+                )}
+              </p>
             </div>
             <div className="flex gap-2">
               <Button
