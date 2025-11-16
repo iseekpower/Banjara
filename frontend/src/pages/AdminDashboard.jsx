@@ -593,6 +593,10 @@ const AdminDashboard = () => {
               <ImageIcon className="w-4 h-4 mr-2" />
               Gallery
             </TabsTrigger>
+            <TabsTrigger value="billing" data-testid="billing-tab">
+              <Receipt className="w-4 h-4 mr-2" />
+              Billing
+            </TabsTrigger>
             <TabsTrigger value="rooms" data-testid="rooms-tab">
               <Home className="w-4 h-4 mr-2" />
               Rooms
