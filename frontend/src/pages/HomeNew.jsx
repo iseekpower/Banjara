@@ -704,9 +704,6 @@ const HomeNew = () => {
                 <Link to="/food" className="block text-stone-400 hover:text-white transition-colors">
                   Order Food
                 </Link>
-                <Link to="/admin-banjara-core" className="block text-stone-400 hover:text-white transition-colors">
-                  Admin
-                </Link>
               </div>
             </div>
             <div>
