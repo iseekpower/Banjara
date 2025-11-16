@@ -761,6 +761,13 @@ async def get_user_billing(user_id: str):
     }
 
 
+@api_router.get("/users")
+async def get_all_users():
+    """Get all registered users"""
+    users = await db.users.find({}, {"_id": 0}).to_list(length=None)
+    return users
+
+
 @api_router.post("/orders/food", response_model=FoodOrder)
 async def create_food_order(order: FoodOrderCreate):
     """Create new food order"""
