@@ -3,6 +3,7 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomeNew from "./pages/HomeNew";
 import AdminDashboard from "./pages/AdminDashboard";
+import HemuDashboard from "./pages/HemuDashboard";
 import BlogPlace from "./pages/BlogPlace";
 import Food from "./pages/Food";
 import TrekDetail from "./pages/TrekDetail";
