@@ -19,8 +19,9 @@ import { toast } from 'sonner';
 import { 
   Clock, ShoppingCart, Trash2, Plus, Minus, ChefHat, 
   Leaf, Drumstick, Timer, Calendar, Megaphone, X,
-  Home as HomeIcon, ArrowLeft, Filter, Sun, Sunset, Moon
+  Home as HomeIcon, ArrowLeft, Filter, Sun, Sunset, Moon, User, LogOut
 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
