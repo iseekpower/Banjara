@@ -577,7 +577,9 @@ const Food = () => {
           <DialogHeader>
             <DialogTitle className="text-2xl">Your Order</DialogTitle>
             <DialogDescription>
-              {orderType === 'guest' ? 'Delivery to your room' : 'Village delivery'}
+              {isAuthenticated 
+                ? (user?.user_type === 'guest' ? 'Delivery to your room' : 'Village delivery in Kalga')
+                : 'Please login to continue'}
             </DialogDescription>
           </DialogHeader>
 
