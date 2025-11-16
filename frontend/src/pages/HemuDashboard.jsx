@@ -371,13 +371,18 @@ const HemuDashboard = () => {
               <h2 className="text-lg font-bold">Food Orders</h2>
               <div className="flex items-center gap-2">
                 <Badge variant="secondary">{foodOrders.length} orders</Badge>
-                {notificationsEnabled && (
-                  <Badge className="bg-green-100 text-green-800 text-[10px] px-2 py-1">
-                    Auto-refresh ON
-                  </Badge>
-                )}
               </div>
             </div>
+            
+            {/* Auto-refresh status for non-notification users */}
+            {!notificationsEnabled && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                <p className="text-xs text-blue-800 flex items-center gap-2">
+                  <span className="animate-pulse">🔄</span>
+                  <span>Page auto-refreshes every 30 seconds to check for new orders</span>
+                </p>
+              </div>
+            )}
             
             {foodOrders.length === 0 ? (
               <Card>
