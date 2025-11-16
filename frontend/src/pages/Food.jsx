@@ -140,6 +140,12 @@ const Food = () => {
   };
 
   const addToCart = (item) => {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      setAuthModalOpen(true);
+      return;
+    }
+    
     const existingItem = cart.find(cartItem => cartItem.name === item.name);
     if (existingItem) {
       setCart(cart.map(cartItem =>
