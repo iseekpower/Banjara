@@ -262,9 +262,13 @@ const HemuDashboard = () => {
               <h1 className="text-xl font-bold">Hemu's Dashboard</h1>
               <p className="text-xs text-emerald-100 flex items-center gap-1">
                 Banjara Barracks
-                {notificationsEnabled && (
-                  <span className="ml-2 inline-flex items-center gap-1">
-                    🔔 <span className="text-[10px]">ON</span>
+                {notificationsEnabled ? (
+                  <span className="ml-2 inline-flex items-center gap-1 bg-green-500/30 px-2 py-0.5 rounded-full">
+                    🔔 <span className="text-[10px]">Auto-alerts ON</span>
+                  </span>
+                ) : (
+                  <span className="ml-2 inline-flex items-center gap-1 bg-yellow-500/30 px-2 py-0.5 rounded-full">
+                    ⚠️ <span className="text-[10px]">Manual refresh</span>
                   </span>
                 )}
               </p>
