@@ -682,50 +682,63 @@ const Food = () => {
 
               {/* Customer Details */}
               <div className="space-y-4">
-                <div>
-                  <Label htmlFor="customer_name">Your Name</Label>
-                  <Input
-                    id="customer_name"
-                    value={checkoutForm.customer_name}
-                    onChange={(e) => setCheckoutForm({...checkoutForm, customer_name: e.target.value})}
-                    required
-                    data-testid="checkout-name"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={checkoutForm.phone}
-                    onChange={(e) => setCheckoutForm({...checkoutForm, phone: e.target.value})}
-                    required
-                    data-testid="checkout-phone"
-                  />
-                </div>
-                {orderType === 'guest' ? (
-                  <div>
-                    <Label htmlFor="room_number">Room Number</Label>
-                    <Input
-                      id="room_number"
-                      value={checkoutForm.room_number}
-                      onChange={(e) => setCheckoutForm({...checkoutForm, room_number: e.target.value})}
-                      required
-                      data-testid="checkout-room"
-                    />
+                {isAuthenticated && (
+                  <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg mb-4">
+                    <p className="text-sm text-blue-800 font-semibold mb-2">✓ Ordering as {user?.name}</p>
+                    <p className="text-xs text-blue-700">
+                      Delivery to: {user?.user_type === 'guest' ? user?.room_number : (user?.cafe_name || 'Kalga')}
+                    </p>
                   </div>
-                ) : (
-                  <div>
-                    <Label htmlFor="delivery_address">Delivery Address in Kalga</Label>
-                    <Textarea
-                      id="delivery_address"
-                      value={checkoutForm.delivery_address}
-                      onChange={(e) => setCheckoutForm({...checkoutForm, delivery_address: e.target.value})}
-                      required
-                      placeholder="Please provide detailed address"
-                      data-testid="checkout-address"
-                    />
-                  </div>
+                )}
+                
+                {!isAuthenticated && (
+                  <>
+                    <div>
+                      <Label htmlFor="customer_name">Your Name</Label>
+                      <Input
+                        id="customer_name"
+                        value={checkoutForm.customer_name}
+                        onChange={(e) => setCheckoutForm({...checkoutForm, customer_name: e.target.value})}
+                        required
+                        data-testid="checkout-name"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={checkoutForm.phone}
+                        onChange={(e) => setCheckoutForm({...checkoutForm, phone: e.target.value})}
+                        required
+                        data-testid="checkout-phone"
+                      />
+                    </div>
+                    {orderType === 'guest' ? (
+                      <div>
+                        <Label htmlFor="room_number">Room Number</Label>
+                        <Input
+                          id="room_number"
+                          value={checkoutForm.room_number}
+                          onChange={(e) => setCheckoutForm({...checkoutForm, room_number: e.target.value})}
+                          required
+                          data-testid="checkout-room"
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <Label htmlFor="delivery_address">Delivery Address in Kalga</Label>
+                        <Textarea
+                          id="delivery_address"
+                          value={checkoutForm.delivery_address}
+                          onChange={(e) => setCheckoutForm({...checkoutForm, delivery_address: e.target.value})}
+                          required
+                          placeholder="Please provide detailed address"
+                          data-testid="checkout-address"
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
                 <div>
                   <Label htmlFor="special_instructions">Special Instructions (Optional)</Label>
