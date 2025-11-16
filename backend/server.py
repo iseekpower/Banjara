@@ -532,8 +532,12 @@ class Subscription(BaseModel):
     model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str  # Link to user
     customer_name: str
     phone: str
+    user_type: str  # "guest" or "traveler"
+    room_number: Optional[str] = None  # For guest: "Attic Room 1" or "Attic Room 2"
+    cafe_name: Optional[str] = None  # For traveler
     address: str
     plan_type: str  # "daily", "weekly", "monthly"
     meal_preferences: List[str]  # ["breakfast", "lunch", "dinner"]
@@ -545,8 +549,12 @@ class Subscription(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class SubscriptionCreate(BaseModel):
+    user_id: str
     customer_name: str
     phone: str
+    user_type: str
+    room_number: Optional[str] = None
+    cafe_name: Optional[str] = None
     address: str
     plan_type: str
     meal_preferences: List[str]
