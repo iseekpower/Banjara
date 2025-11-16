@@ -864,6 +864,135 @@ const Food = () => {
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Auth Modal */}
+      <Dialog open={authModalOpen} onOpenChange={setAuthModalOpen}>
+        <DialogContent className="max-w-md" data-testid="auth-modal">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">
+              {isSignup ? 'Create Account' : 'Login'}
+            </DialogTitle>
+            <DialogDescription>
+              {isSignup 
+                ? 'Create an account to track your orders and enjoy faster checkout'
+                : 'Login to continue ordering delicious food from Hemu\'s kitchen'}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <form onSubmit={handleAuthSubmit} className="space-y-4">
+            {isSignup && (
+              <div>
+                <Label htmlFor="auth-name">Name *</Label>
+                <Input
+                  id="auth-name"
+                  value={authForm.name}
+                  onChange={(e) => setAuthForm({...authForm, name: e.target.value})}
+                  required
+                  placeholder="Enter your name"
+                  data-testid="auth-name-input"
+                />
+              </div>
+            )}
+            
+            <div>
+              <Label htmlFor="auth-phone">Phone Number *</Label>
+              <Input
+                id="auth-phone"
+                type="tel"
+                value={authForm.phone}
+                onChange={(e) => setAuthForm({...authForm, phone: e.target.value})}
+                required
+                placeholder="Enter your phone number"
+                data-testid="auth-phone-input"
+              />
+            </div>
+
+            {isSignup && (
+              <>
+                <div>
+                  <Label>I am a *</Label>
+                  <div className="flex gap-4 mt-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="user_type"
+                        value="guest"
+                        checked={authForm.user_type === 'guest'}
+                        onChange={(e) => setAuthForm({...authForm, user_type: e.target.value, cafe_name: ''})}
+                        className="w-4 h-4 text-emerald-600"
+                      />
+                      <span>Guest at Banjara</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="user_type"
+                        value="traveler"
+                        checked={authForm.user_type === 'traveler'}
+                        onChange={(e) => setAuthForm({...authForm, user_type: e.target.value, room_number: ''})}
+                        className="w-4 h-4 text-emerald-600"
+                      />
+                      <span>Traveler in Kalga</span>
+                    </label>
+                  </div>
+                </div>
+
+                {authForm.user_type === 'guest' && (
+                  <div>
+                    <Label htmlFor="room-number">Room Number *</Label>
+                    <select
+                      id="room-number"
+                      className="w-full p-2 border rounded-lg"
+                      value={authForm.room_number}
+                      onChange={(e) => setAuthForm({...authForm, room_number: e.target.value})}
+                      required
+                      data-testid="room-select"
+                    >
+                      <option value="">Select your room</option>
+                      <option value="Attic Room 1">Attic Room 1</option>
+                      <option value="Attic Room 2">Attic Room 2</option>
+                    </select>
+                  </div>
+                )}
+
+                {authForm.user_type === 'traveler' && (
+                  <div>
+                    <Label htmlFor="cafe-name">Cafe/Place Name (Optional)</Label>
+                    <Input
+                      id="cafe-name"
+                      value={authForm.cafe_name}
+                      onChange={(e) => setAuthForm({...authForm, cafe_name: e.target.value})}
+                      placeholder="e.g., Snowline Cafe"
+                      data-testid="cafe-name-input"
+                    />
+                    <p className="text-xs text-stone-500 mt-1">Where are you staying in Kalga?</p>
+                  </div>
+                )}
+              </>
+            )}
+
+            <Button 
+              type="submit" 
+              className="w-full bg-emerald-600 hover:bg-emerald-700 py-6 text-lg"
+              data-testid="auth-submit-btn"
+            >
+              {isSignup ? 'Create Account' : 'Login'}
+            </Button>
+
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setIsSignup(!isSignup)}
+                className="text-sm text-emerald-600 hover:text-emerald-700 underline"
+              >
+                {isSignup 
+                  ? 'Already have an account? Login' 
+                  : 'Don\'t have an account? Sign up'}
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
