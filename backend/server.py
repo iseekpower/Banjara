@@ -216,6 +216,20 @@ async def get_trek_bookings():
     
     return bookings
 
+@api_router.put("/bookings/trek/{booking_id}")
+async def update_trek_booking_status(booking_id: str, status: str):
+    """Update trek booking status"""
+    result = await db.trek_bookings.update_one(
+        {"id": booking_id},
+        {"$set": {"status": status}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    
+    return {"message": "Trek booking status updated", "status": status}
+
+
 
 # BBQ Booking Endpoints
 @api_router.post("/bookings/bbq", response_model=BBQBooking)
