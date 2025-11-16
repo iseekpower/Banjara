@@ -8,30 +8,54 @@ https://banjara-homestay.preview.emergentagent.com/hemu-dashboard
 
 ## 🆕 NEW FEATURES
 
-### 🔔 Push Notifications
-- **Automatic alerts** when new orders are received
-- **No need to refresh** - you'll be notified instantly
-- Works even when the app is in background (on mobile)
-- Includes sound and vibration alerts
-- Shows order count in notification
-
-**How to enable:**
-1. Login to the dashboard
-2. Click "Enable Now" on the yellow notification card
-3. Allow notifications when browser prompts
-4. You'll see "🔔 ON" in the header when enabled
-
-### 🔄 Auto-Refresh
-- Orders automatically refresh every 30 seconds
-- No manual refresh needed
-- "Auto-refresh ON" badge shows when active
+### 🔄 Auto-Refresh (WORKS WITHOUT NOTIFICATIONS!)
+- **Orders automatically refresh every 30 seconds**
+- **No manual refresh needed** - new orders appear automatically
+- Works on ALL devices including iPhone
+- Blue info box shows: "Page auto-refreshes every 30 seconds"
 - Manual refresh still available (🔄 button in header)
+
+### 🔔 Push Notifications (Optional - For Extra Alerts)
+**⚠️ IMPORTANT for iPhone Users:**
+- Notifications are **optional** - auto-refresh works without them!
+- Web notifications have **limited support on iPhone Safari**
+- For best experience on iPhone: Use **Chrome browser** on iPhone
+- OR simply rely on the auto-refresh feature (works perfectly!)
+
+**How to enable (if supported by your browser):**
+1. Login to the dashboard
+2. Click "🔔 Enable Notifications" button
+3. When browser asks, click "Allow"
+4. You'll see a test notification
+5. Header will show "Auto-alerts ON"
+
+**If notifications don't work:**
+- Don't worry! Auto-refresh still works every 30 seconds
+- You'll see blue info box: "Page auto-refreshes every 30 seconds"
+- New orders will appear automatically without notifications
 
 ### 🔐 Persistent Login
 - **Stay logged in** even after closing/refreshing the page
 - Login persists until you click logout
 - No need to enter password every time
 - Secure session stored locally
+
+## How It Works (Even Without Notifications!)
+
+**With Notifications Enabled (Chrome/Firefox):**
+1. New order arrives
+2. 🔔 Notification pops up with sound
+3. Order appears in dashboard
+
+**Without Notifications (iPhone Safari or any browser):**
+1. Dashboard checks for new orders every 30 seconds
+2. New order appears automatically
+3. Page stays current without manual refresh
+4. Yellow indicator shows "Manual refresh" in header
+
+**Both methods work perfectly!** The key difference is:
+- WITH notifications: Instant alert + auto-refresh
+- WITHOUT notifications: Auto-refresh only (still very effective!)
 
 ## Features Available
 
@@ -63,43 +87,75 @@ https://banjara-homestay.preview.emergentagent.com/hemu-dashboard
 
 ## Mobile Optimized
 - Designed specifically for iPhone 11
-- Works perfectly on mobile browsers
+- Works perfectly on Safari AND Chrome mobile browsers
 - Easy to use with touch interface
 - Sticky header and tabs for easy navigation
-- Pull to refresh functionality (refresh button in header)
+- Auto-refresh built-in (no notifications needed!)
 
 ## Tips for Hemu
-1. **First Time Setup:** Enable notifications for best experience
-2. **Refresh Data:** Click the refresh icon (🔄) in header anytime
-3. **Logout:** Click logout icon when done (login persists automatically)
+
+### For iPhone Users (Recommended Setup):
+1. **Use Safari** (it works great with auto-refresh!)
+2. **Add to Home Screen** for app-like experience:
+   - Open dashboard in Safari
+   - Tap the Share button
+   - Tap "Add to Home Screen"
+   - Now it opens like an app!
+3. **Don't worry about notifications** - auto-refresh handles everything
+4. Keep dashboard open while working - new orders appear automatically
+
+### General Tips:
+1. **Login Once:** Password remembered until you logout
+2. **Manual Refresh:** Click 🔄 icon anytime for instant update
+3. **Logout:** Click logout icon only when completely done
 4. **Order Priority:** Food orders show newest first
 5. **Status Colors:**
    - Yellow = Pending/Waiting
    - Blue = In Progress/Confirmed
    - Green = Ready/Completed
    - Red = Cancelled
-6. **Quick Actions:** All buttons are large and easy to tap on mobile
-7. **Notifications:** Will alert you even when browsing other tabs
-8. **Battery Saving:** Auto-refresh uses minimal data (only 30-second intervals)
+6. **Quick Actions:** All buttons are large and easy to tap
+7. **Battery Friendly:** 30-second checks use minimal data/battery
 
-## Notification Examples
-- "🔔 1 New Order Received! You have 1 pending order to prepare."
-- "🔔 3 New Orders Received! You have 3 pending orders to prepare."
+## For Best Experience
+
+### Option A: iPhone Safari (Recommended)
+✅ Works perfectly with auto-refresh
+✅ Add to home screen for app-like feel
+✅ No extra setup needed
+⚠️ Notifications not available (not needed!)
+
+### Option B: Chrome on iPhone
+✅ Works perfectly with auto-refresh
+✅ May support notifications (browser-dependent)
+✅ Same great experience
+
+### Option C: Any Android Browser
+✅ Full notification support
+✅ Auto-refresh works great
+✅ Complete feature set
 
 ## Important Notes
+- **Auto-refresh works on ALL devices** - no notifications needed!
 - Keep the password secure
-- Enable notifications for instant alerts
 - Login persists until manual logout
 - All changes are saved immediately
-- Browser notifications require permission (one-time setup)
-- Works best on Chrome/Safari mobile browsers
+- 30-second auto-refresh is very reliable
+- Dashboard works offline-friendly (shows last loaded data)
 
 ## Troubleshooting
-**If notifications don't work:**
-1. Check browser notification permissions in phone settings
-2. Make sure "Do Not Disturb" is off
-3. Try the "Enable Now" button again
 
-**If auto-refresh stops:**
-- Simply refresh the page manually once
-- Auto-refresh will resume automatically
+**Q: I don't see notifications**
+A: That's fine! Auto-refresh still works every 30 seconds. New orders appear automatically.
+
+**Q: How do I know it's auto-refreshing?**
+A: Look for the blue info box that says "Page auto-refreshes every 30 seconds"
+
+**Q: Do I need to keep the page open?**
+A: Yes, keep the dashboard tab open. On iPhone, you can switch to other apps briefly and return.
+
+**Q: Page seems frozen**
+A: Click the 🔄 refresh button once. Auto-refresh will resume.
+
+**Q: Battery drain concerns?**
+A: Minimal impact! Checking every 30 seconds uses very little power.
