@@ -333,23 +333,30 @@ const Food = () => {
             </div>
             <div className="flex items-center gap-4">
               {isAuthenticated && (
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-stone-900 flex items-center gap-2">
-                    <User className="w-4 h-4" />
-                    {user?.name}
-                  </p>
-                  <p className="text-xs text-stone-600">
-                    {user?.user_type === 'guest' ? `Room: ${user?.room_number}` : `${user?.cafe_name || 'Traveler in Kalga'}`}
-                  </p>
-                  <Button
-                    onClick={logout}
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs mt-1"
-                  >
-                    <LogOut className="w-3 h-3 mr-1" />
-                    Logout
-                  </Button>
+                <div className="flex items-center gap-4">
+                  <Link to="/my-orders">
+                    <Button variant="outline" className="border-emerald-600 text-emerald-600 hover:bg-emerald-50">
+                      <User className="w-4 h-4 mr-2" />
+                      My Profile
+                    </Button>
+                  </Link>
+                  <div className="text-right">
+                    <p className="text-sm font-semibold text-stone-900 flex items-center gap-2">
+                      {user?.name}
+                    </p>
+                    <p className="text-xs text-stone-600">
+                      {user?.user_type === 'guest' ? `Room: ${user?.room_number}` : `${user?.cafe_name || 'Traveler in Kalga'}`}
+                    </p>
+                    <Button
+                      onClick={logout}
+                      variant="ghost"
+                      size="sm"
+                      className="text-xs mt-1 p-0"
+                    >
+                      <LogOut className="w-3 h-3 mr-1" />
+                      Logout
+                    </Button>
+                  </div>
                 </div>
               )}
               <div className="relative">
