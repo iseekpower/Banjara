@@ -46,6 +46,8 @@ const HomeNew = () => {
     { name: 'Sar Pass', distance: '15 km', time: 'Multi-day', description: 'Challenging high-altitude trek through snow', slug: 'sar-pass' }
   ];
 
+  const [rules, setRules] = useState([]);
+
   const heroSlides = [
     {
       image: 'https://a0.muscache.com/im/pictures/miso/Hosting-51261620/original/f60a8ab7-fea0-44cd-b119-18460ca3de38.jpeg?im_w=1920',
