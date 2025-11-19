@@ -268,11 +268,6 @@ const BlogPlace = () => {
 
       {/* Content */}
       <article className="max-w-4xl mx-auto px-4 py-16">
-        <Link to="/" className="inline-flex items-center text-emerald-600 hover:text-emerald-700 mb-8">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Link>
-
         <div className="prose prose-lg max-w-none">
           {blog.content.split('\n\n').map((paragraph, index) => (
             <p key={index} className="text-stone-700 leading-relaxed mb-6">
