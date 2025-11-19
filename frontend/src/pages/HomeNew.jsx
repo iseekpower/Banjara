@@ -671,6 +671,9 @@ const HomeNew = () => {
         </DialogContent>
       </Dialog>
 
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+        <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Ready for Your Himalayan Adventure?
           </h2>
@@ -695,6 +698,62 @@ const HomeNew = () => {
               Book Your Stay
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* FAQs Section */}
+      <section className="py-20 px-4 bg-white" id="faq" data-testid="faq-section">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <HelpCircle className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-stone-900">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-lg text-stone-600">
+              Everything you need to know about staying at Banjara Barracks
+            </p>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="border-2 hover:border-emerald-200 transition-colors">
+                <CardHeader>
+                  <CardTitle className="text-xl text-emerald-700">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-stone-700 leading-relaxed">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* House Rules Section */}
+      <section className="py-20 px-4 bg-stone-50" id="rules" data-testid="rules-section">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <Shield className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-stone-900">
+              House Rules
+            </h2>
+            <p className="text-lg text-stone-600">
+              Simple guidelines to ensure a pleasant stay for everyone
+            </p>
+          </div>
+          <Card className="border-2 border-emerald-200">
+            <CardContent className="pt-6">
+              <ul className="space-y-4">
+                {rules.map((rule, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center font-bold">
+                      {index + 1}
+                    </span>
+                    <p className="text-stone-700 text-lg pt-1">{rule.rule}</p>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
