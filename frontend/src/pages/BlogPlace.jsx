@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin, Calendar, Clock, Mountain, ExternalLink } from 'lucide-react';
+import FloatingNav from '@/components/FloatingNav';
 
 const AIRBNB_URL = 'https://www.airbnb.co.in/rooms/51261620?source_impression_id=p3_1762452247_P3PmxG8ksmAwf3Rz';
 
