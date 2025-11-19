@@ -80,6 +80,7 @@ const HomeNew = () => {
     fetchTreks();
     fetchGallery();
     fetchFAQs();
+    fetchRules();
   }, []);
 
   useEffect(() => {
