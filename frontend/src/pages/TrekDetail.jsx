@@ -129,7 +129,7 @@ const TrekDetail = () => {
       <FloatingNav />
 
       {/* Hero Section */}
-      <section className="relative h-96 overflow-hidden">
+      <section className="relative h-96 overflow-hidden mt-20">
         <img
           src={trek.images[currentImageIndex]}
           alt={trek.name}
@@ -144,17 +144,29 @@ const TrekDetail = () => {
                 FEATURED TREK
               </Badge>
             )}
-            <h1 className="text-5xl font-bold mb-3">{trek.name}</h1>
-            <div className="flex flex-wrap gap-4 text-lg">
-              <span className="flex items-center gap-2">
-                <Clock className="w-5 h-5" /> {trek.duration}
-              </span>
-              <span className="flex items-center gap-2">
-                <Mountain className="w-5 h-5" /> {trek.altitude}
-              </span>
-              <span className="flex items-center gap-2">
-                <MapPin className="w-5 h-5" /> {trek.distance}
-              </span>
+            <div className="flex items-end justify-between">
+              <div>
+                <h1 className="text-5xl font-bold mb-3">{trek.name}</h1>
+                <div className="flex flex-wrap gap-4 text-lg">
+                  <span className="flex items-center gap-2">
+                    <Clock className="w-5 h-5" /> {trek.duration}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Mountain className="w-5 h-5" /> {trek.altitude}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5" /> {trek.distance}
+                  </span>
+                </div>
+              </div>
+              <Button
+                onClick={() => setBookingOpen(true)}
+                size="lg"
+                className="bg-emerald-600 hover:bg-emerald-700"
+                data-testid="book-trek-btn"
+              >
+                Book This Trek
+              </Button>
             </div>
           </div>
         </div>
