@@ -566,16 +566,18 @@ const AdminDashboard = () => {
         <Tabs defaultValue="bookings" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-12" data-testid="admin-tabs">
             <TabsTrigger value="food-orders" data-testid="food-orders-tab">
-              <ChefHat className="w-4 h-4 mr-2" />
-              Food Orders
-              {foodOrders.filter(o => ['pending', 'preparing', 'ready'].includes(o.status)).length > 0 && (
-                <Badge className="ml-2 bg-red-500 text-white">
-                  {foodOrders.filter(o => ['pending', 'preparing', 'ready'].includes(o.status)).length}
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                <ChefHat className="w-4 h-4" />
+                <span>Food Orders</span>
+                {foodOrders.filter(o => ['pending', 'preparing', 'ready'].includes(o.status)).length > 0 && (
+                  <Badge className="bg-red-500 text-white px-1.5 py-0.5 text-xs">
+                    {foodOrders.filter(o => ['pending', 'preparing', 'ready'].includes(o.status)).length}
+                  </Badge>
+                )}
+              </div>
             </TabsTrigger>
             <TabsTrigger value="qr-code" data-testid="qr-code-tab">
-              <QrCode className="w-4 h-4 mr-2" />
+              <ChefHat className="w-4 h-4 mr-2" />
               QR Menu
             </TabsTrigger>
             <TabsTrigger value="subscriptions" data-testid="subscriptions-tab">
@@ -587,24 +589,28 @@ const AdminDashboard = () => {
               Events
             </TabsTrigger>
             <TabsTrigger value="bookings" data-testid="bookings-tab">
-              <Calendar className="w-4 h-4 mr-2" />
-              Bookings
-              {(trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length + 
-                bbqBookings.filter(b => b.status === 'pending').length) > 0 && (
-                <Badge className="ml-2 bg-red-500 text-white">
-                  {trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length + 
-                   bbqBookings.filter(b => b.status === 'pending').length}
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>Bookings</span>
+                {(trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length + 
+                  bbqBookings.filter(b => b.status === 'pending').length) > 0 && (
+                  <Badge className="bg-red-500 text-white px-1.5 py-0.5 text-xs">
+                    {trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length + 
+                     bbqBookings.filter(b => b.status === 'pending').length}
+                  </Badge>
+                )}
+              </div>
             </TabsTrigger>
             <TabsTrigger value="treks" data-testid="treks-tab">
-              <Mountain className="w-4 h-4 mr-2" />
-              Treks
-              {trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length > 0 && (
-                <Badge className="ml-2 bg-orange-500 text-white">
-                  {trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length}
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                <Mountain className="w-4 h-4" />
+                <span>Treks</span>
+                {trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length > 0 && (
+                  <Badge className="bg-orange-500 text-white px-1.5 py-0.5 text-xs">
+                    {trekBookings.filter(b => ['pending', 'confirmed'].includes(b.status)).length}
+                  </Badge>
+                )}
+              </div>
             </TabsTrigger>
             <TabsTrigger value="gallery" data-testid="gallery-tab">
               <ImageIcon className="w-4 h-4 mr-2" />
