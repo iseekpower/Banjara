@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { ArrowLeft, ShoppingBag, Clock, CheckCircle, XCircle, User, MapPin, Phone, Calendar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import FloatingNav from '@/components/FloatingNav';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
