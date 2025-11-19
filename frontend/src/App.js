@@ -22,6 +22,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomeNew />} />
+            <Route path="/treks" element={<Treks />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/admin-banjara-core" element={<AdminDashboard />} />
             <Route path="/hemu-dashboard" element={<HemuDashboard />} />
             <Route path="/blog/:place" element={<BlogPlace />} />
