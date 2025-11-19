@@ -114,6 +114,17 @@ const HomeNew = () => {
       setFaqs(response.data);
     } catch (error) {
       console.error('Error fetching FAQs:', error);
+
+
+  const fetchRules = async () => {
+    try {
+      const response = await axios.get(`${API}/rules`);
+      setRules(response.data);
+    } catch (error) {
+      console.error('Error fetching rules:', error);
+    }
+  };
+
     }
   };
 
