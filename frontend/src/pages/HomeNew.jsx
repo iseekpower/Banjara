@@ -178,77 +178,11 @@ const HomeNew = () => {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm" data-testid="main-nav">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="text-2xl font-bold text-stone-900">
-              Banjara Barracks
-            </Link>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('treks')} className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
-                Treks
-              </button>
-              <Link to="/food" className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
-                Food
-              </Link>
-              <button onClick={() => scrollToSection('life-at-barracks')} className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
-                Life at Barracks
-              </button>
-              <button onClick={() => scrollToSection('ai-planner')} className="text-stone-700 hover:text-emerald-600 transition-colors font-medium">
-                AI Planner
-              </button>
-              <Button
-                onClick={() => window.open(AIRBNB_URL, '_blank')}
-                variant="outline"
-                className="border-emerald-600 text-emerald-600 hover:bg-emerald-50"
-              >
-                Book Stay
-              </Button>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-stone-700"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t">
-            <div className="px-4 py-3 space-y-3">
-              <button onClick={() => scrollToSection('treks')} className="block w-full text-left text-stone-700 hover:text-emerald-600 font-medium">
-                Treks
-              </button>
-              <Link to="/food" className="block w-full text-left text-stone-700 hover:text-emerald-600 font-medium">
-                Food
-              </Link>
-              <button onClick={() => scrollToSection('life-at-barracks')} className="block w-full text-left text-stone-700 hover:text-emerald-600 font-medium">
-                Life at Barracks
-              </button>
-              <button onClick={() => scrollToSection('ai-planner')} className="block w-full text-left text-stone-700 hover:text-emerald-600 font-medium">
-                AI Planner
-              </button>
-              <Button
-                onClick={() => window.open(AIRBNB_URL, '_blank')}
-                className="w-full"
-                variant="outline"
-              >
-                Book Stay
-              </Button>
-            </div>
-          </div>
-        )}
-      </nav>
+      {/* Floating Navigation */}
+      <FloatingNav />
 
       {/* Hero Slider */}
-      <section className="relative h-screen mt-16 overflow-hidden" data-testid="hero-section">
+      <section className="relative h-screen overflow-hidden" data-testid="hero-section">
         {heroSlides.map((slide, index) => (
           <div
             key={index}
