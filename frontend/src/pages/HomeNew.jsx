@@ -114,7 +114,8 @@ const HomeNew = () => {
       setFaqs(response.data);
     } catch (error) {
       console.error('Error fetching FAQs:', error);
-
+    }
+  };
 
   const fetchRules = async () => {
     try {
@@ -122,9 +123,6 @@ const HomeNew = () => {
       setRules(response.data);
     } catch (error) {
       console.error('Error fetching rules:', error);
-    }
-  };
-
     }
   };
 
