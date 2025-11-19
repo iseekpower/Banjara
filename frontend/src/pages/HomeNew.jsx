@@ -25,7 +25,6 @@ const AIRBNB_URL = 'https://www.airbnb.co.in/rooms/51261620?source_impression_id
 
 const HomeNew = () => {
   const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [treks, setTreks] = useState([]);
   const [gallery, setGallery] = useState([]);
