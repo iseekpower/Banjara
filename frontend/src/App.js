@@ -8,6 +8,9 @@ import BlogPlace from "./pages/BlogPlace";
 import Food from "./pages/Food";
 import TrekDetail from "./pages/TrekDetail";
 import MyOrders from "./pages/MyOrders";
+import Treks from "./pages/Treks";
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "./contexts/AuthContext";
 
