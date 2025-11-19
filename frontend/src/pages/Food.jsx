@@ -360,11 +360,8 @@ const Food = () => {
                     My Profile
                   </Button>
                 </Link>
-              )}
-              <div className="relative">
                 <Button
                   onClick={() => setCheckoutOpen(true)}
-                  size="lg"
                   className="bg-emerald-600 hover:bg-emerald-700 relative"
                   data-testid="cart-btn"
                 >
@@ -379,8 +376,8 @@ const Food = () => {
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        )}
+      </div>
 
       {/* Announcements Banner */}
       {announcements.length > 0 && (
