@@ -6,9 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { 
   Mountain, ChefHat, MapPin, Calendar, Clock, Users, ExternalLink,
-  Menu as MenuIcon, X, Heart, ArrowRight, Star, Sparkles, TrendingUp, MessageCircle, Send, HelpCircle, Shield
+  Heart, ArrowRight, Star, Sparkles, TrendingUp, MessageCircle, Send, HelpCircle, Shield
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import FloatingNav from '@/components/FloatingNav';
 import {
   Dialog,
   DialogContent,
