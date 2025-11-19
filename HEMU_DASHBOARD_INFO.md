@@ -1,7 +1,7 @@
 # Hemu's Dashboard - Access Information
 
 ## Dashboard URL
-https://banjara-homestay.preview.emergentagent.com/hemu-dashboard
+https://mountain-retreats-2.preview.emergentagent.com/hemu-dashboard
 
 ## Login Credentials
 **Password:** `hemu-chef-2024`
