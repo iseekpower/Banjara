@@ -246,8 +246,10 @@ const BlogPlace = () => {
 
   return (
     <div className="min-h-screen bg-stone-50">
+      <FloatingNav />
+      
       {/* Hero */}
-      <section className="relative h-96 bg-gradient-to-br from-emerald-600 to-teal-700">
+      <section className="relative h-96 bg-gradient-to-br from-emerald-600 to-teal-700 mt-20">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative z-10 h-full flex items-center justify-center px-4">
           <div className="text-center text-white max-w-4xl">
