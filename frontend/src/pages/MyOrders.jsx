@@ -93,20 +93,16 @@ const MyOrders = () => {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Link to="/food" className="flex items-center text-emerald-600 hover:text-emerald-700 mb-2">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Food Menu
-              </Link>
-              <h1 className="text-3xl font-bold text-stone-900">My Profile & Orders</h1>
-            </div>
-          </div>
+      <FloatingNav />
+      
+      {/* Page Header */}
+      <div className="pt-28 pb-8 px-4 bg-gradient-to-br from-emerald-50 via-teal-50 to-stone-100">
+        <div className="max-w-7xl mx-auto">
+          <ShoppingBag className="w-12 h-12 text-emerald-600 mb-4" />
+          <h1 className="text-4xl lg:text-5xl font-bold text-stone-900 mb-2">My Profile & Orders</h1>
+          <p className="text-stone-600">Manage your profile and track your food orders</p>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-3 gap-6">
