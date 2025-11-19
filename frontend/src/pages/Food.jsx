@@ -317,48 +317,49 @@ const Food = () => {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <Link to="/" className="flex items-center text-emerald-600 hover:text-emerald-700 mb-2">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Home
-              </Link>
-              <h1 className="text-3xl font-bold text-stone-900 flex items-center gap-2" data-testid="food-page-title">
-                <ChefHat className="w-8 h-8 text-emerald-600" />
-                Hemu's by Banjara Barracks
-              </h1>
-              <p className="text-sm text-stone-600 mt-1">From our kitchen to your heart - Made with love by Chef Hemu</p>
+      {/* Floating Navigation */}
+      <FloatingNav />
+      
+      {/* Page Header */}
+      <div className="pt-28 pb-8 px-4 bg-gradient-to-br from-orange-50 via-amber-50 to-stone-100">
+        <div className="max-w-7xl mx-auto text-center">
+          <ChefHat className="w-16 h-16 text-orange-600 mx-auto mb-4" />
+          <h1 className="text-5xl font-bold text-stone-900 mb-4" data-testid="food-page-title">
+            Hemu's by Banjara Barracks
+          </h1>
+          <p className="text-lg text-stone-600">From our kitchen to your heart - Made with love by Chef Hemu</p>
+          {!isAuthenticated && (
+            <div className="mt-6">
+              <Button
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-6 text-lg rounded-full"
+              >
+                <User className="w-5 h-5 mr-2" />
+                Login to Order
+              </Button>
             </div>
-            <div className="flex items-center gap-4">
-              {isAuthenticated && (
-                <div className="flex items-center gap-4">
-                  <Link to="/my-orders">
-                    <Button variant="outline" className="border-emerald-600 text-emerald-600 hover:bg-emerald-50">
-                      <User className="w-4 h-4 mr-2" />
-                      My Profile
-                    </Button>
-                  </Link>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold text-stone-900 flex items-center gap-2">
-                      {user?.name}
-                    </p>
-                    <p className="text-xs text-stone-600">
-                      {user?.user_type === 'guest' ? `Room: ${user?.room_number}` : `${user?.cafe_name || 'Traveler in Kalga'}`}
-                    </p>
-                    <Button
-                      onClick={logout}
-                      variant="ghost"
-                      size="sm"
-                      className="text-xs mt-1 p-0"
-                    >
-                      <LogOut className="w-3 h-3 mr-1" />
-                      Logout
-                    </Button>
-                  </div>
-                </div>
+          )}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {isAuthenticated && (
+          <div className="mb-6 p-4 bg-white rounded-xl shadow-sm border-l-4 border-emerald-600">
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-sm text-stone-600">Logged in as</p>
+                <p className="text-lg font-semibold text-stone-900">{user?.name}</p>
+                <p className="text-sm text-stone-600">
+                  {user?.user_type === 'guest' ? `Room: ${user?.room_number}` : `${user?.cafe_name || 'Traveler in Kalga'}`}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link to="/my-orders">
+                  <Button variant="outline" className="border-emerald-600 text-emerald-600 hover:bg-emerald-50">
+                    <User className="w-4 h-4 mr-2" />
+                    My Profile
+                  </Button>
+                </Link>
               )}
               <div className="relative">
                 <Button
