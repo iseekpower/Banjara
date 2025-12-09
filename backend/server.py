@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import qrcode
 from io import BytesIO
+import bcrypt
 
 
 ROOT_DIR = Path(__file__).parent
