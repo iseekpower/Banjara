@@ -325,9 +325,9 @@ const Food = () => {
         <div className="max-w-7xl mx-auto text-center">
           <ChefHat className="w-16 h-16 text-orange-600 mx-auto mb-4" />
           <h1 className="text-5xl font-bold text-stone-900 mb-4" data-testid="food-page-title">
-            Hemu's by Banjara Barracks
+            Hemu's Kitchen
           </h1>
-          <p className="text-lg text-stone-600">From our kitchen to your heart - Made with love by Chef Hemu</p>
+          <p className="text-lg text-stone-600">Hemu's pace: Unhurried in creation. Unmatched in taste.</p>
           {!isAuthenticated && (
             <div className="mt-6">
               <Button
