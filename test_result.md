@@ -149,6 +149,21 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ Trek booking with UPI payment working perfectly. Verified: UPI payment method support, payment_status='pending', correct cost calculation (₹5,000 per person), booking storage and retrieval. UPI ID: sadhya0794@okhdfcbank confirmed for frontend integration."
+  
+  - task: "Universal login system"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Universal login system implemented with password authentication for customers, admin, and Hemu. Endpoints: POST /api/auth/signup, POST /api/auth/login"
+      - working: true
+        agent: "testing"
+        comment: "✅ Universal Login System Working Perfectly! All 7 test cases passed (100% success rate): Customer Signup with password hashing, Customer Login with bcrypt verification, Admin Login (admin/banjara-core-admin-2024), Hemu Login (hemu/hemu-chef-2024), Invalid Password rejection (401), Duplicate Signup prevention (400), Non-existent User handling (404). Password security implemented with bcrypt hashing. Authentication system ready for production use."
 
 frontend:
   - task: "New landing page (HomeNew.jsx)"
