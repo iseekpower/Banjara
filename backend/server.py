@@ -705,8 +705,12 @@ async def signup_user(user: UserCreate):
     if existing_user:
         raise HTTPException(status_code=400, detail="Phone number already registered")
     
-    user_dict = user.model_dump()
+    # Hash the password
+    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+    
+    user_dict = user.model_dump(exclude={'password'})
     user_dict["id"] = str(uuid.uuid4())
+    user_dict["password_hash"] = hashed_password.decode('utf-8')
     user_dict["created_at"] = datetime.now(timezone.utc).isoformat()
     
     await db.users.insert_one(user_dict)
@@ -714,10 +718,38 @@ async def signup_user(user: UserCreate):
 
 @api_router.post("/auth/login")
 async def login_user(login: UserLogin):
-    """Login user with phone number"""
+    """Universal login for customers, admin, and hemu"""
+    
+    # Check for special admin/hemu accounts first
+    if login.phone == "admin" and login.password == "banjara-core-admin-2024":
+        return {
+            "id": "admin-user",
+            "name": "Admin",
+            "phone": "admin",
+            "user_type": "admin",
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+    
+    if login.phone == "hemu" and login.password == "hemu-chef-2024":
+        return {
+            "id": "hemu-user",
+            "name": "Hemu",
+            "phone": "hemu",
+            "user_type": "hemu",
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+    
+    # For regular customers - check phone and password
     user = await db.users.find_one({"phone": login.phone})
     if not user:
         raise HTTPException(status_code=404, detail="User not found. Please sign up first.")
+    
+    # Verify password
+    if "password_hash" not in user:
+        raise HTTPException(status_code=400, detail="Please contact support to reset your password")
+    
+    if not bcrypt.checkpw(login.password.encode('utf-8'), user["password_hash"].encode('utf-8')):
+        raise HTTPException(status_code=401, detail="Incorrect password")
     
     return User(**user)
 
