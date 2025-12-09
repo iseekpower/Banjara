@@ -1,4 +1,4 @@
-import { QRCodeSVG } from 'react-qr-code';
+import QRCode from 'react-qr-code';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download, Share2 } from 'lucide-react';
