@@ -327,7 +327,7 @@ const Food = () => {
           <h1 className="text-5xl font-bold text-stone-900 mb-4" data-testid="food-page-title">
             Hemu's Kitchen
           </h1>
-          <p className="text-lg text-stone-600">Hemu's pace: Unhurried in creation. Unmatched in taste.</p>
+          <p className="text-lg text-stone-600">Unhurried in creation. Unmatched in taste.</p>
           {!isAuthenticated && (
             <div className="mt-6">
               <Button
