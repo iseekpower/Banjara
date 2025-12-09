@@ -20,27 +20,19 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signup = async (userData) => {
-    try {
-      const response = await axios.post(`${API}/auth/signup`, userData);
-      const newUser = response.data;
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser));
-      return { success: true, user: newUser };
-    } catch (error) {
-      return { success: false, error: error.response?.data?.detail || 'Signup failed' };
-    }
+    const response = await axios.post(`${API}/auth/signup`, userData);
+    const newUser = response.data;
+    setUser(newUser);
+    localStorage.setItem('user', JSON.stringify(newUser));
+    return newUser;
   };
 
-  const login = async (phone) => {
-    try {
-      const response = await axios.post(`${API}/auth/login`, { phone });
-      const userData = response.data;
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      return { success: true, user: userData };
-    } catch (error) {
-      return { success: false, error: error.response?.data?.detail || 'Login failed' };
-    }
+  const login = async (phone, password) => {
+    const response = await axios.post(`${API}/auth/login`, { phone, password });
+    const userData = response.data;
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    return userData;
   };
 
   const logout = () => {
