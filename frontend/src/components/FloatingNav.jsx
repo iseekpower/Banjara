@@ -135,7 +135,7 @@ const FloatingNav = () => {
             </DropdownMenu>
           ) : (
             <Button
-              onClick={() => navigate('/food')}
+              onClick={() => navigate('/login')}
               size="sm"
               className="ml-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full"
             >
