@@ -699,6 +699,187 @@ class BanjaraBarracksAPITester:
         
         return booking_id is not None
 
+    def test_universal_login_system(self):
+        """Test the new universal login system for customers, admin, and Hemu"""
+        print("\n=== Testing Universal Login System ===")
+        
+        # Test 1: Customer Signup
+        print("\n🔐 Testing Customer Signup...")
+        signup_data = {
+            "name": "Priya Sharma",
+            "phone": "9876543210",
+            "password": "test123",
+            "user_type": "guest",
+            "room_number": "Attic Room 1"
+        }
+        
+        success, response = self.run_test(
+            "Customer Signup",
+            "POST",
+            "auth/signup",
+            200,
+            data=signup_data
+        )
+        
+        customer_created = False
+        if success and response.get('id'):
+            customer_created = True
+            print(f"✅ Customer created with ID: {response['id']}")
+            print(f"   Name: {response.get('name')}")
+            print(f"   Phone: {response.get('phone')}")
+            print(f"   User Type: {response.get('user_type')}")
+            print(f"   Room: {response.get('room_number')}")
+            
+            # Verify password is hashed (not stored in plain text)
+            if 'password' not in response:
+                print("✅ Password properly excluded from response")
+            else:
+                print("❌ Password should not be in response")
+        
+        # Test 2: Customer Login
+        print("\n🔐 Testing Customer Login...")
+        login_data = {
+            "phone": "9876543210",
+            "password": "test123"
+        }
+        
+        success, response = self.run_test(
+            "Customer Login",
+            "POST",
+            "auth/login",
+            200,
+            data=login_data
+        )
+        
+        customer_login_success = False
+        if success and response.get('id'):
+            customer_login_success = True
+            print(f"✅ Customer login successful")
+            print(f"   User ID: {response['id']}")
+            print(f"   Name: {response.get('name')}")
+            print(f"   User Type: {response.get('user_type')}")
+        
+        # Test 3: Admin Login
+        print("\n🔐 Testing Admin Login...")
+        admin_login_data = {
+            "phone": "admin",
+            "password": "banjara-core-admin-2024"
+        }
+        
+        success, response = self.run_test(
+            "Admin Login",
+            "POST",
+            "auth/login",
+            200,
+            data=admin_login_data
+        )
+        
+        admin_login_success = False
+        if success and response.get('user_type') == 'admin':
+            admin_login_success = True
+            print(f"✅ Admin login successful")
+            print(f"   User ID: {response['id']}")
+            print(f"   Name: {response.get('name')}")
+            print(f"   User Type: {response.get('user_type')}")
+        
+        # Test 4: Hemu Login
+        print("\n🔐 Testing Hemu Login...")
+        hemu_login_data = {
+            "phone": "hemu",
+            "password": "hemu-chef-2024"
+        }
+        
+        success, response = self.run_test(
+            "Hemu Login",
+            "POST",
+            "auth/login",
+            200,
+            data=hemu_login_data
+        )
+        
+        hemu_login_success = False
+        if success and response.get('user_type') == 'hemu':
+            hemu_login_success = True
+            print(f"✅ Hemu login successful")
+            print(f"   User ID: {response['id']}")
+            print(f"   Name: {response.get('name')}")
+            print(f"   User Type: {response.get('user_type')}")
+        
+        # Test 5: Invalid Password
+        print("\n🔐 Testing Invalid Password...")
+        invalid_login_data = {
+            "phone": "9876543210",
+            "password": "wrongpass"
+        }
+        
+        success, response = self.run_test(
+            "Invalid Password Login",
+            "POST",
+            "auth/login",
+            401,
+            data=invalid_login_data
+        )
+        
+        invalid_password_handled = success
+        if success:
+            print("✅ Invalid password properly rejected with 401 error")
+        
+        # Test 6: Duplicate Signup
+        print("\n🔐 Testing Duplicate Signup...")
+        duplicate_signup_data = {
+            "name": "Another User",
+            "phone": "9876543210",  # Same phone number
+            "password": "different123",
+            "user_type": "guest",
+            "room_number": "Attic Room 2"
+        }
+        
+        success, response = self.run_test(
+            "Duplicate Signup",
+            "POST",
+            "auth/signup",
+            400,
+            data=duplicate_signup_data
+        )
+        
+        duplicate_signup_handled = success
+        if success:
+            print("✅ Duplicate phone number properly rejected with 400 error")
+        
+        # Test 7: Non-existent User Login
+        print("\n🔐 Testing Non-existent User Login...")
+        nonexistent_login_data = {
+            "phone": "9999999999",
+            "password": "anypassword"
+        }
+        
+        success, response = self.run_test(
+            "Non-existent User Login",
+            "POST",
+            "auth/login",
+            404,
+            data=nonexistent_login_data
+        )
+        
+        nonexistent_user_handled = success
+        if success:
+            print("✅ Non-existent user properly handled with 404 error")
+        
+        # Summary
+        print(f"\n📊 Authentication Test Summary:")
+        print(f"   Customer Signup: {'✅' if customer_created else '❌'}")
+        print(f"   Customer Login: {'✅' if customer_login_success else '❌'}")
+        print(f"   Admin Login: {'✅' if admin_login_success else '❌'}")
+        print(f"   Hemu Login: {'✅' if hemu_login_success else '❌'}")
+        print(f"   Invalid Password Handling: {'✅' if invalid_password_handled else '❌'}")
+        print(f"   Duplicate Signup Handling: {'✅' if duplicate_signup_handled else '❌'}")
+        print(f"   Non-existent User Handling: {'✅' if nonexistent_user_handled else '❌'}")
+        
+        # Return True if all critical tests pass
+        return (customer_created and customer_login_success and 
+                admin_login_success and hemu_login_success and 
+                invalid_password_handled and duplicate_signup_handled)
+
     def test_error_handling(self):
         """Test error handling for invalid IDs"""
         print("\n=== Testing Error Handling ===")
