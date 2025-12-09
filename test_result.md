@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "V4 Redesign: Update landing page to prioritize Treks and Food. Build in-house trek booking system with UPI payment. Add Life at Barracks gallery. Update admin dashboard for trek and gallery management."
+user_problem_statement: "V4 Redesign: Update landing page to prioritize Treks and Food. Build in-house trek booking system with UPI payment. Add Life at Barracks gallery. Update admin dashboard for trek and gallery management. Implement universal login system with password authentication for customers, admin, and Hemu."
 
 backend:
   - task: "Trek CRUD API endpoints"
