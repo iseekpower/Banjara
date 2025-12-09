@@ -11,6 +11,7 @@ import MyOrders from "./pages/MyOrders";
 import Treks from "./pages/Treks";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import QRCodePage from "./pages/QRCode";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "./contexts/AuthContext";
 
