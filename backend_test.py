@@ -914,8 +914,9 @@ def main():
     
     tester = BanjaraBarracksAPITester()
     
-    # Run all tests - prioritizing V4 redesign tests
+    # Run all tests - prioritizing authentication and V4 redesign tests
     tests = [
+        tester.test_universal_login_system,  # NEW: Universal Login System - HIGH PRIORITY
         tester.test_admin_login,
         tester.test_trek_crud_apis,  # V4 Priority: HIGH
         tester.test_gallery_crud_apis,  # V4 Priority: HIGH  
