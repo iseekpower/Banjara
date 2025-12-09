@@ -28,6 +28,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const Food = () => {
+  const navigate = useNavigate();
   const { user, signup, login, logout, isAuthenticated } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [isSignup, setIsSignup] = useState(true);
