@@ -64,12 +64,11 @@ const QRCodePage = () => {
           <div className="flex flex-col items-center space-y-6">
             {/* QR Code */}
             <div className="bg-white p-6 rounded-2xl shadow-lg border-4 border-emerald-100">
-              <QRCodeSVG
+              <QRCode
                 id="qr-code-svg"
                 value={websiteURL}
                 size={300}
                 level="H"
-                includeMargin={true}
                 fgColor="#059669"
               />
             </div>
